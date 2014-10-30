@@ -1,5 +1,5 @@
 // ============
-// SPRITE STUFF
+// SPRITE STUFFing
 // ============
 
 "use strict";
