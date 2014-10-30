@@ -1,12 +1,7 @@
 // ============
 // SPRITE STUFF
 // ============
-<<<<<<< HEAD
 
-
-=======
-// what the hell are you doing
->>>>>>> 2f10e780ddc4b5a031bb5a7fc3d6c4396d17a111
 "use strict";
 
 /* jshint browser: true, devel: true, globalstrict: true */
