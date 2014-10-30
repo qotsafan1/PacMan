@@ -1,7 +1,7 @@
 // ============
 // SPRITE STUFF
 // ============
-
+// what the hell are you doing
 "use strict";
 
 /* jshint browser: true, devel: true, globalstrict: true */
