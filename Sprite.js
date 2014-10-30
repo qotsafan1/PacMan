@@ -1,6 +1,7 @@
 // ============
-// SPRITE STUFFS
+// SPRITE STUFF
 // ============
+// I DONT KNOW
 
 "use strict";
 
