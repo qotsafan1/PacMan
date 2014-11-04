@@ -105,16 +105,12 @@ PacMan.prototype.move = function(du) {
     this.cy += this.velY*this.directionY*du;
     //change image
     this.animate();
-    if(!keys[this.KEY_UP]) this.animationOn = false;
-    if(!keys[this.KEY_DOWN]) this.animationOn = false;
-    if(!keys[this.KEY_LEFT]) this.animationOn = false;
-    if(!keys[this.KEY_RIGHT]) this.animationOn = false;
 };
 PacMan.prototype.animate = function(){
     if(this.animationOn){
         if(this.counter%5 === 0 && this.counter <= 10)this.i++;
         if(this.counter%5 === 0 && this.counter > 10) this.i--;
-        if(keys[this.KEY_LEFT]){
+        if(this.directionX === -1){
             this.sprite = g_animateSpritesLeft[this.i];
         } else{
             this.sprite = g_animateSprites[this.i];
