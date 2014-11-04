@@ -152,14 +152,14 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        pacman_photo0: "https://notendur.hi.is/jfh2/pacman0.png",
-        pacman_photo1: "https://notendur.hi.is/jfh2/pacman1.png",
-        pacman_photo2: "https://notendur.hi.is/jfh2/pacman2.png",
-        pacman_photo3: "https://notendur.hi.is/jfh2/pacman3.png",
-        pacman_photo0left: "https://notendur.hi.is/jfh2/pacman0left.png",
-        pacman_photo1left: "https://notendur.hi.is/jfh2/pacman1left.png",
-        pacman_photo2left: "https://notendur.hi.is/jfh2/pacman2left.png",
-        pacman_photo3left: "https://notendur.hi.is/jfh2/pacman3left.png"
+        pacman_photo0: "images/pacman0.png",
+        pacman_photo1: "images/pacman1.png",
+        pacman_photo2: "images/pacman2.png",
+        pacman_photo3: "images/pacman3.png",
+        pacman_photo0left: "images/pacman0left.png",
+        pacman_photo1left: "images/pacman1left.png",
+        pacman_photo2left: "images/pacman2left.png",
+        pacman_photo3left: "images/pacman3left.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
