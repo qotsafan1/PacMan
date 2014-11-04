@@ -21,8 +21,11 @@ function PacMan(descr) {
     this.rememberResets();
     
     // Default sprite, if not otherwise specified
-    this.sprite = this.sprite || g_sprites.ship;
-    
+    this.counter = 0;
+    this.animationOn = false;
+    this.i = 0;
+    this.sprite = this.sprite || g_animateSprites[this.i];
+   
     // Set normal drawing scale, and warp state off
     this._scale = 1;
     this._isWarping = false;
@@ -61,33 +64,56 @@ PacMan.prototype.move = function(du) {
     var nextX = 0;
     var nextY = 0;
     var rotation = this.rotation;
-
+    
     if(keys[this.KEY_UP]) {
+        if(this.animationOn === false) this.animationOn = true;
         nextY = -3;
         nextX = 0;
-        rotation = 0;
+        rotation = -Math.PI/2;
     }
     if(keys[this.KEY_DOWN]) {
+        if(this.animationOn === false) this.animationOn = true;
         nextY = 3;
         nextX = 0;
-        rotation = Math.PI;
+        rotation =  Math.PI/2;
     }
     if(keys[this.KEY_RIGHT]) {
+        if(this.animationOn === false) this.animationOn = true;
         nextY = 0;
         nextX = 3;
-        rotation = Math.PI/2;
+        rotation = 0;
     }
     if(keys[this.KEY_LEFT]) {
+        if(this.animationOn === false) this.animationOn = true;
         nextY = 0;
         nextX = -3;
-        rotation = -1*Math.PI/2;
+        rotation = 0;
     }
     this.wrapPosition();
     this.cx += nextX*du;
     this.cy += nextY*du;
     this.rotation = rotation;
-
+    //change image
+    this.animate();
+    if(!keys[this.KEY_UP]) this.animationOn = false;
+    if(!keys[this.KEY_DOWN]) this.animationOn = false;
+    if(!keys[this.KEY_LEFT]) this.animationOn = false;
+    if(!keys[this.KEY_RIGHT]) this.animationOn = false;
 };
+PacMan.prototype.animate = function(){
+    if(this.animationOn){
+        if(this.counter%5 === 0 && this.counter <= 10)this.i++;
+        if(this.counter%5 === 0 && this.counter > 10) this.i--;
+        if(keys[this.KEY_LEFT]){
+            this.sprite = g_animateSpritesLeft[this.i];
+        } else{
+            this.sprite = g_animateSprites[this.i];
+        }
+        //if(this.i === g_animateSprites.length-1) this.i=0;
+        this.counter++;
+        if(this.counter === 30) this.counter = 0;
+        }    
+    };
 
 PacMan.prototype.warp = function () {
 

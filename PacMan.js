@@ -152,24 +152,43 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        ship   : "https://notendur.hi.is/~pk/308G/images/ship.png",
-        ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
-        rock   : "https://notendur.hi.is/~pk/308G/images/rock.png"
+        pacman_photo0: "https://notendur.hi.is/jfh2/pacman0.png",
+        pacman_photo1: "https://notendur.hi.is/jfh2/pacman1.png",
+        pacman_photo2: "https://notendur.hi.is/jfh2/pacman2.png",
+        pacman_photo3: "https://notendur.hi.is/jfh2/pacman3.png",
+        pacman_photo0left: "https://notendur.hi.is/jfh2/pacman0left.png",
+        pacman_photo1left: "https://notendur.hi.is/jfh2/pacman1left.png",
+        pacman_photo2left: "https://notendur.hi.is/jfh2/pacman2left.png",
+        pacman_photo3left: "https://notendur.hi.is/jfh2/pacman3left.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
 }
 
 var g_sprites = {};
+var g_animateSprites = [];
+var g_animateSpritesLeft = [];
 
 function preloadDone() {
 
-    g_sprites.ship  = new Sprite(g_images.ship);
-    g_sprites.ship2 = new Sprite(g_images.ship2);
-    g_sprites.rock  = new Sprite(g_images.rock);
+    var pacman0  = new Sprite(g_images.pacman_photo0),
+        pacman1  = new Sprite(g_images.pacman_photo1),
+        pacman2  = new Sprite(g_images.pacman_photo2),
+        pacman3  = new Sprite(g_images.pacman_photo3),
+        pacman0left = new Sprite(g_images.pacman_photo0left),
+        pacman1left = new Sprite(g_images.pacman_photo1left),
+        pacman2left = new Sprite(g_images.pacman_photo2left),
+        pacman3left = new Sprite(g_images.pacman_photo3left);
 
-    g_sprites.bullet = new Sprite(g_images.ship);
-    g_sprites.bullet.scale = 0.25;
+    g_animateSprites.push(pacman0);
+    g_animateSprites.push(pacman1);
+    g_animateSprites.push(pacman2);
+    g_animateSprites.push(pacman3);
+
+    g_animateSpritesLeft.push(pacman0left);
+    g_animateSpritesLeft.push(pacman1left);
+    g_animateSpritesLeft.push(pacman2left);
+    g_animateSpritesLeft.push(pacman3left);
 
     entityManager.init();
     createInitialPacMan();
