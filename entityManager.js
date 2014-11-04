@@ -28,21 +28,12 @@ var entityManager = {
 // "PRIVATE" DATA
 
 _pacMan  : [],
-_maze    : [],
-
-_bShowRocks : true,
 
 // "PRIVATE" METHODS
 
 generatePacMan : function(descr) {
     this._pacMan.push(new PacMan(descr));
 },
-
-_generateMaze : function() {
-    this.generateMaze();
-},
-
-
 
 _forEachOf: function(aCategory, fn) {
     for (var i = 0; i < aCategory.length; ++i) {
@@ -61,20 +52,12 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._pacMan, this._maze];
+    this._categories = [this._pacMan];
 },
 
 init: function() {
-    this._generateMaze();
-    //this._generateShip();
+    
 },
-
-
-generateMaze : function(descr) {
-    this._maze.push(new Maze(descr));
-},
-
-
 
 update: function(du) {
 
@@ -103,7 +86,7 @@ update: function(du) {
 render: function(ctx) {
 
     var debugX = 10, debugY = 100;
-
+    g_maze.render(ctx);
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];
