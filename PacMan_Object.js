@@ -53,6 +53,8 @@ PacMan.prototype.cx = 200;
 PacMan.prototype.cy = 200;
 PacMan.prototype.velX = 0;
 PacMan.prototype.velY = 0;
+PacMan.prototype.directionX = 1;
+PacMan.prototype.directionY = 1;
 PacMan.prototype.launchVel = 2;
 PacMan.prototype.numSubSteps = 1;
 
@@ -61,38 +63,46 @@ PacMan.prototype.warpSound = new Audio(
     "sounds/shipWarp.ogg");
 
 PacMan.prototype.move = function(du) {
-    var nextX = 0;
-    var nextY = 0;
-    var rotation = this.rotation;
-    
+    var rotation;
     if(keys[this.KEY_UP]) {
         if(this.animationOn === false) this.animationOn = true;
-        nextY = -3;
-        nextX = 0;
-        rotation = -Math.PI/2;
+        this.velX = 0;
+        this.velY = 3;
+        if(this.directionY > 0) {
+            this.directionY *= -1;
+        } 
+        this.rotation = -Math.PI/2;      
     }
     if(keys[this.KEY_DOWN]) {
         if(this.animationOn === false) this.animationOn = true;
-        nextY = 3;
-        nextX = 0;
-        rotation =  Math.PI/2;
+        this.velX = 0;
+        this.velY = 3;
+        if(this.directionY < 0) {
+            this.directionY *= -1;
+        }       
+        this.rotation =  Math.PI/2;
     }
     if(keys[this.KEY_RIGHT]) {
         if(this.animationOn === false) this.animationOn = true;
-        nextY = 0;
-        nextX = 3;
-        rotation = 0;
+        this.velX = 3;
+        this.velY = 0;
+        if(this.directionX < 0) {
+            this.directionX *= -1;
+        }       
+        this.rotation = 0;
     }
     if(keys[this.KEY_LEFT]) {
         if(this.animationOn === false) this.animationOn = true;
-        nextY = 0;
-        nextX = -3;
-        rotation = 0;
+        this.velX = 3;
+        this.velY = 0;
+        if(this.directionX > 0) {
+            this.directionX *= -1;
+        }       
+        this.rotation = 0;
     }
     this.wrapPosition();
-    this.cx += nextX*du;
-    this.cy += nextY*du;
-    this.rotation = rotation;
+    this.cx += this.velX*this.directionX*du;
+    this.cy += this.velY*this.directionY*du;
     //change image
     this.animate();
     if(!keys[this.KEY_UP]) this.animationOn = false;
