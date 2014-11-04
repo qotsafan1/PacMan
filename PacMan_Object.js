@@ -28,7 +28,6 @@ function PacMan(descr) {
    
     // Set normal drawing scale, and warp state off
     this._scale = 0.5;
-    this._isWarping = false;
 };
 
 PacMan.prototype = new Entity();
@@ -121,55 +120,8 @@ PacMan.prototype.animate = function(){
         }    
     };
 
-PacMan.prototype.warp = function () {
-
-    this._isWarping = true;
-    this._scaleDirn = -1;
-    this.warpSound.play();
-    
-    // Unregister me from my old posistion
-    // ...so that I can't be collided with while warping
-    spatialManager.unregister(this);
-};
-
-PacMan.prototype.takeBulletHit = function () {
-    this.warp();
-};
-
-PacMan.prototype._updateWarp = function (du) {
-
-    var SHRINK_RATE = 3 / SECS_TO_NOMINALS;
-    this._scale += this._scaleDirn * SHRINK_RATE * du;
-    
-    if (this._scale < 0.2) {
-    
-   
-        this.halt();
-        this._scaleDirn = 1;
-        
-    } else if (this._scale > 1) {
-    
-        this._scale = 1;
-        this._isWarping = false;
-        
-        // Reregister me from my old posistion
-        // ...so that I can be collided with again
-        spatialManager.register(this);
-        
-    }
-};
-
-
-    
 PacMan.prototype.update = function (du) {
-    // Handle warping
-    if (this._isWarping) {
-        this._updateWarp(du);
-        return;
-    }
-
     
-    // TODO: YOUR STUFF HERE! --- Unregister and check for death
     spatialManager.unregister(this);
     if(this._isDeadNow) return entityManager.KILL_ME_NOW;
 
@@ -181,7 +133,7 @@ PacMan.prototype.update = function (du) {
 
     // TODO: YOUR STUFF HERE! --- Warp if isColliding, otherwise Register
     if(this.isColliding()){
-        this.warp();
+        
     } else {
         spatialManager.register(this);
     }
@@ -205,15 +157,6 @@ PacMan.prototype.halt = function () {
 };
 
 var NOMINAL_ROTATE_RATE = 0.1;
-
-PacMan.prototype.updateRotation = function (du) {
-    if (keys[this.KEY_LEFT]) {
-        this.rotation -= NOMINAL_ROTATE_RATE * du;
-    }
-    if (keys[this.KEY_RIGHT]) {
-        this.rotation += NOMINAL_ROTATE_RATE * du;
-    }
-};
 
 PacMan.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
