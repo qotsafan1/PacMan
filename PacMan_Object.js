@@ -27,7 +27,7 @@ function PacMan(descr) {
     this.sprite = this.sprite || g_animateSprites[this.i];
    
     // Set normal drawing scale, and warp state off
-    this._scale = 1;
+    this._scale = 0.5;
     this._isWarping = false;
 };
 
@@ -162,7 +162,6 @@ PacMan.prototype._updateWarp = function (du) {
 
     
 PacMan.prototype.update = function (du) {
-
     // Handle warping
     if (this._isWarping) {
         this._updateWarp(du);

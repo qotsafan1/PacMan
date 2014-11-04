@@ -44,6 +44,17 @@ var g_maze = {
     tWidth : 16
 };
 
+g_maze.returnTilePos = function (cx, cy) {
+    var xTile= Math.floor(cx/16);
+    var yTile= Math.floor(cy/16);
+    return [xTile,yTile];
+};
+
+g_maze.isThereWall = function (cx, cy) {
+    var tile = g_maze.returnTilePos(cx,cy);
+    return this.tiles[tile[0]][tile[1]];//returns 1 if there is a wall and 0 if the way is clear
+};
+
 g_maze.drawTile = function (ctx, x, y) {
     var oldStyle = ctx.strokeStyle;
     ctx.fillStyle = "red";

@@ -1,27 +1,9 @@
 // =========
-// ASTEROIDS
+// PAC-MAN
 // =========
 /*
 
 A sort-of-playable version of the classic arcade game.
-
-
-HOMEWORK INSTRUCTIONS:
-
-You have some "TODO"s to fill in again, particularly in:
-
-spatialManager.js
-
-But also, to a lesser extent, in:
-
-Rock.js
-Bullet.js
-Ship.js
-
-
-...Basically, you need to implement the core of the spatialManager,
-and modify the Rock/Bullet/Ship to register (and unregister)
-with it correctly, so that they can participate in collisions.
 
 */
 
@@ -39,7 +21,7 @@ var g_ctx = g_canvas.getContext("2d");
 
 
 // ====================
-// CREATE INITIAL SHIPS
+// CREATE PAC-MAN
 // ====================
 
 function createInitialPacMan() {
@@ -50,6 +32,14 @@ function createInitialPacMan() {
     });
     
 }
+
+// ======================
+// Fixing maze for tunnel
+// ======================
+g_maze.tiles[-1]=0;
+g_maze.tiles[-1][16]=0;
+g_maze.tiles[28]=0;
+g_maze.tiles[28][16]=0;
 
 // =============
 // GATHER INPUTS
