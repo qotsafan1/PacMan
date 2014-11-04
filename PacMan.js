@@ -27,8 +27,8 @@ var g_ctx = g_canvas.getContext("2d");
 function createInitialPacMan() {
 
     entityManager.generatePacMan({
-        cx : 200,
-        cy : 200
+        cx : 224,
+        cy : 408
     });
     
 }
