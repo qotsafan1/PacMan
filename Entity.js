@@ -84,9 +84,21 @@ Entity.prototype.tilePos = function () {
 };
 
 Entity.prototype.endOfTile = function (tileP) {
-    var x = 0.5<=(this.cx/g_maze.tWidth-tileP[0]);
-    var y = 0.5<=(this.cy/g_maze.tHeight-tileP[1]);
-    return x && y;
+    var calcx = (this.cx/g_maze.tWidth-tileP[0]);
+    var calcy = (this.cy/g_maze.tHeight-tileP[1]);
+    var x,y;
+    if (this.velX*this.directionX<0 || this.velY*this.directionY<0) {
+        if (calcx<0) calcx *=-1;
+        if (calcy<0) calcy *=-1;
+        x = 0.5>=calcx;
+        y = 0.5>=calcy;
+        return x && y;
+    }
+    if (this.velX*this.directionX>0 || this.velY*this.directionY>0) {
+        x = 0.5<=calcx;
+        y = 0.5<=calcy;
+        return x && y;
+    }
 };
 
 Entity.prototype.isNextTileWall = function (tileP) {
