@@ -55,13 +55,39 @@ Entity.prototype.getPos = function () {
     return {posX : this.cx, posY : this.cy};
 };
 
-Entity.prototype.isNextTileWall = function (xVel, yVel, cx, cy) {
-    var myTilePos = g_maze.returnTilePos(cx,cy);
+Entity.prototype.center = function (tileP) {
+    this.cx = tileP[0]*g_maze.tWidth+g_maze.tWidth/2;
+    this.cy = tileP[1]*g_maze.tHeight+g_maze.tHeight/2;
+};
+
+Entity.prototype.canGoLeft = function (tileP) {
+    return 0==g_maze.isThereWall(tileP[0]-1, tileP[1]);
+}; 
+
+Entity.prototype.canGoRight = function (tileP) {
+    return 0==g_maze.isThereWall(tileP[0]+1, tileP[1]);
+};
+
+Entity.prototype.canGoUp = function (tileP) {
+    return 0==g_maze.isThereWall(tileP[0], tileP[1]-1);
+};
+
+Entity.prototype.canGoDown = function (tileP) {
+    return 0==g_maze.isThereWall(tileP[0], tileP[1]+1);
+};
+
+Entity.prototype.tilePos = function () {
+    return g_maze.returnTilePos(this.cx, this.cy); 
+};
+
+Entity.prototype.isNextTileWall = function (tileP) {
+    var cx = this.cx, cy = this.cy,
+        xVel = this.velX*this.directionX, yVel = this.velY*this.directionY;
     var iswall=0;
-    if(xVel<0) {iswall = g_maze.isThereWall(myTilePos[0]-1, myTilePos[1]);}
-    if(xVel>0) {iswall = g_maze.isThereWall(myTilePos[0]+1, myTilePos[1]);}
-    if(yVel<0) {iswall = g_maze.isThereWall(myTilePos[0], myTilePos[1]-1);}
-    if(yVel>0) {iswall = g_maze.isThereWall(myTilePos[0], myTilePos[1]+1);}
+    if(xVel<0) {iswall = g_maze.isThereWall(tileP[0]-1, tileP[1]);}
+    if(xVel>0) {iswall = g_maze.isThereWall(tileP[0]+1, tileP[1]);}
+    if(yVel<0) {iswall = g_maze.isThereWall(tileP[0], tileP[1]-1);}
+    if(yVel>0) {iswall = g_maze.isThereWall(tileP[0], tileP[1]+1);}
     if(iswall===0 || iswall===undefined) return false;
     return true;
 };
