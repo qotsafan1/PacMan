@@ -58,7 +58,7 @@ g_maze.isThereWall = function (cx, cy) {
 g_maze.drawTile = function (ctx, x, y) {
     var oldStyle = ctx.strokeStyle;
     ctx.fillStyle = "red";
-    ctx.fillRect(x*this.tWidth, y*this.tHeight, this.tWidth-2, this.tHeight-2);
+    ctx.fillRect(x*this.tWidth, y*this.tHeight, this.tWidth, this.tHeight);
     ctx.strokeStyle = oldStyle;
 };
 
