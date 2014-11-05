@@ -121,14 +121,17 @@ PacMan.prototype.animate = function(){
     };
 
 PacMan.prototype.update = function (du) {
-    //console.log(g_maze.returnTilePos(this.cx, this.cy));
-    //console.log(this.isNextTileWall(this.velX, this.velY, this.cx, this.cy));
     spatialManager.unregister(this);
     if(this._isDeadNow) return entityManager.KILL_ME_NOW;
 
  
     this.move(du);
+    if(this.isNextTileWall(this.velX*this.directionX, this.velY*this.directionY, this.cx, this.cy))
+    {
+        this.velX=0;
+        this.velY=0;
 
+    }
     if(this.isColliding()){
         
     } else {

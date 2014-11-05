@@ -34,10 +34,7 @@ function createInitialPacMan() {
 // ======================
 // Fixing maze for tunnel
 // ======================
-g_maze.tiles[-1]=[];
-g_maze.tiles[-1][16]=0;
-g_maze.tiles[28]=[];
-g_maze.tiles[28][16]=0;
+g_maze.fixMaze();
 
 // =============
 // GATHER INPUTS

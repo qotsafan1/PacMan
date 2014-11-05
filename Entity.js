@@ -57,13 +57,13 @@ Entity.prototype.getPos = function () {
 
 Entity.prototype.isNextTileWall = function (xVel, yVel, cx, cy) {
     var myTilePos = g_maze.returnTilePos(cx,cy);
-    var iswall;
+    var iswall=0;
     if(xVel<0) {iswall = g_maze.isThereWall(myTilePos[0]-1, myTilePos[1]);}
     if(xVel>0) {iswall = g_maze.isThereWall(myTilePos[0]+1, myTilePos[1]);}
     if(yVel<0) {iswall = g_maze.isThereWall(myTilePos[0], myTilePos[1]-1);}
     if(yVel>0) {iswall = g_maze.isThereWall(myTilePos[0], myTilePos[1]+1);}
-    if(iswall===1) return true;
-    return false;
+    if(iswall===0 || iswall===undefined) return false;
+    return true;
 };
 
 Entity.prototype.getRadius = function () {
