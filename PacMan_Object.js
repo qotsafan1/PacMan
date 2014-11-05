@@ -140,7 +140,7 @@ PacMan.prototype.update = function (du) {
 };
 
 PacMan.prototype.getRadius = function () {
-    return (this.sprite.width / 2) * 0.9;
+    return (this.sprite.width / 2) * 0.9*this._scale;
 };
 
 
