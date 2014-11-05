@@ -70,8 +70,10 @@ PacMan.prototype.move = function(du, tileP) {
         this.velY = this.speed;
         if(this.directionY > 0) {
             this.directionY *= -1;
-        } 
-        this.rotation = -Math.PI/2;
+        }
+        //prevent pacman's "moonwalk"
+        if(this.sprite === g_animateSprites[this.i]) this.rotation = -Math.PI/2;
+        if(this.sprite === g_animateSpritesLeft[this.i]) this.rotation = Math.PI/2;
         this.centerx(tileP);      
     }
     if(keys[this.KEY_DOWN] && this.canGoDown(tileP)) {
@@ -80,8 +82,10 @@ PacMan.prototype.move = function(du, tileP) {
         this.velY = this.speed;
         if(this.directionY < 0) {
             this.directionY *= -1;
-        }       
-        this.rotation =  Math.PI/2;
+        }
+        //prevent pacman's "moonwalk"
+        if(this.sprite === g_animateSprites[this.i])this.rotation = Math.PI/2;
+        if(this.sprite === g_animateSpritesLeft[this.i]) this.rotation = -Math.PI/2;
         this.centerx(tileP);
     }
     if(keys[this.KEY_RIGHT] && this.canGoRight(tileP)) {
