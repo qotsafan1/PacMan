@@ -28,11 +28,17 @@ var entityManager = {
 // "PRIVATE" DATA
 
 _pacMan  : [],
+_level : [],
 
 // "PRIVATE" METHODS
 
 generatePacMan : function(descr) {
     this._pacMan.push(new PacMan(descr));
+},
+
+makeLevel : function(levelobj){
+    this._level.push(levelobj);
+    //console.log(this._level[0]);
 },
 
 _forEachOf: function(aCategory, fn) {
@@ -52,7 +58,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._pacMan];
+    this._categories = [this._pacMan, this._level];
 },
 
 init: function() {

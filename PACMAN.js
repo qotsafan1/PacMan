@@ -28,6 +28,8 @@ function createInitialPacMan() {
         cx : 224,
         cy : 424
     });
+
+    entityManager.makeLevel(g_level);
     
 }
 
@@ -145,7 +147,7 @@ function requestPreloads() {
         pacman_photo2left: "images/pacman2left.png",
         pacman_photo3left: "images/pacman3left.png",
 
-        //level : "images/"
+        level_walls : "images/levelwalls.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -154,6 +156,7 @@ function requestPreloads() {
 var g_sprites = {};
 var g_animateSprites = [];
 var g_animateSpritesLeft = [];
+var g_levelimg;
 
 function preloadDone() {
 
@@ -166,7 +169,7 @@ function preloadDone() {
         pacman2left = new Sprite(g_images.pacman_photo2left),
         pacman3left = new Sprite(g_images.pacman_photo3left);
 
-
+    var level = g_images.level_walls;
 
     g_animateSprites.push(pacman0);
     g_animateSprites.push(pacman1);
@@ -177,6 +180,10 @@ function preloadDone() {
     g_animateSpritesLeft.push(pacman1left);
     g_animateSpritesLeft.push(pacman2left);
     g_animateSpritesLeft.push(pacman3left);
+
+    g_levelimg = level;
+
+    console.log(g_levelimg);
 
     entityManager.init();
     createInitialPacMan();
