@@ -28,7 +28,7 @@ function createInitialPacMan() {
 
     entityManager.generatePacMan({
         cx : 224,
-        cy : 408
+        cy : 424
     });
     
 }
