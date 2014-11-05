@@ -89,7 +89,6 @@ update: function(du) {
 render: function(ctx) {
 
     var debugX = 10, debugY = 100;
-    g_maze.render(ctx);
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];
