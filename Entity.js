@@ -61,19 +61,19 @@ Entity.prototype.center = function (tileP) {
 };
 
 Entity.prototype.canGoLeft = function (tileP) {
-    return 0==g_maze.isThereWall(tileP[0]-1, tileP[1]);
+    return 0===g_maze.isThereWall(tileP[0]-1, tileP[1]);
 }; 
 
 Entity.prototype.canGoRight = function (tileP) {
-    return 0==g_maze.isThereWall(tileP[0]+1, tileP[1]);
+    return 0===g_maze.isThereWall(tileP[0]+1, tileP[1]);
 };
 
 Entity.prototype.canGoUp = function (tileP) {
-    return 0==g_maze.isThereWall(tileP[0], tileP[1]-1);
+    return 0===g_maze.isThereWall(tileP[0], tileP[1]-1);
 };
 
 Entity.prototype.canGoDown = function (tileP) {
-    return 0==g_maze.isThereWall(tileP[0], tileP[1]+1);
+    return 0===g_maze.isThereWall(tileP[0], tileP[1]+1);
 };
 
 Entity.prototype.tilePos = function () {

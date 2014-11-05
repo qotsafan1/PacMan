@@ -28,6 +28,7 @@ function PacMan(descr) {
    
     // Set normal drawing scale, and warp state off
     this._scale = 0.45;
+    this.speed = 2;
 };
 
 PacMan.prototype = new Entity();
@@ -63,36 +64,36 @@ PacMan.prototype.warpSound = new Audio(
 
 PacMan.prototype.move = function(du, tileP) {
     var rotation;
-    if(keys[this.KEY_UP]) {
+    if(keys[this.KEY_UP] && this.canGoUp(tileP)) {
         if(this.animationOn === false) this.animationOn = true;
         this.velX = 0;
-        this.velY = 3;
+        this.velY = this.speed;
         if(this.directionY > 0) {
             this.directionY *= -1;
         } 
         this.rotation = -Math.PI/2;      
     }
-    if(keys[this.KEY_DOWN]) {
+    if(keys[this.KEY_DOWN] && this.canGoDown(tileP)) {
         if(this.animationOn === false) this.animationOn = true;
         this.velX = 0;
-        this.velY = 3;
+        this.velY = this.speed;
         if(this.directionY < 0) {
             this.directionY *= -1;
         }       
         this.rotation =  Math.PI/2;
     }
-    if(keys[this.KEY_RIGHT]) {
+    if(keys[this.KEY_RIGHT] && this.canGoRight(tileP)) {
         if(this.animationOn === false) this.animationOn = true;
-        this.velX = 3;
+        this.velX = this.speed;
         this.velY = 0;
         if(this.directionX < 0) {
             this.directionX *= -1;
         }       
         this.rotation = 0;
     }
-    if(keys[this.KEY_LEFT]) {
+    if(keys[this.KEY_LEFT] && this.canGoLeft(tileP)) {
         if(this.animationOn === false) this.animationOn = true;
-        this.velX = 3;
+        this.velX = this.speed;
         this.velY = 0;
         if(this.directionX > 0) {
             this.directionX *= -1;
