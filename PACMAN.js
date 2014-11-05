@@ -143,7 +143,9 @@ function requestPreloads() {
         pacman_photo0left: "images/pacman0left.png",
         pacman_photo1left: "images/pacman1left.png",
         pacman_photo2left: "images/pacman2left.png",
-        pacman_photo3left: "images/pacman3left.png"
+        pacman_photo3left: "images/pacman3left.png",
+
+        //level : "images/"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -163,6 +165,8 @@ function preloadDone() {
         pacman1left = new Sprite(g_images.pacman_photo1left),
         pacman2left = new Sprite(g_images.pacman_photo2left),
         pacman3left = new Sprite(g_images.pacman_photo3left);
+
+
 
     g_animateSprites.push(pacman0);
     g_animateSprites.push(pacman1);
