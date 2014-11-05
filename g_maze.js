@@ -50,9 +50,8 @@ g_maze.returnTilePos = function (cx, cy) {
     return [xTile,yTile];
 };
 
-g_maze.isThereWall = function (cx, cy) {
-    var tile = g_maze.returnTilePos(cx,cy);
-    return this.tiles[tile[0]][tile[1]];//returns 1 if there is a wall and 0 if the way is clear
+g_maze.isThereWall = function (tx, ty) {
+    return this.tiles[tx][ty];//returns 1 if there is a wall and 0 if the way is clear
 };
 
 g_maze.drawTile = function (ctx, x, y) {
@@ -63,11 +62,29 @@ g_maze.drawTile = function (ctx, x, y) {
 };
 
 g_maze.render = function (ctx) {
-    //ctx.drawImage('images/pacmanmaze.jpg',0,0);
     for (var i=0; i<this.tiles.length; ++i) {
         var row = this.tiles[i];
         for (var k=0; k<row.length; ++k) {
             if(row[k]===1) this.drawTile(ctx, i, k);
         }
     }
+};
+
+g_maze.fixMaze = function () {
+    g_maze.tiles[-1]=[];
+    g_maze.tiles[-2]=[];
+    g_maze.tiles[-1][16]=1;
+    g_maze.tiles[-1][17]=0;
+    g_maze.tiles[-1][18]=1;
+    g_maze.tiles[-2][16]=1;
+    g_maze.tiles[-2][17]=0;
+    g_maze.tiles[-2][18]=1;
+    g_maze.tiles[28]=[];
+    g_maze.tiles[29]=[];
+    g_maze.tiles[28][16]=1;
+    g_maze.tiles[28][17]=0;
+    g_maze.tiles[28][18]=1;
+    g_maze.tiles[29][16]=0;
+    g_maze.tiles[29][17]=0;
+    g_maze.tiles[29][18]=0;
 };

@@ -61,7 +61,7 @@ PacMan.prototype.numSubSteps = 1;
 PacMan.prototype.warpSound = new Audio(
     "sounds/shipWarp.ogg");
 
-PacMan.prototype.move = function(du) {
+PacMan.prototype.move = function(du, tileP) {
     var rotation;
     if(keys[this.KEY_UP]) {
         if(this.animationOn === false) this.animationOn = true;
@@ -121,17 +121,18 @@ PacMan.prototype.animate = function(){
     };
 
 PacMan.prototype.update = function (du) {
-    
+    var tileP =this.tilePos();
     spatialManager.unregister(this);
     if(this._isDeadNow) return entityManager.KILL_ME_NOW;
 
  
-    this.move(du);
-
-    // Handle firing
-   
-
-    // TODO: YOUR STUFF HERE! --- Warp if isColliding, otherwise Register
+    this.move(du, tileP);
+    if(this.isNextTileWall(tileP))
+    {
+        this.velX=0;
+        this.velY=0;
+        this.center(tileP);
+    }
     if(this.isColliding()){
         
     } else {
