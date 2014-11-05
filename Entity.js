@@ -55,8 +55,11 @@ Entity.prototype.getPos = function () {
     return {posX : this.cx, posY : this.cy};
 };
 
-Entity.prototype.center = function (tileP) {
+Entity.prototype.centerx = function (tileP) {
     this.cx = tileP[0]*g_maze.tWidth+g_maze.tWidth/2;
+};
+
+Entity.prototype.centery = function (tileP) {
     this.cy = tileP[1]*g_maze.tHeight+g_maze.tHeight/2;
 };
 
@@ -80,15 +83,19 @@ Entity.prototype.tilePos = function () {
     return g_maze.returnTilePos(this.cx, this.cy); 
 };
 
+Entity.prototype.endOfTile = function (tileP) {
+    var x = 0.5<=(this.cx/g_maze.tWidth-tileP[0]);
+    var y = 0.5<=(this.cy/g_maze.tHeight-tileP[1]);
+    return x && y;
+};
+
 Entity.prototype.isNextTileWall = function (tileP) {
     var cx = this.cx, cy = this.cy,
         xVel = this.velX*this.directionX, yVel = this.velY*this.directionY;
-    var iswall=0;
-    if(xVel<0) {iswall = g_maze.isThereWall(tileP[0]-1, tileP[1]);}
-    if(xVel>0) {iswall = g_maze.isThereWall(tileP[0]+1, tileP[1]);}
-    if(yVel<0) {iswall = g_maze.isThereWall(tileP[0], tileP[1]-1);}
-    if(yVel>0) {iswall = g_maze.isThereWall(tileP[0], tileP[1]+1);}
-    if(iswall===0 || iswall===undefined) return false;
+    if(xVel<0) {return !this.canGoLeft(tileP);}
+    if(xVel>0) {return !this.canGoRight(tileP);}
+    if(yVel<0) {return !this.canGoUp(tileP);}
+    if(yVel>0) {return !this.canGoDown(tileP);}
     return true;
 };
 

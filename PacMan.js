@@ -28,7 +28,7 @@ function PacMan(descr) {
    
     // Set normal drawing scale, and warp state off
     this._scale = 0.45;
-    this.speed = 2;
+    this.speed = 1.6;
 };
 
 PacMan.prototype = new Entity();
@@ -71,7 +71,8 @@ PacMan.prototype.move = function(du, tileP) {
         if(this.directionY > 0) {
             this.directionY *= -1;
         } 
-        this.rotation = -Math.PI/2;      
+        this.rotation = -Math.PI/2;
+        this.centerx(tileP);      
     }
     if(keys[this.KEY_DOWN] && this.canGoDown(tileP)) {
         if(this.animationOn === false) this.animationOn = true;
@@ -81,6 +82,7 @@ PacMan.prototype.move = function(du, tileP) {
             this.directionY *= -1;
         }       
         this.rotation =  Math.PI/2;
+        this.centerx(tileP);
     }
     if(keys[this.KEY_RIGHT] && this.canGoRight(tileP)) {
         if(this.animationOn === false) this.animationOn = true;
@@ -90,6 +92,7 @@ PacMan.prototype.move = function(du, tileP) {
             this.directionX *= -1;
         }       
         this.rotation = 0;
+        this.centery(tileP);
     }
     if(keys[this.KEY_LEFT] && this.canGoLeft(tileP)) {
         if(this.animationOn === false) this.animationOn = true;
@@ -99,6 +102,7 @@ PacMan.prototype.move = function(du, tileP) {
             this.directionX *= -1;
         }       
         this.rotation = 0;
+        this.centery(tileP);
     }
     this.wrapPosition();
     this.cx += this.velX*this.directionX*du;
@@ -125,18 +129,17 @@ PacMan.prototype.update = function (du) {
     var tileP =this.tilePos();
     spatialManager.unregister(this);
     if(this._isDeadNow) return entityManager.KILL_ME_NOW;
-
  
     this.move(du, tileP);
-    if(this.isNextTileWall(tileP))
+    if(this.isNextTileWall(tileP) && this.endOfTile(tileP))
     {
         this.velX=0;
         this.velY=0;
-        this.center(tileP);
+        this.centerx(tileP);
+        this.centery(tileP);
     }
-    if(this.isColliding()){
-        
-    } else {
+    if(this.isColliding()){} 
+    else {
         spatialManager.register(this);
     }
 };
