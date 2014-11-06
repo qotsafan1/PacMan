@@ -184,6 +184,7 @@ PacMan.prototype.update = function (du) {
     else {
         spatialManager.register(this);
     }
+    g_maze.PacTile = this.tilePos();
 };
 
 PacMan.prototype.getRadius = function () {

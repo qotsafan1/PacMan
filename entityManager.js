@@ -26,11 +26,16 @@ var entityManager = {
 
 _pacMan  : [],
 _level : [],
+_ghosts : [],
 
 // "PRIVATE" METHODS
 
 generatePacMan : function(descr) {
     this._pacMan.push(new PacMan(descr));
+},
+
+generateGhost : function(descr) {
+    this._ghosts.push(new Ghost(descr));
 },
 
 makeLevel : function(){
@@ -55,7 +60,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._pacMan, this._level];
+    this._categories = [this._pacMan, this._level, this._ghosts];
 },
 
 init: function() {

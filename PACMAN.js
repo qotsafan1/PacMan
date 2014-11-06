@@ -29,6 +29,13 @@ function createInitialPacMan() {
     });
 
     entityManager.makeLevel();
+
+    entityManager.generateGhost({
+        cx : 224,
+        cy : 232,
+        name : "Blinky",
+        targetTile : [25,0]
+    });
     
 }
 
@@ -114,7 +121,7 @@ function processDiagnostics() {
 // GAME-SPECIFIC RENDERING
 
 function renderSimulation(ctx) {
-    if (g_useUglyRedWall) g_maze.render(ctx);
+    g_maze.render(ctx);
 
     entityManager.render(ctx);
 

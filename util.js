@@ -53,6 +53,13 @@ square: function(x) {
     return x*x;
 },
 
+indexInOrder: function(arr) {
+    var len = arr.length;
+    var indices = new Array(len);
+    for (var i = 0; i < len; ++i) indices[i] = i;
+    indices.sort(function (a, b) { return arr[a] < arr[b] ? -1 : arr[a] > arr[b] ? 1 : 0; });
+    return indices;
+},
 
 // DISTANCES
 // =========

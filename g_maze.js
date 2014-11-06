@@ -41,7 +41,8 @@ var g_maze = {
             [0,0,0,1,0,0,0,0,2,0,0,0,1,1,1,1,1,0,1,1,1,1,1,0,0,0,0,1,1,0,0,0,0,1,0,0],
             [0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0]],
     tHeight : 16,
-    tWidth : 16
+    tWidth : 16,
+    PacTile : [0,0]
 };
 
 g_maze.returnTilePos = function (cx, cy) {
@@ -62,11 +63,13 @@ g_maze.drawTile = function (ctx, x, y, style) {
 };
 
 g_maze.render = function (ctx) {
-    var styles = ["black", "red", "green", "yellow"];
-    for (var i=0; i<this.tiles.length; ++i) {
-        var row = this.tiles[i];
-        for (var k=0; k<row.length; ++k) {
-            if(row[k]>0) this.drawTile(ctx, i, k, styles[row[k]]);
+    if (g_useUglyRedWall) {
+        var styles = ["black", "red", "green", "yellow"];
+        for (var i=0; i<this.tiles.length; ++i) {
+            var row = this.tiles[i];
+            for (var k=0; k<row.length; ++k) {
+                if(row[k]>0) this.drawTile(ctx, i, k, styles[row[k]]);
+            }
         }
     }
 };
