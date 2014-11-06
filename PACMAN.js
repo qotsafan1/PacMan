@@ -146,7 +146,11 @@ function requestPreloads() {
         pacman_photo1left: "images/pacman1left.png",
         pacman_photo2left: "images/pacman2left.png",
         pacman_photo3left: "images/pacman3left.png",
-
+        pacman_dead0: "images/deadPacman0.png",
+        pacman_dead1: "images/deadPacman1.png",
+        pacman_dead2: "images/deadPacman2.png",
+        pacman_dead3: "images/deadPacman3.png",
+        pacman_dead4: "images/deadPacman4.png",
         level_walls : "images/levelwalls.png"
     };
 
@@ -156,6 +160,7 @@ function requestPreloads() {
 var g_sprites = {};
 var g_animateSprites = [];
 var g_animateSpritesLeft = [];
+var g_deathSprites =[];
 var g_levelimg;
 
 function preloadDone() {
@@ -169,6 +174,12 @@ function preloadDone() {
         pacman2left = new Sprite(g_images.pacman_photo2left),
         pacman3left = new Sprite(g_images.pacman_photo3left);
 
+    var deadPacman0 = new Sprite(g_images.pacman_dead0),  
+        deadPacman1 = new Sprite(g_images.pacman_dead1),   
+        deadPacman2 = new Sprite(g_images.pacman_dead2),   
+        deadPacman3 = new Sprite(g_images.pacman_dead3),   
+        deadPacman4 = new Sprite(g_images.pacman_dead4);
+       
     var level = g_images.level_walls;
 
     g_animateSprites.push(pacman0);
@@ -180,6 +191,12 @@ function preloadDone() {
     g_animateSpritesLeft.push(pacman1left);
     g_animateSpritesLeft.push(pacman2left);
     g_animateSpritesLeft.push(pacman3left);
+
+    g_deathSprites.push(deadPacman0);
+    g_deathSprites.push(deadPacman1);
+    g_deathSprites.push(deadPacman2);
+    g_deathSprites.push(deadPacman3);
+    g_deathSprites.push(deadPacman4);
 
     g_levelimg = level;
 
