@@ -65,6 +65,7 @@ PacMan.prototype.warpSound = new Audio(
 
 PacMan.prototype.move = function(du, tileP) {
     if(keys[this.KEY_KILL]){
+        this.rotation = 0;  
         this.isDead = true;
         this.animationOn = false;
         this.i = 0;
