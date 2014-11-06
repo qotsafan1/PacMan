@@ -73,7 +73,7 @@ function updateSimulation(du) {
 
 var g_useAveVel = true;
 var g_renderSpatialDebug = false;
-var g_useUglyRedWall = true;
+var g_useUglyRedWall = false;
 
 var KEY_AVE_VEL = keyCode('V');
 var KEY_SPATIAL = keyCode('X');
