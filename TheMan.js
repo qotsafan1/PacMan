@@ -44,6 +44,7 @@ PacMan.prototype.KEY_UP = 'W'.charCodeAt(0);
 PacMan.prototype.KEY_DOWN  = 'S'.charCodeAt(0);
 PacMan.prototype.KEY_LEFT   = 'A'.charCodeAt(0);
 PacMan.prototype.KEY_RIGHT  = 'D'.charCodeAt(0);
+PacMan.prototype.KEY_KILL = 'I'.charCodeAt(0);
 
 PacMan.prototype.KEY_FIRE   = ' '.charCodeAt(0);
 
@@ -57,14 +58,21 @@ PacMan.prototype.directionX = 1;
 PacMan.prototype.directionY = 1;
 PacMan.prototype.launchVel = 2;
 PacMan.prototype.numSubSteps = 1;
-
+PacMan.prototype.isDead = false;
 // HACKED-IN AUDIO (no preloading)
 PacMan.prototype.warpSound = new Audio(
     "sounds/shipWarp.ogg");
 
 PacMan.prototype.move = function(du, tileP) {
+    if(keys[this.KEY_KILL]){
+        this.isDead = true;
+        this.animationOn = false;
+        this.i = 0;
+        this.counter = 0;
+    }
+
     var rotation;
-    if(keys[this.KEY_UP] && this.canGoUp(tileP)) {
+    if(keys[this.KEY_UP] && this.canGoUp(tileP) && !this.isDead) {
         if(this.animationOn === false) this.animationOn = true;
         this.velX = 0;
         this.velY = this.speed;
@@ -76,7 +84,7 @@ PacMan.prototype.move = function(du, tileP) {
         if(this.sprite === g_animateSpritesLeft[this.i]) this.rotation = Math.PI/2;
         this.centerx(tileP);      
     }
-    if(keys[this.KEY_DOWN] && this.canGoDown(tileP)) {
+    if(keys[this.KEY_DOWN] && this.canGoDown(tileP) && !this.isDead) {
         if(this.animationOn === false) this.animationOn = true;
         this.velX = 0;
         this.velY = this.speed;
@@ -88,7 +96,7 @@ PacMan.prototype.move = function(du, tileP) {
         if(this.sprite === g_animateSpritesLeft[this.i]) this.rotation = -Math.PI/2;
         this.centerx(tileP);
     }
-    if(keys[this.KEY_RIGHT] && this.canGoRight(tileP)) {
+    if(keys[this.KEY_RIGHT] && this.canGoRight(tileP) && !this.isDead) {
         if(this.animationOn === false) this.animationOn = true;
         this.velX = this.speed;
         this.velY = 0;
@@ -98,7 +106,7 @@ PacMan.prototype.move = function(du, tileP) {
         this.rotation = 0;
         this.centery(tileP);
     }
-    if(keys[this.KEY_LEFT] && this.canGoLeft(tileP)) {
+    if(keys[this.KEY_LEFT] && this.canGoLeft(tileP) && !this.isDead) {
         if(this.animationOn === false) this.animationOn = true;
         this.velX = this.speed;
         this.velY = 0;
@@ -112,8 +120,37 @@ PacMan.prototype.move = function(du, tileP) {
     this.cx += this.velX*this.directionX*du;
     this.cy += this.velY*this.directionY*du;
     //change image
+    this.animateDeath();
     this.animate();
 };
+
+PacMan.prototype.resetPacman = function(){
+    //set initial position, rotation, and velocity
+    this.setPos(this.reset_cx, this.reset_cy);
+    this.rotation = this.reset_rotation;
+    this.halt();
+    //
+    this.i = 0;
+    this.counter = 0;
+    //no animation ongoing if pacman is reset
+    this.isDead = false;
+    this.animationOn = false;
+    //initialize the sprite
+    this.sprite = g_animateSprites[this.i];
+};
+PacMan.prototype.animateDeath = function(){
+    if(this.isDead === true){
+        this.halt();
+        this.sprite = g_deathSprites[this.i];
+        if(this.counter%5 === 0) this.i++;
+        this.counter++;
+
+        if(this.i === g_deathSprites.length){
+            this.resetPacman();
+        }
+    }
+};
+
 PacMan.prototype.animate = function(){
     if(this.animationOn){
         if(this.counter%5 === 0 && this.counter <= 10)this.i++;
@@ -150,14 +187,6 @@ PacMan.prototype.update = function (du) {
 
 PacMan.prototype.getRadius = function () {
     return (this.sprite.width / 2) * 0.9*this._scale;
-};
-
-
-PacMan.prototype.reset = function () {
-    this.setPos(this.reset_cx, this.reset_cy);
-    this.rotation = this.reset_rotation;
-    
-    this.halt();
 };
 
 PacMan.prototype.halt = function () {
