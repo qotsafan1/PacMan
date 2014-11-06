@@ -36,8 +36,8 @@ generatePacMan : function(descr) {
     this._pacMan.push(new PacMan(descr));
 },
 
-makeLevel : function(levelobj){
-    this._level.push(levelobj);
+makeLevel : function(){
+    this._level.push(new Level());
     //console.log(this._level[0]);
 },
 

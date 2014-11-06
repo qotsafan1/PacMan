@@ -21,7 +21,6 @@ var g_ctx = g_canvas.getContext("2d");
 // ====================
 // CREATE PAC-MAN
 // ====================
-
 function createInitialPacMan() {
 
     entityManager.generatePacMan({
@@ -29,7 +28,7 @@ function createInitialPacMan() {
         cy : 424
     });
 
-    entityManager.makeLevel(g_level);
+    entityManager.makeLevel();
     
 }
 
@@ -68,7 +67,6 @@ function updateSimulation(du) {
     
     entityManager.update(du);
 
-    
 }
 
 // GAME-SPECIFIC DIAGNOSTICS
@@ -144,7 +142,7 @@ function requestPreloads() {
         pacman_photo2left: "images/pacman2left.png",
         pacman_photo3left: "images/pacman3left.png",
 
-        level_walls : "images/levelwalls.png"
+        level_walls : "images/walls.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -153,7 +151,7 @@ function requestPreloads() {
 var g_sprites = {};
 var g_animateSprites = [];
 var g_animateSpritesLeft = [];
-var g_levelimg;
+var g_levelimg = [];
 
 function preloadDone() {
 
@@ -166,7 +164,7 @@ function preloadDone() {
         pacman2left = new Sprite(g_images.pacman_photo2left),
         pacman3left = new Sprite(g_images.pacman_photo3left);
 
-    var level = g_images.level_walls;
+    var level = new Sprite(g_images.level_walls);
 
     g_animateSprites.push(pacman0);
     g_animateSprites.push(pacman1);
@@ -178,9 +176,9 @@ function preloadDone() {
     g_animateSpritesLeft.push(pacman2left);
     g_animateSpritesLeft.push(pacman3left);
 
-    g_levelimg = level;
+    g_levelimg.push(level);
 
-    console.log(g_levelimg);
+    console.log(g_levelimg[0]);
 
     entityManager.init();
     createInitialPacMan();
