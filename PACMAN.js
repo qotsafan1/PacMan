@@ -71,13 +71,13 @@ function updateSimulation(du) {
 
 // GAME-SPECIFIC DIAGNOSTICS
 
-var g_allowMixedActions = true;
 var g_useAveVel = true;
 var g_renderSpatialDebug = false;
+var g_useUglyRedWall = true;
 
-var KEY_MIXED   = keyCode('M');;
 var KEY_AVE_VEL = keyCode('V');
 var KEY_SPATIAL = keyCode('X');
+var KEY_REDWALL = keyCode('M');
 
 var KEY_HALT  = keyCode('H');
 var KEY_RESET = keyCode('R');
@@ -91,14 +91,11 @@ var KEY_K = keyCode('K');
 
 function processDiagnostics() {
 
-    if (eatKey(KEY_MIXED))
-        g_allowMixedActions = !g_allowMixedActions;
-
     if (eatKey(KEY_AVE_VEL)) g_useAveVel = !g_useAveVel;
 
     if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
 
-    
+    if (eatKey(KEY_REDWALL)) g_useUglyRedWall = !g_useUglyRedWall;    
 }
 
 
@@ -117,6 +114,7 @@ function processDiagnostics() {
 // GAME-SPECIFIC RENDERING
 
 function renderSimulation(ctx) {
+    if (g_useUglyRedWall) g_maze.render(ctx);
 
     entityManager.render(ctx);
 
@@ -142,7 +140,13 @@ function requestPreloads() {
         pacman_photo2left: "images/pacman2left.png",
         pacman_photo3left: "images/pacman3left.png",
 
-        level_walls : "images/walls.png"
+        level_walls : "images/walls.png",
+
+        pacman_dead0: "images/deadPacman0.png",
+        pacman_dead1: "images/deadPacman1.png",
+        pacman_dead2: "images/deadPacman2.png",
+        pacman_dead3: "images/deadPacman3.png",
+        pacman_dead4: "images/deadPacman4.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -152,6 +156,7 @@ var g_sprites = {};
 var g_animateSprites = [];
 var g_animateSpritesLeft = [];
 var g_levelimg = [];
+var g_deathSprites =[];
 
 function preloadDone() {
 
@@ -166,6 +171,12 @@ function preloadDone() {
 
     var level = new Sprite(g_images.level_walls);
 
+    var deadPacman0 = new Sprite(g_images.pacman_dead0),  
+        deadPacman1 = new Sprite(g_images.pacman_dead1),   
+        deadPacman2 = new Sprite(g_images.pacman_dead2),   
+        deadPacman3 = new Sprite(g_images.pacman_dead3),   
+        deadPacman4 = new Sprite(g_images.pacman_dead4);
+
     g_animateSprites.push(pacman0);
     g_animateSprites.push(pacman1);
     g_animateSprites.push(pacman2);
@@ -178,7 +189,11 @@ function preloadDone() {
 
     g_levelimg.push(level);
 
-    console.log(g_levelimg[0]);
+    g_deathSprites.push(deadPacman0);
+    g_deathSprites.push(deadPacman1);
+    g_deathSprites.push(deadPacman2);
+    g_deathSprites.push(deadPacman3);
+    g_deathSprites.push(deadPacman4);
 
     entityManager.init();
     createInitialPacMan();
