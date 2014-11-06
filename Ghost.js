@@ -40,12 +40,12 @@ Ghost.prototype.move = function (target, myTile) {
     var go = this.shortWay(target, myTile);
     if (!this.chosen && this.endOfTile(myTile)) {
         for (var i=0; i<go.length; ++i) {
-            console.log(go);
+            //console.log(go);
             if(this.canGoUp(myTile) && go[i]===0 && !this.velY>0) {
                 this.velX = 0;
                 this.velY = -this.speed;
                 this.centerx(myTile);
-                console.log("0")
+                //console.log("0")
                 this.chosen = true;
                 return;
             }
@@ -53,7 +53,7 @@ Ghost.prototype.move = function (target, myTile) {
                 this.velX = -this.speed;
                 this.velY = 0;
                 this.centery(myTile);
-                console.log("1")
+                //console.log("1")
                 this.chosen = true;
                 return;
             }
@@ -61,7 +61,7 @@ Ghost.prototype.move = function (target, myTile) {
                 this.velX = 0;
                 this.velY = this.speed;
                 this.centerx(myTile);
-                console.log("2")
+                //console.log("2")
                 this.chosen = true;
                 return;
             }
@@ -69,7 +69,7 @@ Ghost.prototype.move = function (target, myTile) {
                 this.velX = this.speed;
                 this.velY = 0;
                 this.centery(myTile);
-                console.log("3")
+                //console.log("3")
                 this.chosen = true;
                 return;
             }
@@ -126,25 +126,25 @@ Ghost.prototype.update = function (du) {
     else if(this.isNextTileWall(myTile) && this.endOfTile(myTile))
     {
         if(this.canGoUp(myTile) && this.velY===0) {
-            console.log("up");
+            //console.log("up");
             this.velY = -this.speed;
             this.velX = 0;
             this.centerx(myTile);
         }
         else if(this.canGoLeft(myTile) && this.velX===0) {
-            console.log("Left");
+            //console.log("Left");
             this.velX = -this.speed;
             this.velY = 0;
             this.centery(myTile);
         }
         else if(this.canGoDown(myTile) && this.velY===0) {
-            console.log("down");
+            //console.log("down");
             this.velY = this.speed;
             this.velX = 0;
             this.centerx(myTile);
         }
         else if(this.canGoRight(myTile) && this.velX===0) {
-            console.log("right");
+            //console.log("right");
             this.velX = this.speed;
             this.velY = 0;
             this.centery(myTile);
