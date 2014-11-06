@@ -97,12 +97,7 @@ function processDiagnostics() {
 
     if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
 
-    if (eatKey(KEY_REDWALL)) {
-        g_useUglyRedWall = !g_useUglyRedWall;
-        console.log('hallo');
-    }
-
-    
+    if (eatKey(KEY_REDWALL)) g_useUglyRedWall = !g_useUglyRedWall;    
 }
 
 

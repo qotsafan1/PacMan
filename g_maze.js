@@ -51,7 +51,7 @@ g_maze.returnTilePos = function (cx, cy) {
 };
 
 g_maze.isThereWall = function (tx, ty) {
-    return this.tiles[tx][ty];//returns 1 if there is a wall and 0 if the way is clear
+    return this.tiles[tx][ty];
 };
 
 g_maze.drawTile = function (ctx, x, y, style) {
@@ -71,6 +71,7 @@ g_maze.render = function (ctx) {
     }
 };
 
+//fixing tunnel that uses wrapparound
 g_maze.fixMaze = function () {
     g_maze.tiles[-1]=[];
     g_maze.tiles[-2]=[];
