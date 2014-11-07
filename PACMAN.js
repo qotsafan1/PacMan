@@ -73,10 +73,12 @@ function updateSimulation(du) {
 var g_useAveVel = true;
 var g_renderSpatialDebug = false;
 var g_useUglyRedWall = false;
+var g_scatterToggle = true;
 
 var KEY_AVE_VEL = keyCode('V');
 var KEY_SPATIAL = keyCode('X');
 var KEY_REDWALL = keyCode('M');
+var KEY_SCATTER = keyCode('N');
 
 var KEY_HALT  = keyCode('H');
 var KEY_RESET = keyCode('R');
@@ -89,6 +91,7 @@ var KEY_2 = keyCode('2');
 var KEY_K = keyCode('K');
 
 function processDiagnostics() {
+    if (eatKey(KEY_SCATTER)) g_scatterToggle = !g_scatterToggle;
 
     if (eatKey(KEY_AVE_VEL)) g_useAveVel = !g_useAveVel;
 

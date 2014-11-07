@@ -29,6 +29,7 @@ function PacMan(descr) {
     // Set normal drawing scale, and warp state off
     this._scale = 0.45;
     this.speed = 1.6;
+    this.turns = "right";
 };
 
 PacMan.prototype = new Entity();
@@ -46,8 +47,6 @@ PacMan.prototype.KEY_LEFT   = 'A'.charCodeAt(0);
 PacMan.prototype.KEY_RIGHT  = 'D'.charCodeAt(0);
 PacMan.prototype.KEY_KILL = 'I'.charCodeAt(0);
 
-PacMan.prototype.KEY_FIRE   = ' '.charCodeAt(0);
-
 // Initial, inheritable, default values
 PacMan.prototype.rotation = 0;
 PacMan.prototype.cx = 200;
@@ -56,12 +55,8 @@ PacMan.prototype.velX = 0;
 PacMan.prototype.velY = 0;
 PacMan.prototype.directionX = 1;
 PacMan.prototype.directionY = 1;
-PacMan.prototype.launchVel = 2;
-PacMan.prototype.numSubSteps = 1;
+
 PacMan.prototype.isDead = false;
-// HACKED-IN AUDIO (no preloading)
-PacMan.prototype.warpSound = new Audio(
-    "sounds/shipWarp.ogg");
 
 PacMan.prototype.move = function(du, tileP) {
     if(keys[this.KEY_KILL]){
@@ -83,7 +78,8 @@ PacMan.prototype.move = function(du, tileP) {
         //prevent pacman's "moonwalk"
         if(this.sprite === g_animateSprites[this.i]) this.rotation = -Math.PI/2;
         if(this.sprite === g_animateSpritesLeft[this.i]) this.rotation = Math.PI/2;
-        this.centerx(tileP);      
+        this.centerx(tileP);   
+        this.turns = "up";   
     }
     if(keys[this.KEY_DOWN] && this.canGoDown(tileP) && !this.isDead) {
         if(this.animationOn === false) this.animationOn = true;
@@ -96,6 +92,7 @@ PacMan.prototype.move = function(du, tileP) {
         if(this.sprite === g_animateSprites[this.i])this.rotation = Math.PI/2;
         if(this.sprite === g_animateSpritesLeft[this.i]) this.rotation = -Math.PI/2;
         this.centerx(tileP);
+        this.turns = "down"
     }
     if(keys[this.KEY_RIGHT] && this.canGoRight(tileP) && !this.isDead) {
         if(this.animationOn === false) this.animationOn = true;
@@ -106,6 +103,7 @@ PacMan.prototype.move = function(du, tileP) {
         }       
         this.rotation = 0;
         this.centery(tileP);
+        this.turns = "right";
     }
     if(keys[this.KEY_LEFT] && this.canGoLeft(tileP) && !this.isDead) {
         if(this.animationOn === false) this.animationOn = true;
@@ -116,6 +114,7 @@ PacMan.prototype.move = function(du, tileP) {
         }       
         this.rotation = 0;
         this.centery(tileP);
+        this.turns = "left";
     }
     this.wrapPosition();
     this.cx += this.velX*this.directionX*du;
@@ -184,7 +183,8 @@ PacMan.prototype.update = function (du) {
     else {
         spatialManager.register(this);
     }
-    g_maze.PacTile = this.tilePos();
+    g_pinky.PacTurns = this.turns;
+    g_blinky.PacTile = this.tilePos();
 };
 
 PacMan.prototype.getRadius = function () {

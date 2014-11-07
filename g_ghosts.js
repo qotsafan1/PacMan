@@ -15,10 +15,16 @@ var g_blinky = new Ghost({
 	cx : 224,
     cy : 232,
     scatterTile : [25,0],
-    targetTile : [25,0]
+    targetTile : [25,0],
+    currentTile : [25,0],
+    PacTile : [0,0]
 });
 
 g_blinky.findTargetTile = function() {
+	this.currentTile = this.tilePos();
+	if (!g_scatterToggle) {
+		return this.PacTile;
+	}
 	return this.scatterTile;
 };
 
@@ -35,10 +41,27 @@ var g_pinky = new Ghost({
 	cx : 224,
 	cy : 232,
 	scatterTile : [2,0],
-	targetTile : [2,0]
+	targetTile : [2,0],
+	PacTurns : "right"
 });
 
 g_pinky.findTargetTile = function() {
+	if (!g_scatterToggle) {
+		switch (this.PacTurns) {
+			case 'up':
+				return [g_blinky.PacTile[0],g_blinky.PacTile[1]-4];
+				break;
+			case "left":
+				return [g_blinky.PacTile[0]-4,g_blinky.PacTile[1]];
+				break;
+			case "down":
+				return [g_blinky.PacTile[0],g_blinky.PacTile[1]+4];
+				break;
+			case "right":
+				return [g_blinky.PacTile[0]+4,g_blinky.PacTile[1]];
+				break;
+		}
+	}
 	return this.scatterTile;
 };
 
@@ -59,6 +82,25 @@ var g_inky = new Ghost({
 });
 
 g_inky.findTargetTile = function() {
+	if (!g_scatterToggle) {
+		var tile = [0,0];
+		switch (g_pinky.PacTurns) {
+			case 'up':
+				tile = [g_blinky.PacTile[0],g_blinky.PacTile[1]-2];
+				break;
+			case "left":
+				tile = [g_blinky.PacTile[0]-2,g_blinky.PacTile[1]];
+				break;
+			case "down":
+				tile = [g_blinky.PacTile[0],g_blinky.PacTile[1]+2];
+				break;
+			case "right":
+				tile = [g_blinky.PacTile[0]+2,g_blinky.PacTile[1]];
+				break;
+		}
+		var dist = [(g_blinky.currentTile[0]-tile[0])*2, (g_blinky.currentTile[1]-tile[1])*2];
+		return [g_blinky.currentTile[0]-dist[0], g_blinky.currentTile[1]-dist[1]];
+	}
 	return this.scatterTile;
 };
 
@@ -75,10 +117,19 @@ var g_clyde = new Ghost({
 	cx : 224,
     cy : 232,
     scatterTile : [0,35],
-    targetTile : [0,35]
+    targetTile : [0,35],
+    currentTile : [0,35]
 });
 
 g_clyde.findTargetTile = function() {
+	this.currentTile = this.tilePos();
+	if(!g_scatterToggle) {
+		var dist = Math.sqrt(util.square(this.currentTile[0]-g_blinky.PacTile[0])+ 
+			util.square(this.currentTile[1]-g_blinky.PacTile[1]));
+		if (Math.round(dist)>8) {return g_blinky.PacTile;}
+		else {return this.scatterTile;}
+
+	}
 	return this.scatterTile;
 };
 
