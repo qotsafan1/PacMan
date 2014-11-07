@@ -77,13 +77,13 @@ Ghost.prototype.move = function (target, myTile) {
 Ghost.prototype.shortWay = function (targ, me) {
     var whereGo = [];
     // distance from tile that is up
-    whereGo[0] = util.wrappedDistSq(targ[0],targ[1],me[0],me[1]-1,g_canvas.width, g_canvas.height);
+    whereGo[0] = util.wrappedDistSq(targ[0],targ[1],me[0],me[1]-1,g_canvas.width, 0);
     // distance from tile that is left
-    whereGo[1] = util.wrappedDistSq(targ[0],targ[1],me[0]-1,me[1],g_canvas.width, g_canvas.height);
+    whereGo[1] = util.wrappedDistSq(targ[0],targ[1],me[0]-1,me[1],g_canvas.width, 0);
     // distance from tile that is down
-    whereGo[2] = util.wrappedDistSq(targ[0],targ[1],me[0],me[1]+1,g_canvas.width, g_canvas.height);
+    whereGo[2] = util.wrappedDistSq(targ[0],targ[1],me[0],me[1]+1,g_canvas.width, 0);
     // distance from tile that is right
-    whereGo[3] = util.wrappedDistSq(targ[0],targ[1],me[0]+1,me[1],g_canvas.width, g_canvas.height);
+    whereGo[3] = util.wrappedDistSq(targ[0],targ[1],me[0]+1,me[1],g_canvas.width, 0);
     // return an array of indices in order decreasing order, if equal in order up>left>down>right
     return util.indexInOrder(whereGo);
 };
@@ -117,7 +117,7 @@ Ghost.prototype.isNextTileWall = function (myTile) {
 };
 
 Ghost.prototype.update = function (du) {
-    //this.targetTile = g_maze.PacTile;
+    this.targetTile = g_maze.PacTile;
     var myTile = this.tilePos();
     var theTile = g_maze.tiles[myTile[0]][myTile[1]];
     if (theTile!==2 && theTile!==3) this.chosen = false;
@@ -159,7 +159,7 @@ Ghost.prototype.render = function () {
     if(this.name==="Blinky") {
         ctx.fillStyle = "red";
         util.fillCircle(ctx, this.cx, this.cy, 10);
-        util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, "red");
+        //util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, "red");
     } 
 
     ctx.fillStyle = oldstyle;
