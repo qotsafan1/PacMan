@@ -29,14 +29,6 @@ function createInitialPacMan() {
     });
 
     entityManager.makeLevel();
-
-    entityManager.generateGhost({
-        cx : 224,
-        cy : 232,
-        name : "Blinky",
-        targetTile : [25,0]
-    });
-    
 }
 
 // ======================

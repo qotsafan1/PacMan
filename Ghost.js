@@ -116,9 +116,13 @@ Ghost.prototype.isNextTileWall = function (myTile) {
     return true;
 };
 
+Ghost.prototype.findTargetTile = function(myTile) {
+    return g_maze.PacTile;
+};
+
 Ghost.prototype.update = function (du) {
-    this.targetTile = g_maze.PacTile;
     var myTile = this.tilePos();
+    this.targetTile = this.findTargetTile(myTile);
     var theTile = g_maze.tiles[myTile[0]][myTile[1]];
     if (theTile!==2 && theTile!==3) this.chosen = false;
     if(g_maze.tiles[myTile[0]][myTile[1]]===2 || g_maze.tiles[myTile[0]][myTile[1]]===3) {
@@ -155,12 +159,5 @@ Ghost.prototype.update = function (du) {
 };
 
 Ghost.prototype.render = function () {
-    var oldstyle = ctx.fillStyle;
-    if(this.name==="Blinky") {
-        ctx.fillStyle = "red";
-        util.fillCircle(ctx, this.cx, this.cy, 10);
-        //util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, "red");
-    } 
 
-    ctx.fillStyle = oldstyle;
 };

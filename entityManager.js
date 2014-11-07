@@ -64,7 +64,10 @@ deferredSetup : function () {
 },
 
 init: function() {
-    
+    this._ghosts.push(g_blinky);
+    this._ghosts.push(g_pinky);
+    this._ghosts.push(g_inky);
+    this._ghosts.push(g_clyde);
 },
 
 update: function(du) {
