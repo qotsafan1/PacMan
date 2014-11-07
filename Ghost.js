@@ -26,7 +26,7 @@ function Ghost(descr) {
     this.i = 0;
     this.sprite = this.sprite || g_animateSprites[this.i];
     */
-    // Set normal drawing scale, and warp state off
+    // Set normal drawing scale
     this._scale = 0.45;
     this.speed = 1;
     this.velX = this.speed;
@@ -40,36 +40,32 @@ Ghost.prototype.move = function (target, myTile) {
     var go = this.shortWay(target, myTile);
     if (!this.chosen && this.endOfTile(myTile)) {
         for (var i=0; i<go.length; ++i) {
-            //console.log(go);
-            if(this.canGoUp(myTile) && go[i]===0 && !this.velY>0) {
+            if(this.canGoUp(myTile) && go[i]===0 && !(this.velY>0) && 
+                g_maze.tiles[myTile[0]][myTile[1]]!==3) {
                 this.velX = 0;
                 this.velY = -this.speed;
                 this.centerx(myTile);
-                //console.log("0")
                 this.chosen = true;
                 return;
             }
-            if(this.canGoLeft(myTile) && go[i]===1 && !this.velX>0) {
+            if(this.canGoLeft(myTile) && go[i]===1 && !(this.velX>0)) {
                 this.velX = -this.speed;
                 this.velY = 0;
                 this.centery(myTile);
-                //console.log("1")
                 this.chosen = true;
                 return;
             }
-            if(this.canGoDown(myTile) && go[i]===2 && !this.velY<0) {
+            if(this.canGoDown(myTile) && go[i]===2 && !(this.velY<0)) {
                 this.velX = 0;
                 this.velY = this.speed;
                 this.centerx(myTile);
-                //console.log("2")
                 this.chosen = true;
                 return;
             }
-            if(this.canGoRight(myTile) && go[i]===3 && !this.velX>0) {
+            if(this.canGoRight(myTile) && go[i]===3 && !(this.velX<0)) {
                 this.velX = this.speed;
                 this.velY = 0;
                 this.centery(myTile);
-                //console.log("3")
                 this.chosen = true;
                 return;
             }
@@ -80,10 +76,15 @@ Ghost.prototype.move = function (target, myTile) {
 //0:up, 1:left, 2:down and 3:right
 Ghost.prototype.shortWay = function (targ, me) {
     var whereGo = [];
-    whereGo[0] = util.square(targ[0]-me[0]) + util.square(targ[1]-(me[1]-1));
-    whereGo[1] = util.square(targ[0]-me[0]-1) + util.square(targ[1]- me[1]);
-    whereGo[2] = util.square(targ[0]-me[0]) + util.square(targ[1]- me[1]+1);
-    whereGo[3] = util.square(targ[0]-me[0]+1) + util.square(targ[1]- me[1]);
+    // distance from tile that is up
+    whereGo[0] = util.wrappedDistSq(targ[0],targ[1],me[0],me[1]-1,g_canvas.width, g_canvas.height);
+    // distance from tile that is left
+    whereGo[1] = util.wrappedDistSq(targ[0],targ[1],me[0]-1,me[1],g_canvas.width, g_canvas.height);
+    // distance from tile that is down
+    whereGo[2] = util.wrappedDistSq(targ[0],targ[1],me[0],me[1]+1,g_canvas.width, g_canvas.height);
+    // distance from tile that is right
+    whereGo[3] = util.wrappedDistSq(targ[0],targ[1],me[0]+1,me[1],g_canvas.width, g_canvas.height);
+    // return an array of indices in order decreasing order, if equal in order up>left>down>right
     return util.indexInOrder(whereGo);
 };
 
@@ -123,28 +124,24 @@ Ghost.prototype.update = function (du) {
     if(g_maze.tiles[myTile[0]][myTile[1]]===2 || g_maze.tiles[myTile[0]][myTile[1]]===3) {
         this.move(this.targetTile, myTile);
     }
-    else if(this.isNextTileWall(myTile) && this.endOfTile(myTile))
+    else if(this.isNextTileWall(myTile) && this.endOfTile(myTile) && !this.cosen)
     {
         if(this.canGoUp(myTile) && this.velY===0) {
-            //console.log("up");
             this.velY = -this.speed;
             this.velX = 0;
             this.centerx(myTile);
         }
         else if(this.canGoLeft(myTile) && this.velX===0) {
-            //console.log("Left");
             this.velX = -this.speed;
             this.velY = 0;
             this.centery(myTile);
         }
         else if(this.canGoDown(myTile) && this.velY===0) {
-            //console.log("down");
             this.velY = this.speed;
             this.velX = 0;
             this.centerx(myTile);
         }
         else if(this.canGoRight(myTile) && this.velX===0) {
-            //console.log("right");
             this.velX = this.speed;
             this.velY = 0;
             this.centery(myTile);
@@ -162,6 +159,8 @@ Ghost.prototype.render = function () {
     if(this.name==="Blinky") {
         ctx.fillStyle = "red";
         util.fillCircle(ctx, this.cx, this.cy, 10);
+        util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, "red");
     } 
+
     ctx.fillStyle = oldstyle;
 };
