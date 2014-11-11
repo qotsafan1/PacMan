@@ -24,9 +24,10 @@ var entityManager = {
 
 // "PRIVATE" DATA
 
-_pacMan  : [],
-_level : [],
+_pacMan : [],
+_level  : [],
 _ghosts : [],
+_dots   : [],
 
 // "PRIVATE" METHODS
 
@@ -36,6 +37,13 @@ generatePacMan : function(descr) {
 
 generateGhost : function(descr) {
     this._ghosts.push(new Ghost(descr));
+},
+
+generateDot : function(cx, cy) {
+    this._dots.push(new Dot({
+        cx : cx,
+        cy : cy
+    }));
 },
 
 makeLevel : function(){
@@ -60,7 +68,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._pacMan, this._level, this._ghosts];
+    this._categories = [this._pacMan, this._level, this._ghosts, this._dots];
 },
 
 init: function() {
@@ -68,6 +76,21 @@ init: function() {
     this._ghosts.push(g_pinky);
     this._ghosts.push(g_inky);
     this._ghosts.push(g_clyde);
+
+    for(var i=0; i < g_maze.tiles.length; ++i) {
+        for(var j=0; j < g_maze.tiles[i].length; ++j) {
+            if(g_maze.tiles[i][j] === 0) {
+                this.generateDot(8+i*16, 8+j*16)
+                console.log(g_maze.tiles[i][j]);    
+            }
+            
+
+        }
+    }
+    //console.log(g_maze.tiles);
+    console.log("g_maze");
+        
+
 },
 
 update: function(du) {
