@@ -77,7 +77,7 @@ Entity.prototype.canGoUp = function (tileP) {
 
 Entity.prototype.canGoDown = function (tileP) {
     return (1!==g_maze.isThereWall(tileP[0], tileP[1]+1) &&
-        4!==g_maze.isThereWall(tileP[0], tileP[1]+1));
+        11!==g_maze.isThereWall(tileP[0], tileP[1]+1));
 };
 
 Entity.prototype.tilePos = function () {

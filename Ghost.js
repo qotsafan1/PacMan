@@ -41,7 +41,8 @@ Ghost.prototype.move = function (target, myTile) {
     if (!this.chosen && this.endOfTile(myTile)) {
         for (var i=0; i<go.length; ++i) {
             if(this.canGoUp(myTile) && go[i]===0 && !(this.velY>0) && 
-                g_maze.tiles[myTile[0]][myTile[1]]!==3) {
+                g_maze.tiles[myTile[0]][myTile[1]]!==3 && 
+                g_maze.tiles[myTile[0]][myTile[1]]!==5) {
                 this.velX = 0;
                 this.velY = -this.speed;
                 this.centerx(myTile);
@@ -124,8 +125,9 @@ Ghost.prototype.update = function (du) {
     var myTile = this.tilePos();
     this.targetTile = this.findTargetTile(myTile);
     var theTile = g_maze.tiles[myTile[0]][myTile[1]];
-    if (theTile!==2 && theTile!==3) this.chosen = false;
-    if(g_maze.tiles[myTile[0]][myTile[1]]===2 || g_maze.tiles[myTile[0]][myTile[1]]===3) {
+    if (theTile!==2 && theTile!==3 && theTile!==4 && theTile!==5) this.chosen = false;
+    if(g_maze.tiles[myTile[0]][myTile[1]]===2 || g_maze.tiles[myTile[0]][myTile[1]]===3 || 
+        g_maze.tiles[myTile[0]][myTile[1]]===4 || g_maze.tiles[myTile[0]][myTile[1]]===5) {
         this.move(this.targetTile, myTile);
     }
     else if(this.isNextTileWall(myTile) && this.endOfTile(myTile) && !this.cosen)
