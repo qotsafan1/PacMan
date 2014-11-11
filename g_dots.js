@@ -10,7 +10,7 @@ Dot.prototype.cx = 0;
 Dot.prototype.cy = 0;
 
 Dot.prototype.update = function(du) {
-	//console.log("hello");
+	//console.log(entityManager._pacMan[0])
 };
 
 Dot.prototype.render = function(ctx) {

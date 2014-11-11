@@ -23,10 +23,10 @@ var g_ctx = g_canvas.getContext("2d");
 // ====================
 function createInitialPacMan() {
 
-    entityManager.generatePacMan({
-        cx : 224,
-        cy : 424
-    });
+    //entityManager.generatePacMan({
+      //  cx : 224,
+     //   cy : 424
+    //});
 
     entityManager.makeLevel();
 }

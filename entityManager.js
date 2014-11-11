@@ -31,8 +31,11 @@ _dots   : [],
 
 // "PRIVATE" METHODS
 
-generatePacMan : function(descr) {
-    this._pacMan.push(new PacMan(descr));
+generatePacMan : function(cx, cy) {
+    this._pacMan.push(new PacMan({
+        cx : cx,
+        cy : cy
+    }));
 },
 
 generateGhost : function(descr) {
@@ -72,6 +75,7 @@ deferredSetup : function () {
 },
 
 init: function() {
+    this.generatePacMan(224,424);
     this._ghosts.push(g_blinky);
     this._ghosts.push(g_pinky);
     this._ghosts.push(g_inky);
@@ -81,14 +85,22 @@ init: function() {
         for(var j=0; j < g_maze.tiles[i].length; ++j) {
             if(g_maze.tiles[i][j] === 0) {
                 this.generateDot(8+i*16, 8+j*16)
-                console.log(g_maze.tiles[i][j]);    
+                 
+            }
+            if(g_maze.tiles[i][j] === 2) {
+                this.generateDot(8+i*16, 8+j*16)
+                 
+            }
+            if(g_maze.tiles[i][j] === 3) {
+                this.generateDot(8+i*16, 8+j*16)
+                 
             }
             
 
         }
     }
     //console.log(g_maze.tiles);
-    console.log("g_maze");
+    console.log(this._pacMan[0].cx);
         
 
 },
