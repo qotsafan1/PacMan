@@ -29,7 +29,7 @@ function Ghost(descr) {
     // Set normal drawing scale
     this._scale = 0.45;
     this.speed = 1;
-    this.velX = this.speed;
+    this.velX = -this.speed;
     this.velY = 0;
     this.chosen = false;
 };
