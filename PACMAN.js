@@ -17,7 +17,6 @@ var g_ctx = g_canvas.getContext("2d");
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
 */
 
-
 // ====================
 // CREATE PAC-MAN
 // ====================
@@ -130,30 +129,34 @@ function renderSimulation(ctx) {
 
 var g_images = {};
 
+
 function requestPreloads() {
 
     var requiredImages = {
-        pacman_photo0: "images/pacman0.png",
-        pacman_photo1: "images/pacman1.png",
-        pacman_photo2: "images/pacman2.png",
-        pacman_photo3: "images/pacman3.png",
-        pacman_photo0left: "images/pacman0left.png",
-        pacman_photo1left: "images/pacman1left.png",
-        pacman_photo2left: "images/pacman2left.png",
-        pacman_photo3left: "images/pacman3left.png",
-
+        
         level_walls : "images/walls.png",
 
-        pacman_dead0: "images/deadPacman0.png",
-        pacman_dead1: "images/deadPacman1.png",
-        pacman_dead2: "images/deadPacman2.png",
-        pacman_dead3: "images/deadPacman3.png",
-        pacman_dead4: "images/deadPacman4.png"
+        therealone: "images/pacmanRight.png",
+        therealoneLeft: "images/pacmanLeft.png",
+        deadPacman : "images/deadPacMan.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
 }
+//function to create spriteSheet, takes in array to store them, image and 
+//number of colums and rows to split the image up to.
+function createSpriteSheet(spriteArray,image,numCol,numRow){
+    var imgHeight = image.height;
+    var imgWidth = image.width;
+    var celWidth = imgWidth/numCol;
+    var celHeight = imgHeight/numRow;
 
+    for(var row = 0; row < numRow;++row){
+        for(var col = 0; col < numCol; ++col){
+            spriteArray.push(new Sprite(image,col*celWidth,row*celHeight,celWidth,celHeight));
+        }
+    }
+}
 var g_sprites = {};
 var g_animateSprites = [];
 var g_animateSpritesLeft = [];
@@ -161,42 +164,11 @@ var g_levelimg = [];
 var g_deathSprites =[];
 
 function preloadDone() {
-
-    var pacman0  = new Sprite(g_images.pacman_photo0),
-        pacman1  = new Sprite(g_images.pacman_photo1),
-        pacman2  = new Sprite(g_images.pacman_photo2),
-        pacman3  = new Sprite(g_images.pacman_photo3),
-        pacman0left = new Sprite(g_images.pacman_photo0left),
-        pacman1left = new Sprite(g_images.pacman_photo1left),
-        pacman2left = new Sprite(g_images.pacman_photo2left),
-        pacman3left = new Sprite(g_images.pacman_photo3left);
-
-    var level = new Sprite(g_images.level_walls);
-
-    var deadPacman0 = new Sprite(g_images.pacman_dead0),  
-        deadPacman1 = new Sprite(g_images.pacman_dead1),   
-        deadPacman2 = new Sprite(g_images.pacman_dead2),   
-        deadPacman3 = new Sprite(g_images.pacman_dead3),   
-        deadPacman4 = new Sprite(g_images.pacman_dead4);
-
-    g_animateSprites.push(pacman0);
-    g_animateSprites.push(pacman1);
-    g_animateSprites.push(pacman2);
-    g_animateSprites.push(pacman3);
-
-    g_animateSpritesLeft.push(pacman0left);
-    g_animateSpritesLeft.push(pacman1left);
-    g_animateSpritesLeft.push(pacman2left);
-    g_animateSpritesLeft.push(pacman3left);
-
+    createSpriteSheet(g_animateSprites,g_images.therealone,2,2);
+    createSpriteSheet(g_animateSpritesLeft,g_images.therealoneLeft,2,2);
+    createSpriteSheet(g_deathSprites,g_images.deadPacman,2,3);
+    var level = new Sprite(g_images.level_walls,0,0,g_images.level_walls.width,g_images.level_walls.height);
     g_levelimg.push(level);
-
-    g_deathSprites.push(deadPacman0);
-    g_deathSprites.push(deadPacman1);
-    g_deathSprites.push(deadPacman2);
-    g_deathSprites.push(deadPacman3);
-    g_deathSprites.push(deadPacman4);
-
     entityManager.init();
     createInitialPacMan();
 
