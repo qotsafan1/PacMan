@@ -23,6 +23,7 @@ function handleMouse(evt) {
     var button = evt.buttons === undefined ? evt.which : evt.buttons;
     if (!button) return;
     console.log(g_maze.returnTilePos(g_mouseX,g_mouseY));
+    console.log(Math.floor(util.randRange(0,4)));
 }
 
 // Handle "down" and "move" events the same way.

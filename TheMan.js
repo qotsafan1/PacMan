@@ -160,6 +160,7 @@ PacMan.prototype.eatDot = function(){
     for(var i=0; i<fruitEntity.length;i++){
         if((fruitEntity[i].cx > this.cx-this.getRadius() && fruitEntity[i].cx < this.cx +this.getRadius()) && (fruitEntity[i].cy > this.cy-this.getRadius() && fruitEntity[i].cy < this.cy +this.getRadius())) {
                 fruitEntity.splice(i,1);
+                this.makeGhostsScared();
         }
     }
 
@@ -183,7 +184,16 @@ PacMan.prototype.animate = function(){
         this.counter++;
         if(this.counter === 30) this.counter = 0;
         }    
-    };
+};
+
+// tell ghost to be scared because now the TheMan is in the house took the big pill
+PacMan.prototype.makeGhostsScared= function() {
+    g_blinky.scared = true;
+    g_pinky.scared = true;
+    g_inky.scared = true;
+    g_clyde.scared = true;
+    console.log("is this working!");
+};
 
 PacMan.prototype.update = function (du) {
     var tileP =this.tilePos();

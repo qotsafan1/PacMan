@@ -32,6 +32,7 @@ function Ghost(descr) {
     this.velX = -this.speed;
     this.velY = 0;
     this.chosen = false;
+    this.scared = false;
 };
 
 Ghost.prototype = new Entity();
@@ -89,6 +90,7 @@ Ghost.prototype.shortWay = function (targ, me) {
     return util.indexInOrder(whereGo);
 };
 
+
 Ghost.prototype.endOfTile = function (myTile) {
     var calcx = (this.cx/g_maze.tWidth-myTile[0]);
     var calcy = (this.cy/g_maze.tHeight-myTile[1]);
@@ -117,15 +119,10 @@ Ghost.prototype.isNextTileWall = function (myTile) {
     return true;
 };
 
-Ghost.prototype.findTargetTile = function(myTile) {
-    return g_maze.PacTile;
-};
-
-Ghost.prototype.update = function (du) {
-    var myTile = this.tilePos();
+Ghost.prototype.makingDecisions = function(theTile, myTile) {
     this.targetTile = this.findTargetTile(myTile);
-    var theTile = g_maze.tiles[myTile[0]][myTile[1]];
     if (theTile!==2 && theTile!==3 && theTile!==4 && theTile!==5) this.chosen = false;
+
     if(g_maze.tiles[myTile[0]][myTile[1]]===2 || g_maze.tiles[myTile[0]][myTile[1]]===3 || 
         g_maze.tiles[myTile[0]][myTile[1]]===4 || g_maze.tiles[myTile[0]][myTile[1]]===5) {
         this.move(this.targetTile, myTile);
@@ -154,12 +151,30 @@ Ghost.prototype.update = function (du) {
         }
 
     }
+};
+
+Ghost.prototype.findTargetTile = function(myTile) {
+    return g_blinky.PacTile;
+};
+
+Ghost.prototype.update = function (du) {
+    var myTile = this.tilePos();
+    var theTile = g_maze.tiles[myTile[0]][myTile[1]];
+    
+    this.makingDecisions(theTile, myTile);
+
     this.wrapPosition();
     this.cx += this.velX*du;
     this.cy += this.velY*du;
 
 };
 
-Ghost.prototype.render = function () {
-
+Ghost.prototype.render = function (ctx) {
+    if(!this.scared) this.drawHealthyGhost(ctx);
+    else {
+        var oldstyle = ctx.fillStyle;
+        ctx.fillStyle = 'darkblue';
+        util.fillCircle(ctx, this.cx, this.cy, 10);
+        ctx.fillStyle = oldstyle;
+    }
 };

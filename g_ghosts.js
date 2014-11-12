@@ -28,7 +28,7 @@ g_blinky.findTargetTile = function() {
 	return this.scatterTile;
 };
 
-g_blinky.render = function(ctx) {
+g_blinky.drawHealthyGhost = function(ctx) {
 	var oldstyle = ctx.fillStyle;
     ctx.fillStyle = "red";
     util.fillCircle(ctx, this.cx, this.cy, 10);
@@ -65,7 +65,7 @@ g_pinky.findTargetTile = function() {
 	return this.scatterTile;
 };
 
-g_pinky.render = function(ctx) {
+g_pinky.drawHealthyGhost = function(ctx) {
 	var oldstyle = ctx.fillStyle;
 	ctx.fillStyle = "pink";
 	util.fillCircle(ctx, this.cx, this.cy, 10);
@@ -104,7 +104,7 @@ g_inky.findTargetTile = function() {
 	return this.scatterTile;
 };
 
-g_inky.render = function(ctx) {
+g_inky.drawHealthyGhost = function(ctx) {
 	var oldstyle = ctx.fillStyle;
 	ctx.fillStyle = '#00FFFF';
 	util.fillCircle(ctx, this.cx, this.cy, 10);
@@ -133,7 +133,7 @@ g_clyde.findTargetTile = function() {
 	return this.scatterTile;
 };
 
-g_clyde.render = function(ctx) {
+g_clyde.drawHealthyGhost = function(ctx) {
 	var oldstyle = ctx.fillStyle;
 	ctx.fillStyle = '#DAA520';
 	util.fillCircle(ctx, this.cx, this.cy, 10);
