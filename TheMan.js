@@ -151,6 +151,19 @@ PacMan.prototype.animateDeath = function(){
     }
 };
 
+PacMan.prototype.eatDot = function(){
+    var dotEntity = entityManager._dots;
+    //console.log(this.cx + "  " + dotEntity[1].cx);
+
+
+
+    for(var i=0; i<dotEntity.length;i++){
+        if((dotEntity[i].cx > this.cx-2 && dotEntity[i].cx < this.cx +2) && (dotEntity[i].cy > this.cy-2 && dotEntity[i].cy < this.cy +2)) {
+            dotEntity.splice(i,1);
+        }
+    }   
+}
+
 PacMan.prototype.animate = function(){
     if(this.animationOn){
         if(this.counter%5 === 0 && this.counter <= 10)this.i++;
@@ -171,6 +184,8 @@ PacMan.prototype.update = function (du) {
     spatialManager.unregister(this);
     if(this._isDeadNow) return entityManager.KILL_ME_NOW;
  
+    this.eatDot();
+
     this.move(du, tileP);
     if(this.isNextTileWall(tileP) && this.endOfTile(tileP))
     {

@@ -11,6 +11,8 @@ Dot.prototype.cy = 0;
 
 Dot.prototype.update = function(du) {
 	//console.log(entityManager._pacMan[0])
+	
+	
 };
 
 Dot.prototype.render = function(ctx) {

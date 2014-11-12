@@ -83,19 +83,9 @@ init: function() {
 
     for(var i=0; i < g_maze.tiles.length; ++i) {
         for(var j=0; j < g_maze.tiles[i].length; ++j) {
-            if(g_maze.tiles[i][j] === 0) {
+            if(g_maze.tiles[i][j] === 0 || g_maze.tiles[i][j] === 2 || g_maze.tiles[i][j] === 3) {
                 this.generateDot(8+i*16, 8+j*16)
-                 
             }
-            if(g_maze.tiles[i][j] === 2) {
-                this.generateDot(8+i*16, 8+j*16)
-                 
-            }
-            if(g_maze.tiles[i][j] === 3) {
-                this.generateDot(8+i*16, 8+j*16)
-                 
-            }
-            
 
         }
     }
