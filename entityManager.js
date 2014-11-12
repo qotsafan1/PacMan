@@ -28,6 +28,7 @@ _pacMan : [],
 _level  : [],
 _ghosts : [],
 _dots   : [],
+_fruits  : [],
 
 // "PRIVATE" METHODS
 
@@ -44,6 +45,13 @@ generateGhost : function(descr) {
 
 generateDot : function(cx, cy) {
     this._dots.push(new Dot({
+        cx : cx,
+        cy : cy
+    }));
+},
+
+generateFruit : function(cx, cy) {
+    this._fruits.push(new Fruit({
         cx : cx,
         cy : cy
     }));
@@ -71,7 +79,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._pacMan, this._level, this._ghosts, this._dots];
+    this._categories = [this._pacMan, this._level, this._ghosts, this._dots, this._fruits];
 },
 
 init: function() {
@@ -84,13 +92,14 @@ init: function() {
     for(var i=0; i < g_maze.tiles.length; ++i) {
         for(var j=0; j < g_maze.tiles[i].length; ++j) {
             if(g_maze.tiles[i][j] === 0 || g_maze.tiles[i][j] === 2 || g_maze.tiles[i][j] === 3) {
-                this.generateDot(8+i*16, 8+j*16)
+                this.generateDot(8+i*16, 8+j*16);
+            }
+            if(g_maze.tiles[i][j] === 8) {
+                this.generateFruit(8+i*16, 8+j*16);
             }
 
         }
     }
-    //console.log(g_maze.tiles);
-    console.log(this._pacMan[0].cx);
         
 
 },
