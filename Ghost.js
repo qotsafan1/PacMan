@@ -33,12 +33,17 @@ function Ghost(descr) {
     this.velY = 0;
     this.chosen = false;
     this.scared = false;
+    this.currentTile = [0,0];
 };
 
 Ghost.prototype = new Entity();
 
 Ghost.prototype.move = function (target, myTile) {
-    var go = this.shortWay(target, myTile);
+    var go;
+    if (this.scared) go = this.panicDecision();
+    else go = this.shortWay(target, myTile);
+
+
     if (!this.chosen && this.endOfTile(myTile)) {
         for (var i=0; i<go.length; ++i) {
             if(this.canGoUp(myTile) && go[i]===0 && !(this.velY>0) && 
@@ -75,6 +80,18 @@ Ghost.prototype.move = function (target, myTile) {
     } 
 };
 
+// deathly afraid ghosts don´t make the best decisions
+Ghost.prototype.panicDecision = function() {
+    var rand = Math.floor(util.randRange(1,4));
+    var arr = [rand];
+    for (var i = 0; i<4; ++i) {
+        rand--;
+        if (rand===-1) rand = 3;
+        arr.push(rand);
+    }
+    return arr;
+};
+
 //0:up, 1:left, 2:down and 3:right
 Ghost.prototype.shortWay = function (targ, me) {
     var whereGo = [];
@@ -90,7 +107,7 @@ Ghost.prototype.shortWay = function (targ, me) {
     return util.indexInOrder(whereGo);
 };
 
-
+// checks if the next move is over the center of the tile
 Ghost.prototype.endOfTile = function (myTile) {
     var calcx = (this.cx/g_maze.tWidth-myTile[0]);
     var calcy = (this.cy/g_maze.tHeight-myTile[1]);
@@ -109,6 +126,7 @@ Ghost.prototype.endOfTile = function (myTile) {
     }
 };
 
+// checks if nest tile in your direction is a wall
 Ghost.prototype.isNextTileWall = function (myTile) {
     var cx = this.cx, cy = this.cy,
         xVel = this.velX, yVel = this.velY;
@@ -121,13 +139,13 @@ Ghost.prototype.isNextTileWall = function (myTile) {
 
 Ghost.prototype.makingDecisions = function(theTile, myTile) {
     this.targetTile = this.findTargetTile(myTile);
-    if (theTile!==2 && theTile!==3 && theTile!==4 && theTile!==5) this.chosen = false;
 
-    if(g_maze.tiles[myTile[0]][myTile[1]]===2 || g_maze.tiles[myTile[0]][myTile[1]]===3 || 
-        g_maze.tiles[myTile[0]][myTile[1]]===4 || g_maze.tiles[myTile[0]][myTile[1]]===5) {
-        this.move(this.targetTile, myTile);
+    // here ghosts make decicions when they land on an intersection
+    if(g_maze.isGhostDecTile(theTile)) {
+        return this.move(this.targetTile, myTile);
     }
-    else if(this.isNextTileWall(myTile) && this.endOfTile(myTile) && !this.cosen)
+    // here ghosts turn before crashing into a wall
+    else
     {
         if(this.canGoUp(myTile) && this.velY===0) {
             this.velY = -this.speed;
@@ -153,20 +171,27 @@ Ghost.prototype.makingDecisions = function(theTile, myTile) {
     }
 };
 
-Ghost.prototype.findTargetTile = function(myTile) {
-    return g_blinky.PacTile;
+Ghost.prototype.fright = function() {
+    this.scared = true;
+    this.velY *=-1;
+    this.velX *=-1;
 };
 
 Ghost.prototype.update = function (du) {
-    var myTile = this.tilePos();
-    var theTile = g_maze.tiles[myTile[0]][myTile[1]];
+    var endTile = this.endOfTile(this.currentTile);
+    var theTile = g_maze.tiles[this.currentTile[0]][this.currentTile[1]];
     
-    this.makingDecisions(theTile, myTile);
+    if (!g_maze.isGhostDecTile(theTile)) this.chosen = false;
+
+    if(endTile && (g_maze.isGhostDecTile(theTile) || this.isNextTileWall(this.currentTile))) {
+        // if the ghost can´t just keep going and needs to take a decision
+        this.makingDecisions(theTile, this.currentTile);
+    }
 
     this.wrapPosition();
     this.cx += this.velX*du;
     this.cy += this.velY*du;
-
+    this.currentTile = this.tilePos();
 };
 
 Ghost.prototype.render = function (ctx) {

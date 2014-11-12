@@ -125,6 +125,7 @@ update: function(du) {
             }
         }
     }
+    g_maze.update(du);
     
 },
 

@@ -41,7 +41,8 @@ var g_maze = {
             [9,9,9,1,0,0,8,0,2,0,0,0,1,1,1,1,1,9,1,1,1,1,1,0,0,0,8,1,1,0,0,0,0,1,9,9],
             [9,9,9,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9,9]],
     tHeight : 16,
-    tWidth : 16
+    tWidth : 16,
+    scaredTimer : 0
 };
 
 g_maze.returnTilePos = function (cx, cy) {
@@ -54,6 +55,10 @@ g_maze.isThereWall = function (tx, ty) {
     return this.tiles[tx][ty];
 };
 
+g_maze.isGhostDecTile = function (num) {
+    return (num===2 || num===3 || num===4 || num===5);
+};
+
 g_maze.drawTile = function (ctx, x, y, style) {
     var oldStyle = ctx.strokeStyle;
     ctx.fillStyle = style;
@@ -61,13 +66,24 @@ g_maze.drawTile = function (ctx, x, y, style) {
     ctx.strokeStyle = oldStyle;
 };
 
+g_maze.update = function(du) {
+    if (g_blinky.scared || g_pinky.scared || g_inky.scared || g_clyde.scared) {
+        if (this.scaredTimer>6) { 
+            this.scaredTimer=0;
+            this.stopBeingScared();
+            return;
+        }
+        this.scaredTimer += du/SECS_TO_NOMINALS;
+    }
+};
+
 g_maze.render = function (ctx) {
     if (g_useUglyRedWall) {
-        var styles = ["black", "red", "green", "yellow", "white"];
+        var styles = ["black", "red", "green", "yellow", "green", "yellow"];
         for (var i=0; i<this.tiles.length; ++i) {
             var row = this.tiles[i];
             for (var k=0; k<row.length; ++k) {
-                if(row[k]>0 && row[k]<5) this.drawTile(ctx, i, k, styles[row[k]]);
+                if(row[k]>0 && row[k]<6) this.drawTile(ctx, i, k, styles[row[k]]);
             }
         }
     }
@@ -91,4 +107,11 @@ g_maze.fixMaze = function () {
     g_maze.tiles[29][16]=0;
     g_maze.tiles[29][17]=0;
     g_maze.tiles[29][18]=0;
+};
+
+g_maze.stopBeingScared = function() {
+    g_blinky.scared = false;
+    g_pinky.scared = false;
+    g_inky.scared = false;
+    g_clyde.scared = false;
 };

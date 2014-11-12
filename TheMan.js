@@ -188,11 +188,11 @@ PacMan.prototype.animate = function(){
 
 // tell ghost to be scared because now the TheMan is in the house took the big pill
 PacMan.prototype.makeGhostsScared= function() {
-    g_blinky.scared = true;
-    g_pinky.scared = true;
-    g_inky.scared = true;
-    g_clyde.scared = true;
-    console.log("is this working!");
+    g_maze.scaredTimer = 0;
+    g_blinky.fright();
+    g_pinky.fright();
+    g_inky.fright();
+    g_clyde.fright();
 };
 
 PacMan.prototype.update = function (du) {
