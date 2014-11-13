@@ -1,6 +1,6 @@
-// ==========
-// PacMan STUFF
-// ==========
+// ===========
+// Ghost STUFF
+// ===========
 
 "use strict";
 
@@ -192,6 +192,18 @@ Ghost.prototype.update = function (du) {
     this.cx += this.velX*du;
     this.cy += this.velY*du;
     this.currentTile = this.tilePos();
+    if(this.isColliding()){
+        console.log("hello");
+       /* this.rotation = 0;  
+        this.isDead = true;
+        this.animationOn = false;
+        this.i = 0;
+        this.counter = 0;*/
+    } 
+};
+
+Ghost.prototype.getRadius = function() {
+    return 10;
 };
 
 Ghost.prototype.render = function (ctx) {

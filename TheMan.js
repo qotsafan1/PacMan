@@ -1,6 +1,6 @@
-// ==========
+// ============
 // PacMan STUFF
-// ==========
+// ============
 
 "use strict";
 
@@ -210,10 +210,13 @@ PacMan.prototype.update = function (du) {
         this.centerx(tileP);
         this.centery(tileP);
     }
-    if(this.isColliding()){} 
+    /*if(this.isColliding()){
+       
+    } 
     else {
         spatialManager.register(this);
-    }
+    }*/
+    spatialManager.register(this);
     g_pinky.PacTurns = this.turns;
     g_blinky.PacTile = this.tilePos();
 };

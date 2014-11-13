@@ -58,7 +58,7 @@ unregister: function(entity) {
     // TODO: YOUR STUFF HERE!
     for (var i = 0; i < this._entities.length; i++) {
         if(this._entities[i]._isDeadNow) {
-            this._entities.splice(i);
+            this._entities[i]= false;
         }
     };
 },
