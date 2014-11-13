@@ -127,7 +127,7 @@ function renderSimulation(ctx) {
     if (g_startupscreen.timer >= 0) g_startupscreen.render(ctx);
     else {
 
-        g_maze.render(ctx);
+        //g_maze.render(ctx);
 
         entityManager.render(ctx);
 

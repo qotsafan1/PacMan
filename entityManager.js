@@ -29,17 +29,20 @@ _level  : [],
 _ghosts : [],
 _dots   : [],
 _fruits  : [],
+_maze   : [],
 pacRtime : 0,
 levelRtime : 0,
 ghostsRtime : 0,
 dotsRtime : 0,
 fruitsRtime : 0,
+mazeRtime : 0,
 pacUtime : 0,
 levelUtime : 0,
 ghostsUtime : 0,
 dotsUtime : 0,
 fruitsUtime : 0,
 counter : 0,
+mazeUtime : 0,
 
 
 // "PRIVATE" METHODS
@@ -102,6 +105,7 @@ init: function() {
     this._ghosts.push(g_pinky);
     this._ghosts.push(g_inky);
     this._ghosts.push(g_clyde);
+    this._maze.push(g_maze);
     g_clyde.fixYourFriends();
 
     for(var i=0; i < g_maze.tiles.length; ++i) {
@@ -120,7 +124,7 @@ init: function() {
 },
 
 update: function(du) {
-    var things = ['pacman', 'level', 'dots', 'fruits', 'ghosts'];
+    var things = ['pacman', 'level', 'dots', 'fruits', 'ghosts', 'maze'];
     var arr = [];
     if(g_takingTime) this.counter+=du/SECS_TO_NOMINALS;
     for (var c = 0; c < this._categories.length; ++c) {
@@ -161,6 +165,9 @@ update: function(du) {
             if (things[c]==='ghosts') {
                 this.ghostsUtime += b-a;
             }
+            if (things[c]==='maze') {
+                this.mazeUtime += b-a;
+            }
         }
     }
     if(g_takingTime) {
@@ -169,14 +176,15 @@ update: function(du) {
         console.log("Dots update time:  "+ (this.dotsUtime/this.counter));
         console.log("Fruits update time:  "+ (this.fruitsUtime/this.counter));
         console.log("Ghosts update time:  "+ (this.ghostsUtime/this.counter));
+        console.log("Maze update time:  "+ (this.mazeUtime/this.counter));
         console.log('');
     }
-    g_maze.update(du);
+    //g_maze.update(du);
     
 },
 
 render: function(ctx) {
-    var things = ['pacman', 'level', 'dots', 'fruits', 'ghosts'];
+    var things = ['pacman', 'level', 'dots', 'fruits', 'ghosts', 'maze'];
     var arr = [];
 
     var debugX = 10, debugY = 100;
@@ -211,6 +219,9 @@ render: function(ctx) {
             if (things[c]==='ghosts') {
                 this.ghostsRtime += b-a;
             }
+            if (things[c]==='maze') {
+                this.mazeRtime += b-a;
+            }
         }
     }
     if(g_takingTime) {
@@ -219,6 +230,7 @@ render: function(ctx) {
         console.log("Dots render time:  "+ (this.dotsRtime/this.counter));
         console.log("Fruits render time:  "+ (this.fruitsRtime/this.counter));
         console.log("Ghosts render time:  "+ (this.ghostsRtime/this.counter));
+        console.log("Maze render time:  "+ (this.mazeRtime/this.counter));
         console.log('');
     }
 }
