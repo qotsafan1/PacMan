@@ -26,11 +26,16 @@ function handleMouse(evt) {
     var button = evt.buttons === undefined ? evt.which : evt.buttons;
     if (!button) return;
     console.log(g_maze.returnTilePos(g_mouseX,g_mouseY));
-    g_pausemenu.update();
+    g_pausemenu.buttonpushed();
 
 
+}
+
+function handleMouseUp(evt) {
+    g_pausemenu.buttonreleased();
 }
 
 // Handle "down" and "move" events the same way.
 window.addEventListener("mousedown", handleMouse);
 window.addEventListener("mousemove", handleMouse);
+window.addEventListener("mouseup", handleMouseUp);

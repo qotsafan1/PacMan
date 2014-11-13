@@ -121,7 +121,7 @@ function renderSimulation(ctx) {
 
     if (g_renderSpatialDebug) spatialManager.render(ctx);
     
-    if(g_isGamePaused) g_pausemenu.render(ctx);
+    if (g_isGamePaused) g_pausemenu.render(ctx);
 }
 
 
@@ -138,6 +138,8 @@ function requestPreloads() {
         
         level_walls : "images/walls.png",
         b_continue : "images/continue.png",
+
+        pacmanlogo : "images/pacmanlogo.png",
 
         therealone: "images/pacmanRight.png",
         therealoneLeft: "images/pacmanLeft.png",
@@ -171,6 +173,7 @@ var g_animateSprites = [];
 var g_animateSpritesLeft = [];
 var g_levelimg = [];
 var g_buttons = [];
+var g_paclogo = [];
 var g_deathSprites =[];
 
 //spriteArrays for the ghosts!
@@ -193,12 +196,17 @@ function preloadDone() {
     createSpriteSheet(g_scaredSprite,g_images.scared,2,1);
 
     var levelimage = g_images.level_walls;
-    var level = new Sprite(levelimage, 0, 0, levelimage.width, levelimage.height);
-    g_levelimg.push(level);
+    var levelsprite = new Sprite(levelimage, 0, 0, levelimage.width, levelimage.height);
+    g_levelimg.push(levelsprite);
 
     var button = g_images.b_continue;
-    var continue_button = new Sprite(button, 0, 0, button.width, button.height);
-    g_buttons.push(continue_button);
+    var continue_buttonsprite = new Sprite(button, 0, 0, button.width, button.height);
+    g_buttons.push(continue_buttonsprite);
+
+    var logo = g_images.pacmanlogo;
+    var logosprite = new Sprite(logo, 0, 0, logo.width, logo.height);
+    g_paclogo.push(logosprite);
+
 
     entityManager.init();
     //createInitialPacMan();

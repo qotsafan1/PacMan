@@ -13,11 +13,11 @@ function pauseMenu() {
     this.menu_radius = 20;
     this.menu_linewidth = 4;
 
-    this.canvas_fillcolor = 'rgba(0,0,0,0.4';
+    this.canvas_fillcolor = 'rgba(0,0,0,0.5';
     this.menu_fillcolor = 'rgba(0,0,0,0.7)';
     this.strokecolor = '#000BDD';
 
-    this.b_continue = new Button(g_canvas.width/2, this.menu_cy+40, 201, 30, g_buttons[0]);
+    this.b_continue = new Button(g_canvas.width/2, this.menu_cy+40, g_buttons[0].width, g_buttons[0].height, g_buttons[0]);
 
     //this.b_newgame = new Button(g_canvas.width/2, this.menu_cy+90, 150,30, g_buttons[0]);
     //this.b_quit = new Button(g_canvas.width/2, this.menu_cy+140, 150,30, g_buttons[0]);
@@ -31,8 +31,12 @@ pauseMenu.prototype.update = function() {
 	//this.b_quit.update();
 };
 
-pauseMenu.prototype.watch = function() {
+pauseMenu.prototype.buttonpushed = function() {
+	this.b_continue.toggleon();
+};
 
+pauseMenu.prototype.buttonreleased = function() {
+	this.b_continue.toggleoff();
 };
 
 pauseMenu.prototype.render = function(ctx) {
