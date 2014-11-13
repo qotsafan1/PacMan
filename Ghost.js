@@ -180,6 +180,7 @@ Ghost.prototype.fright = function() {
 Ghost.prototype.update = function (du) {
     var endTile = this.endOfTile(this.currentTile);
     var theTile = g_maze.tiles[this.currentTile[0]][this.currentTile[1]];
+    spatialManager.unregister(this);
     
     if (!g_maze.isGhostDecTile(theTile)) this.chosen = false;
 
@@ -192,14 +193,7 @@ Ghost.prototype.update = function (du) {
     this.cx += this.velX*du;
     this.cy += this.velY*du;
     this.currentTile = this.tilePos();
-    if(this.isColliding()){
-        console.log("hello");
-       /* this.rotation = 0;  
-        this.isDead = true;
-        this.animationOn = false;
-        this.i = 0;
-        this.counter = 0;*/
-    } 
+    spatialManager.register(this);
 };
 
 Ghost.prototype.getRadius = function() {

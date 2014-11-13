@@ -60,11 +60,7 @@ PacMan.prototype.isDead = false;
 
 PacMan.prototype.move = function(du, tileP) {
     if(keys[this.KEY_KILL]){
-        this.rotation = 0;  
-        this.isDead = true;
-        this.animationOn = false;
-        this.i = 0;
-        this.counter = 0;
+        this.die();
     }
 
     var rotation;
@@ -210,12 +206,12 @@ PacMan.prototype.update = function (du) {
         this.centerx(tileP);
         this.centery(tileP);
     }
-    /*if(this.isColliding()){
-       
+    if(this.isColliding()){
+        var thing = this.isColliding();
+        if (!thing.scared) {
+            this.die();
+        }
     } 
-    else {
-        spatialManager.register(this);
-    }*/
     spatialManager.register(this);
     g_pinky.PacTurns = this.turns;
     g_blinky.PacTile = this.tilePos();
@@ -228,6 +224,14 @@ PacMan.prototype.getRadius = function () {
 PacMan.prototype.halt = function () {
     this.velX = 0;
     this.velY = 0;
+};
+
+PacMan.prototype.die = function() {
+    this.rotation = 0;  
+    this.isDead = true;
+    this.animationOn = false;
+    this.i = 0;
+    this.counter = 0;
 };
 
 var NOMINAL_ROTATE_RATE = 0.1;
