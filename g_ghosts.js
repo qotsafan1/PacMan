@@ -21,7 +21,6 @@ var g_blinky = new Ghost({
 });
 
 g_blinky.findTargetTile = function() {
-	this.currentTile = this.tilePos();
 	if (!g_scatterToggle) {
 		return this.PacTile;
 	}
@@ -128,7 +127,6 @@ var g_clyde = new Ghost({
 });
 
 g_clyde.findTargetTile = function() {
-	this.currentTile = this.tilePos();
 	if(!g_scatterToggle) {
 		var dist = util.square(this.currentTile[0]-g_blinky.PacTile[0])+ 
 			util.square(this.currentTile[1]-g_blinky.PacTile[1]);

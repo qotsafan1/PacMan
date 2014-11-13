@@ -42,7 +42,8 @@ var g_maze = {
             [9,9,9,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9,9]],
     tHeight : 16,
     tWidth : 16,
-    scaredTimer : 0
+    scaredTimer : 0,
+    theManMoving : false
 };
 
 g_maze.returnTilePos = function (cx, cy) {
@@ -75,6 +76,7 @@ g_maze.update = function(du) {
         }
         this.scaredTimer += du/SECS_TO_NOMINALS;
     }
+    //console.log(this.theManMoving);
 };
 
 g_maze.render = function (ctx) {

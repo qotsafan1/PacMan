@@ -65,6 +65,7 @@ PacMan.prototype.move = function(du, tileP) {
 
     var rotation;
     if(keys[this.KEY_UP] && this.canGoUp(tileP) && !this.isDead) {
+        if(!g_maze.theManMoving) g_maze.theManMoving = true;
         if(this.animationOn === false) this.animationOn = true;
         this.velX = 0;
         this.velY = this.speed;
@@ -78,6 +79,7 @@ PacMan.prototype.move = function(du, tileP) {
         this.turns = "up";   
     }
     if(keys[this.KEY_DOWN] && this.canGoDown(tileP) && !this.isDead) {
+        if(!g_maze.theManMoving) g_maze.theManMoving = true;
         if(this.animationOn === false) this.animationOn = true;
         this.velX = 0;
         this.velY = this.speed;
@@ -91,6 +93,7 @@ PacMan.prototype.move = function(du, tileP) {
         this.turns = "down"
     }
     if(keys[this.KEY_RIGHT] && this.canGoRight(tileP) && !this.isDead) {
+        if(!g_maze.theManMoving) g_maze.theManMoving = true;
         if(this.animationOn === false) this.animationOn = true;
         this.velX = this.speed;
         this.velY = 0;
@@ -102,6 +105,7 @@ PacMan.prototype.move = function(du, tileP) {
         this.turns = "right";
     }
     if(keys[this.KEY_LEFT] && this.canGoLeft(tileP) && !this.isDead) {
+        if(!g_maze.theManMoving) g_maze.theManMoving = true;
         if(this.animationOn === false) this.animationOn = true;
         this.velX = this.speed;
         this.velY = 0;
@@ -134,6 +138,7 @@ PacMan.prototype.resetPacman = function(){
     //initialize the sprite
     this.sprite = g_animateSprites[this.i];
 };
+
 PacMan.prototype.animateDeath = function(){
     if(this.isDead === true){
         this.halt();
@@ -232,6 +237,11 @@ PacMan.prototype.die = function() {
     this.animationOn = false;
     this.i = 0;
     this.counter = 0;
+    /*g_blinky.reset();
+    g_pinky.reset();
+    g_inky.reset();
+    g_clyde.reset();*/
+    //g_maze.theManMoving = false;
 };
 
 var NOMINAL_ROTATE_RATE = 0.1;

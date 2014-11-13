@@ -18,14 +18,8 @@ function Ghost(descr) {
     // Common inherited setup logic from Entity
     this.setup(descr);
 
-    //this.rememberResets();
-    /*
-    // Default sprite, if not otherwise specified
-    this.counter = 0;
-    this.animationOn = false;
-    this.i = 0;
-    this.sprite = this.sprite || g_animateSprites[this.i];
-    */
+    this.rememberResets();
+
     // Set normal drawing scale
     this._scale = 0.45;
     this.speed = 1;
@@ -37,6 +31,20 @@ function Ghost(descr) {
 };
 
 Ghost.prototype = new Entity();
+
+Ghost.prototype.rememberResets = function () {
+    // Remember my reset positions
+    this.reset_cx = this.cx;
+    this.reset_cy = this.cy;
+    this.reset_velX = this.velX;
+    this.reset_velY = this.velY;
+};
+
+Ghost.prototype.reset = function () {
+    this.setPos(this.reset_cx, this.reset_cy);
+    this.velX = this.reset_velX;
+    this.velY = this.reset_velY;
+};
 
 Ghost.prototype.move = function (target, myTile) {
     var go;
@@ -178,6 +186,10 @@ Ghost.prototype.fright = function() {
 };
 
 Ghost.prototype.update = function (du) {
+    if (!g_maze.theManMoving) {
+        this.currentTile = this.tilePos();
+        return;
+    }
     var endTile = this.endOfTile(this.currentTile);
     var theTile = g_maze.tiles[this.currentTile[0]][this.currentTile[1]];
     spatialManager.unregister(this);

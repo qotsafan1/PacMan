@@ -88,11 +88,6 @@ init: function() {
     this._ghosts.push(g_pinky);
     this._ghosts.push(g_inky);
     this._ghosts.push(g_clyde);
-    
-    spatialManager.register(g_blinky);
-    spatialManager.register(g_pinky);
-    spatialManager.register(g_inky);
-    spatialManager.register(g_clyde);
 
     for(var i=0; i < g_maze.tiles.length; ++i) {
         for(var j=0; j < g_maze.tiles[i].length; ++j) {
