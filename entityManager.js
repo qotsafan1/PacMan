@@ -59,7 +59,6 @@ generateFruit : function(cx, cy) {
 
 makeLevel : function(){
     this._level.push(new Level());
-    //console.log(this._level[0]);
 },
 
 _forEachOf: function(aCategory, fn) {
@@ -83,6 +82,9 @@ deferredSetup : function () {
 },
 
 init: function() {
+
+    this.makeLevel();
+
     this.generatePacMan(224,424);
     this._ghosts.push(g_blinky);
     this._ghosts.push(g_pinky);

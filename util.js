@@ -108,6 +108,41 @@ fillBox: function (ctx, x, y, w, h, style) {
     ctx.fillStyle = style;
     ctx.fillRect(x, y, w, h);
     ctx.fillStyle = oldStyle;
+},
+
+roundedBox: function (ctx, x, y, width, height, radius, fillstyle, linewidth, strokestyle) {
+
+  // Save
+  var oldfill = ctx.fillStyle;
+  var oldstroke  = ctx.strokestyle;
+  var oldline = ctx.lineWidth;
+
+  ctx.fillStyle = fillstyle;
+  ctx.strokeStyle = strokestyle;
+  ctx.lineWidth = linewidth;
+
+  ctx.beginPath();
+
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + width - radius, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  ctx.lineTo(x + width, y + height - radius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  ctx.lineTo(x + radius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
+
+  ctx.closePath();
+
+  ctx.fill();
+  ctx.stroke();
+  
+  // Restore
+  ctx.fillStyle = oldfill;
+  ctx.strokestyle = oldstroke;
+  ctx.lineWidth = oldline;
+
 }
 
 };
