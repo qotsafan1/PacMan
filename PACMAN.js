@@ -62,9 +62,13 @@ function gatherInputs() {
 
 function updateSimulation(du) {
     
-    processDiagnostics();
-    
-    entityManager.update(du);
+    if (g_startupscreen.timer >= 0) g_startupscreen.update(du);
+    else {
+
+        processDiagnostics();
+        
+        entityManager.update(du);
+    }
 
 }
 
@@ -115,13 +119,18 @@ function processDiagnostics() {
 // GAME-SPECIFIC RENDERING
 
 function renderSimulation(ctx) {
-    g_maze.render(ctx);
 
-    entityManager.render(ctx);
+    if (g_startupscreen.timer >= 0) g_startupscreen.render(ctx);
+    else {
 
-    if (g_renderSpatialDebug) spatialManager.render(ctx);
-    
-    if (g_isGamePaused) g_pausemenu.render(ctx);
+        g_maze.render(ctx);
+
+        entityManager.render(ctx);
+
+        if (g_renderSpatialDebug) spatialManager.render(ctx);
+        
+        if (g_isGamePaused) g_pausemenu.render(ctx);
+    }
 }
 
 
@@ -211,6 +220,8 @@ function preloadDone() {
     entityManager.init();
     //createInitialPacMan();
     g_pausemenu = new pauseMenu();
+
+    g_startupscreen = new startUpScreen(g_paclogo[0]);
 
     main.init();
 }

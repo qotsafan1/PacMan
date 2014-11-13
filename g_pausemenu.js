@@ -17,7 +17,8 @@ function pauseMenu() {
     this.menu_fillcolor = 'rgba(0,0,0,0.7)';
     this.strokecolor = '#000BDD';
 
-    this.b_continue = new Button(g_canvas.width/2, this.menu_cy+40, g_buttons[0].width, g_buttons[0].height, g_buttons[0]);
+    this.b_continue = new Button(g_canvas.width/2, this.menu_cy+40, 
+    							 g_buttons[0].width, g_buttons[0].height, g_buttons[0]);
 
     //this.b_newgame = new Button(g_canvas.width/2, this.menu_cy+90, 150,30, g_buttons[0]);
     //this.b_quit = new Button(g_canvas.width/2, this.menu_cy+140, 150,30, g_buttons[0]);
