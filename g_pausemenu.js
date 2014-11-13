@@ -19,16 +19,16 @@ function pauseMenu() {
 
     this.b_continue = new Button(g_canvas.width/2, this.menu_cy+40, 201, 30, g_buttons[0]);
 
-    this.b_newgame = new Button(g_canvas.width/2, this.menu_cy+90, 150,30, g_buttons[0]);
-    this.b_quit = new Button(g_canvas.width/2, this.menu_cy+140, 150,30, g_buttons[0]);
+    //this.b_newgame = new Button(g_canvas.width/2, this.menu_cy+90, 150,30, g_buttons[0]);
+    //this.b_quit = new Button(g_canvas.width/2, this.menu_cy+140, 150,30, g_buttons[0]);
 
 }
 
 pauseMenu.prototype.update = function() {
 
 	this.b_continue.update();
-	this.b_newgame.update();
-	this.b_quit.update();
+	//this.b_newgame.update();
+	//this.b_quit.update();
 };
 
 pauseMenu.prototype.watch = function() {
@@ -37,11 +37,15 @@ pauseMenu.prototype.watch = function() {
 
 pauseMenu.prototype.render = function(ctx) {
 
+	// This fillbox darkens the whole screen
 	util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, this.canvas_fillcolor);
+
+	// Draws a rounded menu rectangle
 	util.roundedBox(ctx, this.menu_cx, this.menu_cy, this.menu_width, 
 						 this.menu_height, this.menu_radius, 
 						 this.menu_fillcolor, this.menu_linewidth, this.strokecolor);
 
+	// Draw buttons
 	this.b_continue.render(ctx);
 	//this.b_newgame.render(ctx);
 	//this.b_quit.render(ctx);

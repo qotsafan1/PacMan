@@ -16,8 +16,10 @@ var g_mouseX = 0,
 
 function handleMouse(evt) {
     
-    g_mouseX = evt.clientX - g_canvas.offsetLeft;
-    g_mouseY = evt.clientY - g_canvas.offsetTop;
+	var rect = canvas.getBoundingClientRect();
+
+    g_mouseX = evt.clientX - rect.left;
+    g_mouseY = evt.clientY - rect.top;
 
     
     // If no button is being pressed, then bail
