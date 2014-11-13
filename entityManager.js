@@ -90,6 +90,7 @@ init: function() {
     this._ghosts.push(g_pinky);
     this._ghosts.push(g_inky);
     this._ghosts.push(g_clyde);
+    g_clyde.fixYourFriends();
 
     for(var i=0; i < g_maze.tiles.length; ++i) {
         for(var j=0; j < g_maze.tiles[i].length; ++j) {

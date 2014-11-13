@@ -28,7 +28,7 @@ function PacMan(descr) {
    
     // Set normal drawing scale, and warp state off
     this._scale = 0.45;
-    this.speed = 1.6;
+    this.speed = 2;//1.6;
     this.turns = "right";
 };
 
@@ -137,6 +137,10 @@ PacMan.prototype.resetPacman = function(){
     this.animationOn = false;
     //initialize the sprite
     this.sprite = g_animateSprites[this.i];
+    g_blinky.resetGhost();
+    g_pinky.resetGhost();
+    g_inky.resetGhost();
+    g_clyde.resetGhost();
 };
 
 PacMan.prototype.animateDeath = function(){
@@ -199,7 +203,6 @@ PacMan.prototype.makeGhostsScared= function() {
 PacMan.prototype.update = function (du) {
     var tileP =this.tilePos();
     spatialManager.unregister(this);
-    if(this._isDeadNow) return entityManager.KILL_ME_NOW;
  
     this.eatDot();
 
@@ -211,10 +214,13 @@ PacMan.prototype.update = function (du) {
         this.centerx(tileP);
         this.centery(tileP);
     }
-    if(this.isColliding()){
+    if(this.isColliding() && !this.isDead){
         var thing = this.isColliding();
         if (!thing.scared) {
             this.die();
+        }
+        else {
+            thing.isDeadNow = true;
         }
     } 
     spatialManager.register(this);
@@ -237,11 +243,7 @@ PacMan.prototype.die = function() {
     this.animationOn = false;
     this.i = 0;
     this.counter = 0;
-    /*g_blinky.reset();
-    g_pinky.reset();
-    g_inky.reset();
-    g_clyde.reset();*/
-    //g_maze.theManMoving = false;
+    g_maze.theManMoving = false;
 };
 
 var NOMINAL_ROTATE_RATE = 0.1;

@@ -16,8 +16,9 @@ var g_blinky = new Ghost({
     cy : 232,
     scatterTile : [25,0],
     targetTile : [25,0],
-    currentTile : [25,0],
-    PacTile : [0,0]
+    PacTile : [0,0],
+    velX : -this.speed,
+    velY : 0
 });
 
 g_blinky.findTargetTile = function() {
@@ -40,10 +41,12 @@ g_blinky.drawHealthyGhost = function(ctx) {
 
 var g_pinky = new Ghost({
 	cx : 224,
-	cy : 232,
+	cy : 280,
 	scatterTile : [2,0],
 	targetTile : [2,0],
-	PacTurns : "right"
+	PacTurns : "right",
+	velX : 0,
+    velY : this.speed
 });
 
 g_pinky.findTargetTile = function() {
@@ -78,10 +81,12 @@ g_pinky.drawHealthyGhost = function(ctx) {
 };
 
 var g_inky = new Ghost({
-	cx : 224,
-    cy : 232,
+	cx : 184,
+	cy : 280,
     scatterTile : [27,35],
-    targetTile : [27,35]
+    targetTile : [27,35],
+    velX : 0,
+    velY : this.speed
 });
 
 g_inky.findTargetTile = function() {
@@ -119,11 +124,12 @@ g_inky.drawHealthyGhost = function(ctx) {
 };
 
 var g_clyde = new Ghost({
-	cx : 224,
-    cy : 232,
+	cx : 264,
+    cy : 280,
     scatterTile : [0,35],
     targetTile : [0,35],
-    currentTile : [0,35]
+    velX : 0,
+    velY : this.speed
 });
 
 g_clyde.findTargetTile = function() {
@@ -146,4 +152,17 @@ g_clyde.drawHealthyGhost = function(ctx) {
 	if(g_useUglyRedWall)
 		util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, '#DAA520');
 	//ctx.fillStyle = oldstyle;
+};
+
+g_clyde.fixYourFriends = function() {
+    g_blinky.inCage = false;
+    g_pinky.inCage = false;
+    g_inky.velX = 0;
+    g_inky.velY = -this.speed;
+    g_clyde.velX = 0;
+    g_clyde.velY = -this.speed;
+    g_blinky.rememberResets();
+    g_pinky.rememberResets();
+    g_inky.rememberResets();
+    g_clyde.rememberResets();
 };

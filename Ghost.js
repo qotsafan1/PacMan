@@ -18,8 +18,6 @@ function Ghost(descr) {
     // Common inherited setup logic from Entity
     this.setup(descr);
 
-    this.rememberResets();
-
     // Set normal drawing scale
     this._scale = 0.45;
     this.speed = 1;
@@ -27,7 +25,8 @@ function Ghost(descr) {
     this.velY = 0;
     this.chosen = false;
     this.scared = false;
-    this.currentTile = [0,0];
+    this.currentTile = [13,14];
+    this.inCage = true;
 };
 
 Ghost.prototype = new Entity();
@@ -38,17 +37,19 @@ Ghost.prototype.rememberResets = function () {
     this.reset_cy = this.cy;
     this.reset_velX = this.velX;
     this.reset_velY = this.velY;
+    this.reset_tile = this.tilePos();
 };
 
-Ghost.prototype.reset = function () {
+Ghost.prototype.resetGhost = function () {
     this.setPos(this.reset_cx, this.reset_cy);
     this.velX = this.reset_velX;
     this.velY = this.reset_velY;
+    this.currentTile = this.reset_tile;
 };
 
 Ghost.prototype.move = function (target, myTile) {
     var go;
-    if (this.scared) go = this.panicDecision();
+    if (this.scared && !this.isDeadNow) go = this.panicDecision();
     else go = this.shortWay(target, myTile);
 
 
@@ -146,7 +147,10 @@ Ghost.prototype.isNextTileWall = function (myTile) {
 };
 
 Ghost.prototype.makingDecisions = function(theTile, myTile) {
-    this.targetTile = this.findTargetTile(myTile);
+    if (this.isDeadNow) {
+        this.targetTile = g_blinky.reset_tile;
+    }
+    else this.targetTile = this.findTargetTile(myTile);
 
     // here ghosts make decicions when they land on an intersection
     if(g_maze.isGhostDecTile(theTile)) {
@@ -155,6 +159,9 @@ Ghost.prototype.makingDecisions = function(theTile, myTile) {
     // here ghosts turn before crashing into a wall
     else
     {
+        if(this.inCage) {
+            return this.velY *= -1;
+        }
         if(this.canGoUp(myTile) && this.velY===0) {
             this.velY = -this.speed;
             this.velX = 0;
@@ -186,10 +193,8 @@ Ghost.prototype.fright = function() {
 };
 
 Ghost.prototype.update = function (du) {
-    if (!g_maze.theManMoving) {
-        this.currentTile = this.tilePos();
-        return;
-    }
+    if (!g_maze.theManMoving) return;
+
     var endTile = this.endOfTile(this.currentTile);
     var theTile = g_maze.tiles[this.currentTile[0]][this.currentTile[1]];
     spatialManager.unregister(this);
@@ -205,6 +210,9 @@ Ghost.prototype.update = function (du) {
     this.cx += this.velX*du;
     this.cy += this.velY*du;
     this.currentTile = this.tilePos();
+    if(this.isDeadNow) {
+        if((this.reset_tile[0]===this.currentTile[0]) && (this.reset_tile[1]===this.currentTile[1])) this.isDeadNow = false;
+    }
     spatialManager.register(this);
 };
 
