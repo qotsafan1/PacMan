@@ -78,11 +78,13 @@ var g_useAveVel = true;
 var g_renderSpatialDebug = false;
 var g_useUglyRedWall = false;
 var g_scatterToggle = true;
+var g_takingTime = false;
 
 var KEY_AVE_VEL = keyCode('V');
 var KEY_SPATIAL = keyCode('X');
 var KEY_REDWALL = keyCode('M');
 var KEY_SCATTER = keyCode('N');
+var KEY_TAKETIME = keyCode('T');
 
 var KEY_HALT  = keyCode('H');
 var KEY_RESET = keyCode('R');
@@ -101,7 +103,9 @@ function processDiagnostics() {
 
     if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
 
-    if (eatKey(KEY_REDWALL)) g_useUglyRedWall = !g_useUglyRedWall;    
+    if (eatKey(KEY_REDWALL)) g_useUglyRedWall = !g_useUglyRedWall;   
+
+    if (eatKey(KEY_TAKETIME)) g_takingTime = !g_takingTime;   
 }
 
 

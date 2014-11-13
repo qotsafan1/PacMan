@@ -29,6 +29,18 @@ _level  : [],
 _ghosts : [],
 _dots   : [],
 _fruits  : [],
+pacRtime : 0,
+levelRtime : 0,
+ghostsRtime : 0,
+dotsRtime : 0,
+fruitsRtime : 0,
+pacUtime : 0,
+levelUtime : 0,
+ghostsUtime : 0,
+dotsUtime : 0,
+fruitsUtime : 0,
+counter : 0,
+
 
 // "PRIVATE" METHODS
 
@@ -108,11 +120,15 @@ init: function() {
 },
 
 update: function(du) {
-
+    var things = ['pacman', 'level', 'dots', 'fruits', 'ghosts'];
+    var arr = [];
+    if(g_takingTime) this.counter+=du/SECS_TO_NOMINALS;
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];
         var i = 0;
+
+        var a = performance.now();
 
         while (i < aCategory.length) {
 
@@ -127,17 +143,48 @@ update: function(du) {
                 ++i;
             }
         }
+
+        var b = performance.now();
+        if(g_takingTime) {
+            if (things[c]==='pacman') {
+                this.pacUtime += b-a;
+            }
+            if (things[c]==='level') {
+                this.levelUtime += b-a;
+            }
+            if (things[c]==='dots') {
+                this.dotsUtime += b-a;
+            }
+            if (things[c]==='fruits') {
+                this.fruitsUtime += b-a;
+            }
+            if (things[c]==='ghosts') {
+                this.ghostsUtime += b-a;
+            }
+        }
+    }
+    if(g_takingTime) {
+        console.log("PacMan update time:  "+ (this.pacUtime/this.counter));
+        console.log("Level update time:  "+ (this.levelUtime/this.counter));
+        console.log("Dots update time:  "+ (this.dotsUtime/this.counter));
+        console.log("Fruits update time:  "+ (this.fruitsUtime/this.counter));
+        console.log("Ghosts update time:  "+ (this.ghostsUtime/this.counter));
+        console.log('');
     }
     g_maze.update(du);
     
 },
 
 render: function(ctx) {
+    var things = ['pacman', 'level', 'dots', 'fruits', 'ghosts'];
+    var arr = [];
 
     var debugX = 10, debugY = 100;
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];
+
+        var a = performance.now();
 
         for (var i = 0; i < aCategory.length; ++i) {
 
@@ -146,6 +193,33 @@ render: function(ctx) {
 
         }
         debugY += 10;
+
+        var b = performance.now();
+        if(g_takingTime) {
+            if (things[c]==='pacman') {
+                this.pacRtime += b-a;
+            }
+            if (things[c]==='level') {
+                this.levelRtime += b-a;
+            }
+            if (things[c]==='dots') {
+                this.dotsRtime += b-a;
+            }
+            if (things[c]==='fruits') {
+                this.fruitsRtime += b-a;
+            }
+            if (things[c]==='ghosts') {
+                this.ghostsRtime += b-a;
+            }
+        }
+    }
+    if(g_takingTime) {
+        console.log("PacMan render time:  "+ (this.pacRtime/this.counter));
+        console.log("Level render time:  "+ (this.levelRtime/this.counter));
+        console.log("Dots render time:  "+ (this.dotsRtime/this.counter));
+        console.log("Fruits render time:  "+ (this.fruitsRtime/this.counter));
+        console.log("Ghosts render time:  "+ (this.ghostsRtime/this.counter));
+        console.log('');
     }
 }
 
