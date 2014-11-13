@@ -28,13 +28,15 @@ g_blinky.findTargetTile = function() {
 	return this.scatterTile;
 };
 
-g_blinky.render = function(ctx) {
-	var oldstyle = ctx.fillStyle;
-    ctx.fillStyle = "red";
-    util.fillCircle(ctx, this.cx, this.cy, 10);
+g_blinky.drawHealthyGhost = function(ctx) {
+	//var oldstyle = ctx.fillStyle;
+    //ctx.fillStyle = "red";
+    //util.fillCircle(ctx, this.cx, this.cy, 10);
+    g_blinkySprite[0].scale = 0.45;
+    g_blinkySprite[0].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
     if(g_useUglyRedWall) 
     	util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, "red");
-    ctx.fillStyle = oldstyle;
+    //ctx.fillStyle = oldstyle;
 };
 
 var g_pinky = new Ghost({
@@ -65,13 +67,15 @@ g_pinky.findTargetTile = function() {
 	return this.scatterTile;
 };
 
-g_pinky.render = function(ctx) {
-	var oldstyle = ctx.fillStyle;
-	ctx.fillStyle = "pink";
-	util.fillCircle(ctx, this.cx, this.cy, 10);
+g_pinky.drawHealthyGhost = function(ctx) {
+	//var oldstyle = ctx.fillStyle;
+	//ctx.fillStyle = "pink";
+	//util.fillCircle(ctx, this.cx, this.cy, 10);
+	g_pinkySprite[0].scale = 0.45;
+    g_pinkySprite[0].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
 	if(g_useUglyRedWall)
 		util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, "pink");
-	ctx.fillStyle = oldstyle;
+	//ctx.fillStyle = oldstyle;
 };
 
 var g_inky = new Ghost({
@@ -104,13 +108,15 @@ g_inky.findTargetTile = function() {
 	return this.scatterTile;
 };
 
-g_inky.render = function(ctx) {
-	var oldstyle = ctx.fillStyle;
-	ctx.fillStyle = '#00FFFF';
-	util.fillCircle(ctx, this.cx, this.cy, 10);
+g_inky.drawHealthyGhost = function(ctx) {
+	//var oldstyle = ctx.fillStyle;
+	//ctx.fillStyle = '#00FFFF';
+	//util.fillCircle(ctx, this.cx, this.cy, 10);
+	g_inkySprite[0].scale = 0.45;
+    g_inkySprite[0].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
 	if(g_useUglyRedWall)
 		util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, '#00FFFF');
-	ctx.fillStyle = oldstyle;
+	//ctx.fillStyle = oldstyle;
 };
 
 var g_clyde = new Ghost({
@@ -124,20 +130,22 @@ var g_clyde = new Ghost({
 g_clyde.findTargetTile = function() {
 	this.currentTile = this.tilePos();
 	if(!g_scatterToggle) {
-		var dist = Math.sqrt(util.square(this.currentTile[0]-g_blinky.PacTile[0])+ 
-			util.square(this.currentTile[1]-g_blinky.PacTile[1]));
-		if (Math.round(dist)>8) {return g_blinky.PacTile;}
+		var dist = util.square(this.currentTile[0]-g_blinky.PacTile[0])+ 
+			util.square(this.currentTile[1]-g_blinky.PacTile[1]);
+		if (Math.round(dist)>64) {return g_blinky.PacTile;}
 		else {return this.scatterTile;}
 
 	}
 	return this.scatterTile;
 };
 
-g_clyde.render = function(ctx) {
-	var oldstyle = ctx.fillStyle;
-	ctx.fillStyle = '#DAA520';
-	util.fillCircle(ctx, this.cx, this.cy, 10);
+g_clyde.drawHealthyGhost = function(ctx) {
+	//var oldstyle = ctx.fillStyle;
+	//ctx.fillStyle = '#DAA520';
+	//util.fillCircle(ctx, this.cx, this.cy, 10);
+	g_clydeSprite[0].scale = 0.45;
+    g_clydeSprite[0].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
 	if(g_useUglyRedWall)
 		util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, '#DAA520');
-	ctx.fillStyle = oldstyle;
+	//ctx.fillStyle = oldstyle;
 };

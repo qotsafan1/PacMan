@@ -19,6 +19,6 @@ Dot.prototype.render = function(ctx) {
 
 	var oldstyle = ctx.fillStyle;
 	ctx.fillStyle = '#DAA520';
-	util.fillCircle(ctx, this.cx, this.cy, 1);
+	util.fillCircle(ctx, this.cx, this.cy, 2);
 	ctx.fillStyle = oldstyle;
 };

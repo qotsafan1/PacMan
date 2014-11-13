@@ -141,7 +141,12 @@ function requestPreloads() {
 
         therealone: "images/pacmanRight.png",
         therealoneLeft: "images/pacmanLeft.png",
-        deadPacman : "images/deadPacMan.png"
+        deadPacman : "images/deadPacMan.png",
+        inky: "images/inky.png",
+        blinky: "images/blinky.png",
+        pinky: "images/pinky.png",
+        clyde: "images/clyde.png",
+        scared: "images/scaredGhosts.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -168,10 +173,24 @@ var g_levelimg = [];
 var g_buttons = [];
 var g_deathSprites =[];
 
+//spriteArrays for the ghosts!
+var g_inkySprite = [],
+    g_blinkySprite = [],
+    g_pinkySprite = [],
+    g_clydeSprite = [],
+    g_scaredSprite = [];
+
 function preloadDone() {
     createSpriteSheet(g_animateSprites,g_images.therealone,2,2);
     createSpriteSheet(g_animateSpritesLeft,g_images.therealoneLeft,2,2);
     createSpriteSheet(g_deathSprites,g_images.deadPacman,2,3);
+
+    //create ghosts sprites
+    createSpriteSheet(g_inkySprite,g_images.inky,2,1);
+    createSpriteSheet(g_blinkySprite,g_images.blinky,2,1);
+    createSpriteSheet(g_pinkySprite,g_images.pinky,2,1);
+    createSpriteSheet(g_clydeSprite,g_images.clyde,2,1);
+    createSpriteSheet(g_scaredSprite,g_images.scared,2,1);
 
     var levelimage = g_images.level_walls;
     var level = new Sprite(levelimage, 0, 0, levelimage.width, levelimage.height);

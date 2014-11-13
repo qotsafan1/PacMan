@@ -1,6 +1,6 @@
-// ==========
+// ============
 // PacMan STUFF
-// ==========
+// ============
 
 "use strict";
 
@@ -60,11 +60,7 @@ PacMan.prototype.isDead = false;
 
 PacMan.prototype.move = function(du, tileP) {
     if(keys[this.KEY_KILL]){
-        this.rotation = 0;  
-        this.isDead = true;
-        this.animationOn = false;
-        this.i = 0;
-        this.counter = 0;
+        this.die();
     }
 
     var rotation;
@@ -153,12 +149,19 @@ PacMan.prototype.animateDeath = function(){
 
 PacMan.prototype.eatDot = function(){
     var dotEntity = entityManager._dots;
+    var fruitEntity = entityManager._fruits;
     //console.log(this.cx + "  " + dotEntity[1].cx);
 
 
+    for(var i=0; i<fruitEntity.length;i++){
+        if((fruitEntity[i].cx > this.cx-this.getRadius() && fruitEntity[i].cx < this.cx +this.getRadius()) && (fruitEntity[i].cy > this.cy-this.getRadius() && fruitEntity[i].cy < this.cy +this.getRadius())) {
+                fruitEntity.splice(i,1);
+                this.makeGhostsScared();
+        }
+    }
 
     for(var i=0; i<dotEntity.length;i++){
-        if((dotEntity[i].cx > this.cx-2 && dotEntity[i].cx < this.cx +2) && (dotEntity[i].cy > this.cy-2 && dotEntity[i].cy < this.cy +2)) {
+        if((dotEntity[i].cx > this.cx-this.getRadius() && dotEntity[i].cx < this.cx +this.getRadius()) && (dotEntity[i].cy > this.cy-this.getRadius() && dotEntity[i].cy < this.cy +this.getRadius())) {
             dotEntity.splice(i,1);
         }
     }   
@@ -177,7 +180,16 @@ PacMan.prototype.animate = function(){
         this.counter++;
         if(this.counter === 30) this.counter = 0;
         }    
-    };
+};
+
+// tell ghost to be scared because now the TheMan is in the house took the big pill
+PacMan.prototype.makeGhostsScared= function() {
+    g_maze.scaredTimer = 0;
+    g_blinky.fright();
+    g_pinky.fright();
+    g_inky.fright();
+    g_clyde.fright();
+};
 
 PacMan.prototype.update = function (du) {
     var tileP =this.tilePos();
@@ -194,10 +206,13 @@ PacMan.prototype.update = function (du) {
         this.centerx(tileP);
         this.centery(tileP);
     }
-    if(this.isColliding()){} 
-    else {
-        spatialManager.register(this);
-    }
+    if(this.isColliding()){
+        var thing = this.isColliding();
+        if (!thing.scared) {
+            this.die();
+        }
+    } 
+    spatialManager.register(this);
     g_pinky.PacTurns = this.turns;
     g_blinky.PacTile = this.tilePos();
 };
@@ -209,6 +224,14 @@ PacMan.prototype.getRadius = function () {
 PacMan.prototype.halt = function () {
     this.velX = 0;
     this.velY = 0;
+};
+
+PacMan.prototype.die = function() {
+    this.rotation = 0;  
+    this.isDead = true;
+    this.animationOn = false;
+    this.i = 0;
+    this.counter = 0;
 };
 
 var NOMINAL_ROTATE_RATE = 0.1;

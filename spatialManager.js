@@ -32,10 +32,7 @@ _entities : [],
 // PUBLIC METHODS
 
 getNewSpatialID : function() {
-
-    // TODO: YOUR STUFF HERE!
-    this._nextSpatialID += 1;
-    return this._nextSpatialID;
+    return this._nextSpatialID++;
 
 },
 
@@ -43,40 +40,33 @@ register: function(entity) {
     var pos = entity.getPos();
     var spatialID = entity.getSpatialID();
     
-    // TODO: YOUR STUFF HERE!
-   var inEntities = this._entities.indexOf(entity);
-    if (inEntities !== -1) {
-        this._entities[inEntities] = entity;
-    }
-    else {
-        this._entities.push(entity);
-    } 
+   this._entities[spatialID] = {
+        posX    : pos.posX,
+        posY    : pos.posY,
+        radius  : entity.getRadius(),
+        entity  : entity
+   };
 },
 
 unregister: function(entity) {
     var spatialID = entity.getSpatialID();
-    // TODO: YOUR STUFF HERE!
-    for (var i = 0; i < this._entities.length; i++) {
-        if(this._entities[i]._isDeadNow) {
-            this._entities.splice(i);
-        }
-    };
+    delete this._entities[spatialID];
 },
 
 findEntityInRange: function(posX, posY, radius) {
 
-    // TODO: YOUR STUFF HERE!
-        var entity = this._entities;
-    for(var i=0; i<entity.length; i++){
-        var wrapDis = util.wrappedDistSq(entity[i].getPos().posX, entity[i].getPos().posY, posX, posY, g_canvas.width, g_canvas.height);
-        var dis = entity[i].getRadius() + radius;
-
-        if (wrapDis < Math.pow(dis,2)) {
-            if((posX !== entity[i].cx) && (posY !== entity[i].cy)){
-                return entity[i];
-            }
+    for (var ID in this._entities) {
+        var e = this._entities[ID];
+        var distSq = util.wrappedDistSq(
+            e.posX, e.posY, 
+            posX, posY,
+            g_canvas.width, g_canvas.height);
+        var limitSq = util.square(e.radius + radius);
+        if (distSq < limitSq) {
+            return e.entity;
         }
     }
+    return false;
 
 },
 
@@ -86,7 +76,7 @@ render: function(ctx) {
 
     for (var ID in this._entities) {
         var e = this._entities[ID];
-        util.strokeCircle(ctx, e.cx, e.cy, e.getRadius());
+        util.strokeCircle(ctx, e.posX, e.posY, e.radius);
     }
     ctx.strokeStyle = oldStyle;
 }
