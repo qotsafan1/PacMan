@@ -27,13 +27,14 @@ function createInitialPacMan() {
      //   cy : 424
     //});
 
-    entityManager.makeLevel();
+    //entityManager.makeLevel();
 }
 
 // ======================
 // Fixing maze for tunnel
 // ======================
 g_maze.fixMaze();
+
 
 // =============
 // GATHER INPUTS
@@ -111,7 +112,6 @@ function processDiagnostics() {
 //
 // It then delegates the game-specific logic to `gameRender`
 
-
 // GAME-SPECIFIC RENDERING
 
 function renderSimulation(ctx) {
@@ -120,6 +120,8 @@ function renderSimulation(ctx) {
     entityManager.render(ctx);
 
     if (g_renderSpatialDebug) spatialManager.render(ctx);
+    
+    if(g_isGamePaused) g_pausemenu.render(ctx);
 }
 
 
@@ -135,6 +137,7 @@ function requestPreloads() {
     var requiredImages = {
         
         level_walls : "images/walls.png",
+        b_continue : "images/continue.png",
 
         therealone: "images/pacmanRight.png",
         therealoneLeft: "images/pacmanLeft.png",
@@ -157,20 +160,30 @@ function createSpriteSheet(spriteArray,image,numCol,numRow){
         }
     }
 }
+
 var g_sprites = {};
 var g_animateSprites = [];
 var g_animateSpritesLeft = [];
 var g_levelimg = [];
+var g_buttons = [];
 var g_deathSprites =[];
 
 function preloadDone() {
     createSpriteSheet(g_animateSprites,g_images.therealone,2,2);
     createSpriteSheet(g_animateSpritesLeft,g_images.therealoneLeft,2,2);
     createSpriteSheet(g_deathSprites,g_images.deadPacman,2,3);
-    var level = new Sprite(g_images.level_walls,0,0,g_images.level_walls.width,g_images.level_walls.height);
+
+    var levelimage = g_images.level_walls;
+    var level = new Sprite(levelimage, 0, 0, levelimage.width, levelimage.height);
     g_levelimg.push(level);
+
+    var button = g_images.b_continue;
+    var continue_button = new Sprite(button, 0, 0, button.width, button.height);
+    g_buttons.push(continue_button);
+
     entityManager.init();
-    createInitialPacMan();
+    //createInitialPacMan();
+    g_pausemenu = new pauseMenu();
 
     main.init();
 }
