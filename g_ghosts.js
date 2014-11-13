@@ -29,12 +29,14 @@ g_blinky.findTargetTile = function() {
 };
 
 g_blinky.drawHealthyGhost = function(ctx) {
-	var oldstyle = ctx.fillStyle;
-    ctx.fillStyle = "red";
-    util.fillCircle(ctx, this.cx, this.cy, 10);
+	//var oldstyle = ctx.fillStyle;
+    //ctx.fillStyle = "red";
+    //util.fillCircle(ctx, this.cx, this.cy, 10);
+    g_blinkySprite[0].scale = 0.45;
+    g_blinkySprite[0].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
     if(g_useUglyRedWall) 
     	util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, "red");
-    ctx.fillStyle = oldstyle;
+    //ctx.fillStyle = oldstyle;
 };
 
 var g_pinky = new Ghost({
@@ -66,12 +68,14 @@ g_pinky.findTargetTile = function() {
 };
 
 g_pinky.drawHealthyGhost = function(ctx) {
-	var oldstyle = ctx.fillStyle;
-	ctx.fillStyle = "pink";
-	util.fillCircle(ctx, this.cx, this.cy, 10);
+	//var oldstyle = ctx.fillStyle;
+	//ctx.fillStyle = "pink";
+	//util.fillCircle(ctx, this.cx, this.cy, 10);
+	g_pinkySprite[0].scale = 0.45;
+    g_pinkySprite[0].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
 	if(g_useUglyRedWall)
 		util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, "pink");
-	ctx.fillStyle = oldstyle;
+	//ctx.fillStyle = oldstyle;
 };
 
 var g_inky = new Ghost({
@@ -105,12 +109,14 @@ g_inky.findTargetTile = function() {
 };
 
 g_inky.drawHealthyGhost = function(ctx) {
-	var oldstyle = ctx.fillStyle;
-	ctx.fillStyle = '#00FFFF';
-	util.fillCircle(ctx, this.cx, this.cy, 10);
+	//var oldstyle = ctx.fillStyle;
+	//ctx.fillStyle = '#00FFFF';
+	//util.fillCircle(ctx, this.cx, this.cy, 10);
+	g_inkySprite[0].scale = 0.45;
+    g_inkySprite[0].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
 	if(g_useUglyRedWall)
 		util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, '#00FFFF');
-	ctx.fillStyle = oldstyle;
+	//ctx.fillStyle = oldstyle;
 };
 
 var g_clyde = new Ghost({
@@ -134,10 +140,12 @@ g_clyde.findTargetTile = function() {
 };
 
 g_clyde.drawHealthyGhost = function(ctx) {
-	var oldstyle = ctx.fillStyle;
-	ctx.fillStyle = '#DAA520';
-	util.fillCircle(ctx, this.cx, this.cy, 10);
+	//var oldstyle = ctx.fillStyle;
+	//ctx.fillStyle = '#DAA520';
+	//util.fillCircle(ctx, this.cx, this.cy, 10);
+	g_clydeSprite[0].scale = 0.45;
+    g_clydeSprite[0].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
 	if(g_useUglyRedWall)
 		util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, '#DAA520');
-	ctx.fillStyle = oldstyle;
+	//ctx.fillStyle = oldstyle;
 };

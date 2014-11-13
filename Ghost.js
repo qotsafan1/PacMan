@@ -197,9 +197,14 @@ Ghost.prototype.update = function (du) {
 Ghost.prototype.render = function (ctx) {
     if(!this.scared) this.drawHealthyGhost(ctx);
     else {
-        var oldstyle = ctx.fillStyle;
-        ctx.fillStyle = 'darkblue';
-        util.fillCircle(ctx, this.cx, this.cy, 10);
-        ctx.fillStyle = oldstyle;
+        //var oldstyle = ctx.fillStyle;
+        //ctx.fillStyle = 'darkblue';
+        //util.fillCircle(ctx, this.cx, this.cy, 10);
+        //ctx.fillStyle = oldstyle;
+        g_scaredSprite[0].scale = 0.45;
+        g_scaredSprite[0].drawWrappedCentredAt(ctx, g_blinky.cx,g_blinky.cy,0);
+        g_scaredSprite[0].drawWrappedCentredAt(ctx, g_inky.cx,g_inky.cy,0);
+        g_scaredSprite[0].drawWrappedCentredAt(ctx, g_pinky.cx,g_pinky.cy,0);
+        g_scaredSprite[0].drawWrappedCentredAt(ctx, g_clyde.cx,g_clyde.cy,0);
     }
 };
