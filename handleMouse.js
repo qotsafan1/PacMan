@@ -16,19 +16,26 @@ var g_mouseX = 0,
 
 function handleMouse(evt) {
     
-    g_mouseX = evt.clientX - g_canvas.offsetLeft;
-    g_mouseY = evt.clientY - g_canvas.offsetTop;
+	var rect = canvas.getBoundingClientRect();
+
+    g_mouseX = evt.clientX - rect.left;
+    g_mouseY = evt.clientY - rect.top;
 
     
     // If no button is being pressed, then bail
     var button = evt.buttons === undefined ? evt.which : evt.buttons;
     if (!button) return;
     console.log(g_maze.returnTilePos(g_mouseX,g_mouseY));
-    g_pausemenu.update();
+    g_pausemenu.buttonpushed();
 
 
+}
+
+function handleMouseUp(evt) {
+    g_pausemenu.buttonreleased();
 }
 
 // Handle "down" and "move" events the same way.
 window.addEventListener("mousedown", handleMouse);
 window.addEventListener("mousemove", handleMouse);
+window.addEventListener("mouseup", handleMouseUp);
