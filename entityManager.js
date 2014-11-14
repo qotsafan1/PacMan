@@ -27,7 +27,6 @@ var entityManager = {
 _pacMan : [],
 _level  : [],
 _ghosts : [],
-_dots   : [],
 _fruits  : [],
 _maze   : [],
 pacRtime : 0,
@@ -93,7 +92,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._pacMan, this._level, this._dots, this._fruits, this._ghosts, this._maze];
+    this._categories = [this._pacMan, this._level, this._fruits, this._ghosts, this._maze];
 },
 
 init: function() {
@@ -110,9 +109,7 @@ init: function() {
 
     for(var i=0; i < g_maze.tiles.length; ++i) {
         for(var j=0; j < g_maze.tiles[i].length; ++j) {
-            if(g_maze.tiles[i][j] === 0 || g_maze.tiles[i][j] === 2 || g_maze.tiles[i][j] === 3) {
-                this.generateDot(8+i*16, 8+j*16);
-            }
+    
             if(g_maze.tiles[i][j] === 8) {
                 this.generateFruit(8+i*16, 8+j*16);
             }
@@ -124,7 +121,7 @@ init: function() {
 },
 
 update: function(du) {
-    var things = ['pacman', 'level', 'dots', 'fruits', 'ghosts', 'maze'];
+    var things = ['pacman', 'level', 'fruits', 'ghosts', 'maze'];
     var arr = [];
     if(g_takingTime) this.counter+=du/SECS_TO_NOMINALS;
     for (var c = 0; c < this._categories.length; ++c) {
@@ -156,9 +153,6 @@ update: function(du) {
             if (things[c]==='level') {
                 this.levelUtime += b-a;
             }
-            if (things[c]==='dots') {
-                this.dotsUtime += b-a;
-            }
             if (things[c]==='fruits') {
                 this.fruitsUtime += b-a;
             }
@@ -173,7 +167,6 @@ update: function(du) {
     if(g_takingTime) {
         console.log("PacMan update time:  "+ (this.pacUtime/this.counter));
         console.log("Level update time:  "+ (this.levelUtime/this.counter));
-        console.log("Dots update time:  "+ (this.dotsUtime/this.counter));
         console.log("Fruits update time:  "+ (this.fruitsUtime/this.counter));
         console.log("Ghosts update time:  "+ (this.ghostsUtime/this.counter));
         console.log("Maze update time:  "+ (this.mazeUtime/this.counter));
@@ -184,7 +177,7 @@ update: function(du) {
 },
 
 render: function(ctx) {
-    var things = ['pacman', 'level', 'dots', 'fruits', 'ghosts', 'maze'];
+    var things = ['pacman', 'level', 'fruits', 'ghosts', 'maze'];
     var arr = [];
 
     var debugX = 10, debugY = 100;
@@ -210,9 +203,6 @@ render: function(ctx) {
             if (things[c]==='level') {
                 this.levelRtime += b-a;
             }
-            if (things[c]==='dots') {
-                this.dotsRtime += b-a;
-            }
             if (things[c]==='fruits') {
                 this.fruitsRtime += b-a;
             }
@@ -227,7 +217,6 @@ render: function(ctx) {
     if(g_takingTime) {
         console.log("PacMan render time:  "+ (this.pacRtime/this.counter));
         console.log("Level render time:  "+ (this.levelRtime/this.counter));
-        console.log("Dots render time:  "+ (this.dotsRtime/this.counter));
         console.log("Fruits render time:  "+ (this.fruitsRtime/this.counter));
         console.log("Ghosts render time:  "+ (this.ghostsRtime/this.counter));
         console.log("Maze render time:  "+ (this.mazeRtime/this.counter));

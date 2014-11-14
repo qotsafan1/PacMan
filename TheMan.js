@@ -161,17 +161,12 @@ PacMan.prototype.eatDot = function(){
     var fruitEntity = entityManager._fruits;
     //console.log(this.cx + "  " + dotEntity[1].cx);
 
+    g_dotsEaten();
 
     for(var i=0; i<fruitEntity.length;i++){
         if((fruitEntity[i].cx > this.cx-this.getRadius() && fruitEntity[i].cx < this.cx +this.getRadius()) && (fruitEntity[i].cy > this.cy-this.getRadius() && fruitEntity[i].cy < this.cy +this.getRadius())) {
                 fruitEntity.splice(i,1);
                 this.makeGhostsScared();
-        }
-    }
-
-    for(var i=0; i<dotEntity.length;i++){
-        if((dotEntity[i].cx > this.cx-this.getRadius() && dotEntity[i].cx < this.cx +this.getRadius()) && (dotEntity[i].cy > this.cy-this.getRadius() && dotEntity[i].cy < this.cy +this.getRadius())) {
-            dotEntity.splice(i,1);
         }
     }   
 }
