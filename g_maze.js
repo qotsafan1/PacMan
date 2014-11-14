@@ -43,7 +43,9 @@ var g_maze = {
     tHeight : 16,
     tWidth : 16,
     scaredTimer : 0,
-    theManMoving : false
+    theManMoving : false,
+    dots : [],
+    fruits : []
 };
 
 g_maze.returnTilePos = function (cx, cy) {
@@ -88,6 +90,20 @@ g_maze.render = function (ctx) {
             }
         }
     }
+    var oldstyle = ctx.fillStyle;
+    ctx.fillStyle = '#DAA520';
+    for (var i=0; i<this.dots.length; ++i) {
+        var now = this.dots[i];
+        if (this.tiles[now[0]][now[1]]===0 || this.tiles[now[0]][now[1]]===2 ||
+            this.tiles[now[0]][now[1]]===3) util.fillCircle(ctx, now[0]*16+8, now[1]*16+8, 2);
+        else this.dots.splice(i,1); 
+    }
+    for (var k=0; k<this.fruits.length; ++k) {
+        var now = this.fruits[k];
+        if (this.tiles[now[0]][now[1]]===8) util.fillCircle(ctx, now[0]*16+8, now[1]*16+8, 6);
+        else this.fruits.splice(k,1);
+    }
+    ctx.fillStyle = oldstyle;
 };
 
 //fixing tunnel that uses wrapparound
@@ -108,6 +124,17 @@ g_maze.fixMaze = function () {
     g_maze.tiles[29][16]=0;
     g_maze.tiles[29][17]=0;
     g_maze.tiles[29][18]=0;
+    for (var i = 0; i<this.tiles.length; ++i) {
+        var x = this.tiles[i];
+        for (var k = 0; k<x.length; ++k) {
+            if (x[k]===0 || x[k]===2 || x[k]===3) {
+                this.dots.push([i,k]);
+            }
+            else if(x[k]===8) {
+                this.fruits.push([i,k]);
+            }
+        }
+    }
 };
 
 g_maze.stopBeingScared = function() {

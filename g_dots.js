@@ -4,7 +4,14 @@ function Dot(descr) {
         this.setup(descr);
 }
 
-Dot.prototype = new Entity();
+//Dot.prototype = new Entity();
+Dot.prototype.setup = function (descr) {
+
+    // Apply all setup properies from the (optional) descriptor
+    for (var property in descr) {
+        this[property] = descr[property];
+    }
+};
 
 Dot.prototype.cx = 0;
 Dot.prototype.cy = 0;
