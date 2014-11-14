@@ -93,7 +93,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._pacMan, this._level, this._dots, this._fruits, this._maze, this._ghosts];
+    this._categories = [this._pacMan, this._level, this._dots, this._fruits, this._ghosts, this._maze];
 },
 
 init: function() {
@@ -107,7 +107,7 @@ init: function() {
     this._ghosts.push(g_clyde);
     this._maze.push(g_maze);
     g_clyde.fixYourFriends();
-/*
+
     for(var i=0; i < g_maze.tiles.length; ++i) {
         for(var j=0; j < g_maze.tiles[i].length; ++j) {
             if(g_maze.tiles[i][j] === 0 || g_maze.tiles[i][j] === 2 || g_maze.tiles[i][j] === 3) {
@@ -119,12 +119,12 @@ init: function() {
 
         }
     }
-        */
+        
 
 },
 
 update: function(du) {
-    var things = ['pacman', 'level', 'dots', 'fruits', 'maze', 'ghosts'];
+    var things = ['pacman', 'level', 'dots', 'fruits', 'ghosts', 'maze'];
     var arr = [];
     if(g_takingTime) this.counter+=du/SECS_TO_NOMINALS;
     for (var c = 0; c < this._categories.length; ++c) {
@@ -184,7 +184,7 @@ update: function(du) {
 },
 
 render: function(ctx) {
-    var things = ['pacman', 'level', 'dots', 'fruits', 'maze', 'ghosts'];
+    var things = ['pacman', 'level', 'dots', 'fruits', 'ghosts', 'maze'];
     var arr = [];
 
     var debugX = 10, debugY = 100;

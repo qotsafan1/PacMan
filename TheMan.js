@@ -156,8 +156,8 @@ PacMan.prototype.animateDeath = function(){
     }
 };
 
-PacMan.prototype.eatDot = function(tileP){
-    /*var dotEntity = entityManager._dots;
+PacMan.prototype.eatDot = function(){
+    var dotEntity = entityManager._dots;
     var fruitEntity = entityManager._fruits;
     //console.log(this.cx + "  " + dotEntity[1].cx);
 
@@ -173,31 +173,7 @@ PacMan.prototype.eatDot = function(tileP){
         if((dotEntity[i].cx > this.cx-this.getRadius() && dotEntity[i].cx < this.cx +this.getRadius()) && (dotEntity[i].cy > this.cy-this.getRadius() && dotEntity[i].cy < this.cy +this.getRadius())) {
             dotEntity.splice(i,1);
         }
-    }   */
-    switch (g_maze.tiles[tileP[0]][tileP[1]]) {
-        case 0:
-            g_maze.tiles[tileP[0]][tileP[1]]=10;
-            break;
-        case 2:
-            g_maze.tiles[tileP[0]][tileP[1]]=4;
-            break;
-        case 3:
-            g_maze.tiles[tileP[0]][tileP[1]]=5;
-            break;
-        case 8:
-            g_maze.tiles[tileP[0]][tileP[1]]=7;
-            this.makeGhostsScared();
-            break;
-        }
-            /*
-    if (g_maze.tiles[tileP[0]][tileP[1]]===0 || g_maze.tiles[tileP[0]][tileP[1]]===2 ||
-            g_maze.tiles[tileP[0]][tileP[1]]===3) {
-
-    }
-    else if(g_maze.tiles[tileP[0]][tileP[1]]===8) {
-        g_maze.tiles[tileP[0]][tileP[1]] = 7;
-        this.makeGhostsScared();
-    }*/
+    }   
 }
 
 PacMan.prototype.animate = function(){
@@ -228,7 +204,7 @@ PacMan.prototype.update = function (du) {
     var tileP =this.tilePos();
     spatialManager.unregister(this);
  
-    this.eatDot(tileP);
+    this.eatDot();
 
     this.move(du, tileP);
     if(this.isNextTileWall(tileP) && this.endOfTile(tileP))
