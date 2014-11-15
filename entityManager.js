@@ -92,7 +92,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._pacMan, this._level, this._fruits, this._ghosts, this._maze];
+    this._categories = [this._pacMan, this._level, this._fruits, this._maze, this._ghosts];
 },
 
 init: function() {
@@ -121,7 +121,7 @@ init: function() {
 },
 
 update: function(du) {
-    var things = ['pacman', 'level', 'fruits', 'ghosts', 'maze'];
+    var things = ['pacman', 'level', 'fruits', 'maze', 'ghosts'];
     var arr = [];
     if(g_takingTime) this.counter+=du/SECS_TO_NOMINALS;
     for (var c = 0; c < this._categories.length; ++c) {
@@ -177,7 +177,7 @@ update: function(du) {
 },
 
 render: function(ctx) {
-    var things = ['pacman', 'level', 'fruits', 'ghosts', 'maze'];
+    var things = ['pacman', 'level', 'fruits', 'maze', 'ghosts'];
     var arr = [];
 
     var debugX = 10, debugY = 100;

@@ -27,6 +27,7 @@ function Ghost(descr) {
     this.scared = false;
     this.currentTile = [13,14];
     this.inCage = true;
+    this.deathTile = [14,17];
 };
 
 Ghost.prototype = new Entity();
@@ -52,7 +53,12 @@ Ghost.prototype.move = function (target, myTile) {
     if (this.scared && !this.isDeadNow) go = this.panicDecision();
     else go = this.shortWay(target, myTile);
 
-
+    if (this.isDeadNow && g_maze.tiles[myTile[0]][myTile[1]]===13) {
+            this.velX = 0;
+            this.velY = this.speed;
+            this.centerx;
+            return;
+    }
     if (!this.chosen && this.endOfTile(myTile)) {
         for (var i=0; i<go.length; ++i) {
             if(this.canGoUp(myTile) && go[i]===0 && !(this.velY>0) && 
@@ -148,12 +154,12 @@ Ghost.prototype.isNextTileWall = function (myTile) {
 
 Ghost.prototype.makingDecisions = function(theTile, myTile) {
     if (this.isDeadNow) {
-        this.targetTile = g_blinky.reset_tile;
+        this.targetTile = this.deathTile;
     }
     else this.targetTile = this.findTargetTile(myTile);
 
     // here ghosts make decicions when they land on an intersection
-    if(g_maze.isGhostDecTile(theTile)) {
+    if(g_maze.isGhostDecTile(theTile, this)) {
         return this.move(this.targetTile, myTile);
     }
     // here ghosts turn before crashing into a wall
@@ -198,21 +204,26 @@ Ghost.prototype.update = function (du) {
     var endTile = this.endOfTile(this.currentTile);
     var theTile = g_maze.tiles[this.currentTile[0]][this.currentTile[1]];
     spatialManager.unregister(this);
-    
-    if (!g_maze.isGhostDecTile(theTile)) this.chosen = false;
+    if(theTile===10 && !this.inCage) {
+        this.isDeadNow = false;
+        this.centerx(this.currentTile);
+        this.velX = 0;
+        this.velY = -this.speed;
+    }
+    else {
+        
+        if (!g_maze.isGhostDecTile(theTile, this)) this.chosen = false;
 
-    if(endTile && (g_maze.isGhostDecTile(theTile) || this.isNextTileWall(this.currentTile))) {
-        // if the ghost can´t just keep going and needs to take a decision
-        this.makingDecisions(theTile, this.currentTile);
+        if(endTile && (g_maze.isGhostDecTile(theTile, this) || this.isNextTileWall(this.currentTile))) {
+            // if the ghost can´t just keep going and needs to take a decision
+            this.makingDecisions(theTile, this.currentTile);
+        }
     }
 
     this.wrapPosition();
     this.cx += this.velX*du;
     this.cy += this.velY*du;
     this.currentTile = this.tilePos();
-    if(this.isDeadNow) {
-        if((this.reset_tile[0]===this.currentTile[0]) && (this.reset_tile[1]===this.currentTile[1])) this.isDeadNow = false;
-    }
     spatialManager.register(this);
 };
 
