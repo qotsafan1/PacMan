@@ -2,6 +2,11 @@
 var g_score = 0;
 var g_lives = 3;
 
+g_newGame = function() {
+	g_score = 0;
+	g_lives = 3;
+}
+
 function Level() {
     this.cx = 0;
     this.cy = 0;
@@ -27,6 +32,8 @@ Level.prototype.render = function(ctx) {
 	this.levelsprite.drawAt(ctx, this.cx, this.cy);
 	ctx.font = "20px Georgia";
 	ctx.fillText(g_score, 0, 50);
+
+
 	//console.log("buja");
 	//ctx.drawImage("images/levelwalls.png", this.cx, this.cy);
 };
