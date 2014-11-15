@@ -24,6 +24,8 @@ var g_dotsEaten = function() {
         if(array_cx[i] > entityManager._pacMan[0].cx-entityManager._pacMan[0].getRadius() && array_cx[i] < entityManager._pacMan[0].cx+entityManager._pacMan[0].getRadius() && array_cy[i] > entityManager._pacMan[0].cy-entityManager._pacMan[0].getRadius() && array_cy[i] < entityManager._pacMan[0].cy+entityManager._pacMan[0].getRadius()) {
             array_cx.splice(i,1);
             array_cy.splice(i,1);
+
+            g_point();
         }
     }
 }

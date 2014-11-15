@@ -157,15 +157,15 @@ PacMan.prototype.animateDeath = function(){
 };
 
 PacMan.prototype.eatDot = function(){
-    var dotEntity = entityManager._dots;
     var fruitEntity = entityManager._fruits;
-    //console.log(this.cx + "  " + dotEntity[1].cx);
+
 
     g_dotsEaten();
 
     for(var i=0; i<fruitEntity.length;i++){
         if((fruitEntity[i].cx > this.cx-this.getRadius() && fruitEntity[i].cx < this.cx +this.getRadius()) && (fruitEntity[i].cy > this.cy-this.getRadius() && fruitEntity[i].cy < this.cy +this.getRadius())) {
                 fruitEntity.splice(i,1);
+                g_point();
                 this.makeGhostsScared();
         }
     }   
@@ -239,6 +239,8 @@ PacMan.prototype.die = function() {
     this.i = 0;
     this.counter = 0;
     g_maze.theManMoving = false;
+    
+    g_lossOfLife();
 };
 
 var NOMINAL_ROTATE_RATE = 0.1;
