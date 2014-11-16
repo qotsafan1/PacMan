@@ -17,8 +17,6 @@ Fruit.prototype.update = function(du) {
 
 Fruit.prototype.render = function(ctx) {
 
-	var oldstyle = ctx.fillStyle;
 	ctx.fillStyle = '#DAA520';
 	util.fillCircle(ctx, this.cx, this.cy, 6);
-	ctx.fillStyle = oldstyle;
 };
