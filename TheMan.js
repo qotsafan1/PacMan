@@ -211,11 +211,11 @@ PacMan.prototype.update = function (du) {
     }
     if(this.isColliding() && !this.isDead){
         var thing = this.isColliding();
-        if (!thing.scared) {
-            this.die();
+        if (thing.scared || thing.isDeadNow) {
+            thing.isDeadNow = true;
         }
         else {
-            thing.isDeadNow = true;
+             this.die();
         }
     } 
     spatialManager.register(this);
