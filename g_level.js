@@ -1,6 +1,11 @@
 // Level stuff
 var g_score = 0;
 var g_lives = 3;
+var g_speed = 2;
+var g_ghostSpeed = 0.75;
+var g_pacSpeed = 0.8;
+var g_scaredGhostSpeed = 0.50;
+var g_scaredPacSpeed = 0.9;
 
 g_newGame = function() {
 	g_score = 0;

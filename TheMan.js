@@ -28,7 +28,7 @@ function PacMan(descr) {
    
     // Set normal drawing scale, and warp state off
     this._scale = 0.45;
-    this.speed = 2;//1.6;
+    this.speed = g_pacSpeed*g_speed;
     this.turns = "right";
 };
 
@@ -193,12 +193,16 @@ PacMan.prototype.makeGhostsScared= function() {
     g_pinky.fright();
     g_inky.fright();
     g_clyde.fright();
+    g_maze.ghostScared = true;
 };
 
 PacMan.prototype.update = function (du) {
     var tileP =this.tilePos();
     spatialManager.unregister(this);
- 
+
+    if (g_maze.ghostScared) this.speed = g_scaredPacSpeed*g_speed;
+    else g_pacSpeed*g_speed;
+
     this.eatDot();
 
     this.move(du, tileP);
