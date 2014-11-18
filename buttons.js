@@ -11,9 +11,9 @@ function Button(x, y, width, height, img) {
 
 	this.centerX = this.cx-this.buttonwidth/2;
 	this.centerY = this.cy-this.buttonheight/2;
-
-	this.buttoncolor = '#000BDD';
 }
+
+Button.prototype.buttoncolor = '#000BDD';
 
 Button.prototype.update = function() {
 

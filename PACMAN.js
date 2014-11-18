@@ -20,7 +20,7 @@ var g_ctx = g_canvas.getContext("2d");
 // ====================
 // CREATE PAC-MAN
 // ====================
-function createInitialPacMan() {
+function createInitialObjects() {
 
     //entityManager.generatePacMan({
       //  cx : 224,
@@ -28,6 +28,20 @@ function createInitialPacMan() {
     //});
 
     //entityManager.makeLevel();
+
+    g_startupscreen = new startUpScreen({
+
+        cx : g_canvas.width/2,
+        cy : g_canvas.height/2,
+        pacmanlogo : g_paclogo[0]
+
+    });
+
+
+    g_pausemenu = new Menu(300, 180);
+    //generatePauseMenu();
+
+
 }
 
 // ======================
@@ -220,10 +234,7 @@ function preloadDone() {
 
 
     entityManager.init();
-    //createInitialPacMan();
-    g_pausemenu = new pauseMenu();
-
-    g_startupscreen = new startUpScreen(g_paclogo[0]);
+    createInitialObjects();
 
     main.init();
 }
