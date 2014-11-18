@@ -3,7 +3,16 @@
 var g_pausemenu;
 var g_mainmenu;
 
-function Menu(width, height) {
+function pauseButtons(xpos, ypos) {
+
+	var b_continue = new Button(xpos, ypos+40, g_buttons[0].width, g_buttons[0].height, g_buttons[0]);
+
+	var buttons = [b_continue];
+
+	return buttons;
+}
+
+function Menu(width, height, type) {
 
 	this.menu_width = width;
 	this.menu_height = height;
@@ -11,8 +20,11 @@ function Menu(width, height) {
 	this.menu_cx = (g_canvas.width-this.menu_width)/2;
 	this.menu_cy = (g_canvas.height-this.menu_height-15)/2;
 
-    this.b_continue = new Button(g_canvas.width/2, this.menu_cy+40, 
-                            	 g_buttons[0].width, g_buttons[0].height, g_buttons[0]);
+	if(type === "pause") {
+		this.buttons = pauseButtons(g_canvas.width/2, this.menu_cy);
+	}
+
+    //console.log(this.buttons);
 
     //this.b_newgame = new Button(g_canvas.width/2, this.menu_cy+90, 150,30, g_buttons[0]);
     //this.b_quit = new Button(g_canvas.width/2, this.menu_cy+140, 150,30, g_buttons[0]);
@@ -29,17 +41,28 @@ Menu.prototype.menu_linewidth = 4;
 
 Menu.prototype.update = function() {
 
-	this.b_continue.update();
+	for (var i = 0; i < this.buttons.length; i++) {
+		this.buttons[i].update();
+	}
+	//this.b_continue.update();
 	//this.b_newgame.update();
 	//this.b_quit.update();
 };
 
 Menu.prototype.buttonpushed = function() {
-	this.b_continue.toggleon();
+	//this.b_continue.toggleon();
+
+	for (var i = 0; i < this.buttons.length; i++) {
+		this.buttons[i].toggleon();
+	}
 };
 
 Menu.prototype.buttonreleased = function() {
-	this.b_continue.toggleoff();
+	//this.b_continue.toggleoff();
+
+	for (var i = 0; i < this.buttons.length; i++) {
+		this.buttons[i].toggleoff();
+	}
 };
 
 Menu.prototype.render = function(ctx) {
@@ -53,7 +76,10 @@ Menu.prototype.render = function(ctx) {
 						 this.menu_fillcolor, this.menu_linewidth, this.strokecolor);
 
 	// Draw buttons
-	this.b_continue.render(ctx);
+	for (var i = 0; i < this.buttons.length; i++) {
+		this.buttons[i].render(ctx);
+	}
+	//this.b_continue.render(ctx);
 	//this.b_newgame.render(ctx);
 	//this.b_quit.render(ctx);
 };
