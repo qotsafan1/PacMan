@@ -20,7 +20,7 @@ function Ghost(descr) {
 
     // Set normal drawing scale
     this._scale = 0.45;
-    this.speed = 1;
+    this.speed = g_ghostSpeed*g_speed;
     this.velX = -this.speed;
     this.velY = 0;
     this.chosen = false;
@@ -200,6 +200,10 @@ Ghost.prototype.fright = function() {
 
 Ghost.prototype.update = function (du) {
     if (!g_maze.theManMoving) return;
+
+    if(this.scared) this.speed = g_scaredGhostSpeed*g_speed;
+    else this.speed = g_ghostSpeed*g_speed;
+    if(this.isDeadNow) this.speed = g_speed;
 
     var endTile = this.endOfTile(this.currentTile);
     var theTile = g_maze.tiles[this.currentTile[0]][this.currentTile[1]];

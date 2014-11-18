@@ -17,7 +17,7 @@ var g_blinky = new Ghost({
     scatterTile : [25,0],
     targetTile : [25,0],
     PacTile : [0,0],
-    velX : -this.speed,
+    velX : -g_ghostSpeed*g_speed,
     velY : 0
 });
 
@@ -46,7 +46,7 @@ var g_pinky = new Ghost({
 	targetTile : [2,0],
 	PacTurns : "right",
 	velX : 0,
-    velY : this.speed
+    velY : g_ghostSpeed*g_speed
 });
 
 g_pinky.findTargetTile = function() {
@@ -86,7 +86,7 @@ var g_inky = new Ghost({
     scatterTile : [27,35],
     targetTile : [27,35],
     velX : 0,
-    velY : this.speed
+    velY : g_ghostSpeed*g_speed
 });
 
 g_inky.findTargetTile = function() {
@@ -129,7 +129,7 @@ var g_clyde = new Ghost({
     scatterTile : [0,35],
     targetTile : [0,35],
     velX : 0,
-    velY : this.speed
+    velY : g_ghostSpeed*g_speed
 });
 
 g_clyde.findTargetTile = function() {
@@ -158,9 +158,9 @@ g_clyde.fixYourFriends = function() {
     g_blinky.inCage = false;
     g_pinky.inCage = false;
     g_inky.velX = 0;
-    g_inky.velY = -this.speed;
+    g_inky.velY = -g_ghostSpeed*g_speed;
     g_clyde.velX = 0;
-    g_clyde.velY = -this.speed;
+    g_clyde.velY = -g_ghostSpeed*g_speed;
     g_blinky.rememberResets();
     g_pinky.rememberResets();
     g_inky.rememberResets();
