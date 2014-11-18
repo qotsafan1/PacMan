@@ -20,7 +20,7 @@ var g_maze = {
             [9,9,9,1,0,1,1,1,0,1,1,0,1,1,1,1,1,9,1,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,9,9],
             [9,9,9,1,2,0,0,0,2,0,0,2,0,0,0,0,0,2,0,0,0,0,0,2,0,0,2,0,0,0,1,1,0,1,9,9],
             [9,9,9,1,0,1,1,1,0,1,1,1,1,1,1,1,1,9,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,9,9],
-            [9,9,9,1,0,1,1,1,0,1,1,1,1,1,1,1,1,9,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,9,9],
+            [9,9,9,1,0,1,1,1,0,1,1,1,1,1,1,1,1,15,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,9,9],
             [9,9,9,1,0,1,1,1,2,0,0,0,1,1,9,9,9,4,9,9,4,9,9,2,1,1,2,0,0,0,1,1,0,1,9,9],
             [9,9,9,1,0,1,1,1,0,1,1,0,1,1,9,1,1,1,1,1,9,1,1,0,1,1,0,1,1,0,1,1,0,1,9,9],
             [9,9,9,1,0,1,1,1,0,1,1,0,1,1,9,1,12,12,12,1,9,1,1,0,1,1,0,1,1,0,1,1,0,1,9,9],
@@ -34,7 +34,7 @@ var g_maze = {
             [9,9,9,1,0,1,1,1,0,1,1,1,1,1,1,1,1,9,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,9,9],
             [9,9,9,1,0,1,1,1,0,1,1,1,1,1,1,1,1,9,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,9,9],
             [9,9,9,1,2,0,0,0,2,0,0,2,0,0,0,0,0,2,0,0,0,0,0,2,0,0,2,0,0,0,1,1,0,1,9,9],
-            [9,9,9,1,0,1,1,1,0,1,1,0,1,1,1,1,1,9,1,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,9,9],
+            [9,9,9,1,0,1,1,1,0,1,1,0,1,1,1,1,1,15,1,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,9,9],
             [9,9,9,1,0,1,1,1,0,1,1,0,1,1,1,1,1,9,1,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,9,9],
             [9,9,9,1,0,1,1,1,0,1,1,0,1,1,1,1,1,9,1,1,1,1,1,0,1,1,0,0,0,2,1,1,0,1,9,9],
             [9,9,9,1,0,1,1,1,0,1,1,0,1,1,1,1,1,9,1,1,1,1,1,0,1,1,0,1,1,0,1,1,0,1,9,9],
@@ -70,27 +70,29 @@ g_maze.drawTile = function (ctx, x, y, style) {
 };
 
 g_maze.update = function(du) {
-    if (g_blinky.scared || g_pinky.scared || g_inky.scared || g_clyde.scared) {
-        if (this.scaredTimer>6) { 
-            this.scaredTimer=0;
-            this.stopBeingScared();
-            this.ghostScared = false;
-            return;
+    if (this.theManMoving) {
+        if (g_blinky.scared || g_pinky.scared || g_inky.scared || g_clyde.scared) {
+            if (this.scaredTimer>6) { 
+                this.scaredTimer=0;
+                this.stopBeingScared();
+                this.ghostScared = false;
+                return;
+            }
+            this.scaredTimer += du/SECS_TO_NOMINALS;
         }
-        this.scaredTimer += du/SECS_TO_NOMINALS;
-    }
-    this.nextOut += du/SECS_TO_NOMINALS;
-    if (g_inky.inCage && this.nextOut>4 && g_inky.endOfTile(g_inky.currentTile)) {
-        g_inky.centery(g_inky.currentTile);
-        g_inky.inCage = false;
-        g_inky.velX = 1;
-        g_inky.velY = 0;
-    }
-    if (g_clyde.inCage && this.nextOut>8 && g_clyde.endOfTile(g_clyde.currentTile)) {
-        g_clyde.centery(g_clyde.currentTile);
-        g_clyde.inCage = false;
-        g_clyde.velX =-1;
-        g_clyde.velY = 0;
+        this.nextOut += du/SECS_TO_NOMINALS;
+        if (g_inky.inCage && this.nextOut>g_inkyOut && g_inky.endOfTile(g_inky.currentTile)) {
+            g_inky.centery(g_inky.currentTile);
+            g_inky.inCage = false;
+            g_inky.velX = 1;
+            g_inky.velY = 0;
+        }
+        if (g_clyde.inCage && this.nextOut>g_clydeOut && g_clyde.endOfTile(g_clyde.currentTile)) {
+            g_clyde.centery(g_clyde.currentTile);
+            g_clyde.inCage = false;
+            g_clyde.velX =-1;
+            g_clyde.velY = 0;
+        }
     }
 };
 

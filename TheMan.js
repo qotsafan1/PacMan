@@ -197,11 +197,24 @@ PacMan.prototype.makeGhostsScared= function() {
 };
 
 PacMan.prototype.update = function (du) {
-    var tileP =this.tilePos();
     spatialManager.unregister(this);
 
     if (g_maze.ghostScared) this.speed = g_scaredPacSpeed*g_speed;
     else g_pacSpeed*g_speed;
+
+    while (du > 4) {
+        this.takeStep(4);
+        du -= 4;
+    }
+    this.takeStep(du);
+    
+    spatialManager.register(this);
+    g_pinky.PacTurns = this.turns;
+    g_blinky.PacTile = this.tilePos();
+};
+
+PacMan.prototype.takeStep = function (du) {
+    var tileP =this.tilePos();
 
     this.eatDot();
 
@@ -221,10 +234,7 @@ PacMan.prototype.update = function (du) {
         else {
              this.die();
         }
-    } 
-    spatialManager.register(this);
-    g_pinky.PacTurns = this.turns;
-    g_blinky.PacTile = this.tilePos();
+    }
 };
 
 PacMan.prototype.getRadius = function () {

@@ -28,6 +28,7 @@ function Ghost(descr) {
     this.currentTile = [13,14];
     this.inCage = true;
     this.deathTile = [14,17];
+    this.turn = false;
 };
 
 Ghost.prototype = new Entity();
@@ -50,15 +51,28 @@ Ghost.prototype.resetGhost = function () {
 
 Ghost.prototype.move = function (target, myTile) {
     var go;
+    // turn around
+    if (this.turn) {
+        this.velY *=-1;
+        this.velX *=-1;
+        this.turn = false;
+        this.chosen = true;
+        return;
+    }
+
+    // Choses shortest distance to target tile
     if (this.scared && !this.isDeadNow) go = this.panicDecision();
     else go = this.shortWay(target, myTile);
 
+    // if is dead and is over ghostcage turn down
     if (this.isDeadNow && g_maze.tiles[myTile[0]][myTile[1]]===13) {
             this.velX = 0;
             this.velY = this.speed;
             this.centerx;
             return;
     }
+
+    // move to the tile that is closest to the target tile
     if (!this.chosen && this.endOfTile(myTile)) {
         for (var i=0; i<go.length; ++i) {
             if(this.canGoUp(myTile) && go[i]===0 && !(this.velY>0) && 
@@ -152,6 +166,7 @@ Ghost.prototype.isNextTileWall = function (myTile) {
     return true;
 };
 
+// Ghost now on a tile he needs to make a decision where to go next
 Ghost.prototype.makingDecisions = function(theTile, myTile) {
     if (this.isDeadNow) {
         this.targetTile = this.deathTile;
@@ -194,8 +209,7 @@ Ghost.prototype.makingDecisions = function(theTile, myTile) {
 
 Ghost.prototype.fright = function() {
     this.scared = true;
-    this.velY *=-1;
-    this.velX *=-1;
+    if(!this.isDeadNow) this.turn = true;
 };
 
 Ghost.prototype.update = function (du) {
@@ -205,11 +219,22 @@ Ghost.prototype.update = function (du) {
     else this.speed = g_ghostSpeed*g_speed;
     if(this.isDeadNow) this.speed = g_speed;
 
+    spatialManager.unregister(this);
+    while (du>4) { //take smaller steps if du is too large
+        this.takeStep(4);
+        du-=4;
+    }
+    this.takeStep(du);
+
+    spatialManager.register(this);
+};
+
+Ghost.prototype.takeStep = function(du) {
     var endTile = this.endOfTile(this.currentTile);
     var theTile = g_maze.tiles[this.currentTile[0]][this.currentTile[1]];
-    spatialManager.unregister(this);
     if(theTile===10 && !this.inCage) {
         this.isDeadNow = false;
+        this.scared = false;
         this.centerx(this.currentTile);
         this.velX = 0;
         this.velY = -this.speed;
@@ -228,7 +253,6 @@ Ghost.prototype.update = function (du) {
     this.cx += this.velX*du;
     this.cy += this.velY*du;
     this.currentTile = this.tilePos();
-    spatialManager.register(this);
 };
 
 Ghost.prototype.getRadius = function() {
@@ -236,16 +260,16 @@ Ghost.prototype.getRadius = function() {
 };
 
 Ghost.prototype.render = function (ctx) {
+    if (this.isDeadNow) {
+        var oldstyle = ctx.fillStyle;
+        ctx.fillStyle = 'green';
+        util.fillCircle(ctx, this.cx, this.cy, 10);
+        ctx.fillStyle = oldstyle;
+        return;
+    }
     if(!this.scared) this.drawHealthyGhost(ctx);
     else {
-        //var oldstyle = ctx.fillStyle;
-        //ctx.fillStyle = 'darkblue';
-        //util.fillCircle(ctx, this.cx, this.cy, 10);
-        //ctx.fillStyle = oldstyle;
         g_scaredSprite[0].scale = 0.45;
-        g_scaredSprite[0].drawWrappedCentredAt(ctx, g_blinky.cx,g_blinky.cy,0);
-        g_scaredSprite[0].drawWrappedCentredAt(ctx, g_inky.cx,g_inky.cy,0);
-        g_scaredSprite[0].drawWrappedCentredAt(ctx, g_pinky.cx,g_pinky.cy,0);
-        g_scaredSprite[0].drawWrappedCentredAt(ctx, g_clyde.cx,g_clyde.cy,0);
+        g_scaredSprite[0].drawWrappedCentredAt(ctx, this.cx,this.cy,0);
     }
 };

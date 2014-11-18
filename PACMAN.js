@@ -98,7 +98,7 @@ var KEY_AVE_VEL = keyCode('V');
 var KEY_SPATIAL = keyCode('X');
 var KEY_REDWALL = keyCode('M');
 var KEY_SCATTER = keyCode('N');
-var KEY_TAKETIME = keyCode('T');
+var KEY_TAKETIME = keyCode('L');
 
 var KEY_HALT  = keyCode('H');
 var KEY_RESET = keyCode('R');

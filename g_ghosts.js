@@ -165,4 +165,8 @@ g_clyde.fixYourFriends = function() {
     g_pinky.rememberResets();
     g_inky.rememberResets();
     g_clyde.rememberResets();
+    spatialManager.register(g_blinky);
+    spatialManager.register(g_pinky);
+    spatialManager.register(g_inky);
+    spatialManager.register(g_clyde);
 };
