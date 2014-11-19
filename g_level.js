@@ -28,7 +28,7 @@ function Level() {
 
 Level.prototype.update = function(du) {
 	//console.log(g_lives);
-	if (g_dotCounter===244) {
+	if (array_cx.length === 0 && entityManager._fruits.length === 0) {
 		nextLevel();
 	}
 	if(g_lives === 0){
@@ -57,9 +57,7 @@ g_lossOfLife = function () {
 }
 
 g_LostGame = function() {
-	if(g_lives === 0) {
-		localStorage.setItem("highscore", g_score);
-	}
+	if(g_lives === 0 && g_score > highscore) (localStorage.setItem("highscore", g_score));
 }
 
 Level.prototype.render = function(ctx) {
