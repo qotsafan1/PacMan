@@ -11,6 +11,7 @@ var g_clydeOut = 8;
 var g_ghostFrightTime = 6;
 var g_currentLevel = 1;
 var g_dotCounter = 0;
+var highscore = localStorage.getItem("highscore");
 
 g_newGame = function() {
 	g_score = 0;
@@ -30,6 +31,9 @@ Level.prototype.update = function(du) {
 	if (g_dotCounter===244) {
 		nextLevel();
 	}
+	if(g_lives === 0){
+		g_LostGame();
+	}
 };
 
 g_SmallPoints = function() {
@@ -44,9 +48,9 @@ g_lossOfLife = function () {
 	g_lives--;
 }
 
-g_LostGame = function(g_score) {
+g_LostGame = function() {
 	if(g_lives === 0) {
-
+		localStorage.setItem("highscore", g_score);
 	}
 }
 
@@ -60,6 +64,7 @@ Level.prototype.render = function(ctx) {
 	ctx.fillText(g_score, 50, 40);
 	if(g_score===0) ctx.fillText("  0", 50, 40);
 	ctx.fillText("HIGH SCORE", 165, 20);
+	if(highscore != null) ctx.fillText(highscore, 165, 40);
 
 	//Render Lives
 	var width = 90;
