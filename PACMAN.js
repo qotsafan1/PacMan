@@ -192,7 +192,7 @@ function requestPreloads() {
 
         therealone: "images/pacmanRight.png",
         therealoneLeft: "images/pacmanLeft.png",
-        deadPacman : "images/deadPacMan.png",
+        deadPacman : "images/deadPacMan1.png",
         inky: "images/inky.png",
         blinky: "images/blinky.png",
         pinky: "images/pinky.png",
@@ -239,7 +239,8 @@ var g_inkySprite = [],
 function preloadDone() {
     createSpriteSheet(g_animateSprites,g_images.therealone,2,2);
     createSpriteSheet(g_animateSpritesLeft,g_images.therealoneLeft,2,2);
-    createSpriteSheet(g_deathSprites,g_images.deadPacman,2,3);
+    
+    createSpriteSheet(g_deathSprites,g_images.deadPacman,2,4);
 
     createSpriteSheet(g_candySprite,g_images.candy,4,2);
     //create ghosts sprites
