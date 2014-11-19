@@ -284,8 +284,13 @@ Ghost.prototype.render = function (ctx) {
         else {
             if(this.counter === 0) this.i = 1;
             if(this.counter === 5) this.i = 0;
+            if(g_maze.scaredTimer<=(0.8)*g_ghostFrightTime){
             g_scaredSprite[this.i].scale = 0.45;
             g_scaredSprite[this.i].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
+            }else if(g_ghostFrightTime*0.8 < g_maze.scaredTimer<= g_ghostFrightTime){
+                g_scaredEndSprite[this.i].scale = 0.45;
+                g_scaredEndSprite[this.i].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
+            }
             this.counter ++;
             if(this.counter > 10) this.counter = 0;
         }
