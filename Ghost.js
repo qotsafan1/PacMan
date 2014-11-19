@@ -241,15 +241,11 @@ Ghost.prototype.update = function (du) {
 Ghost.prototype.takeStep = function(du) {
     var endTile = this.endOfTile(this.currentTile);
     var theTile = g_maze.tiles[this.currentTile[0]][this.currentTile[1]];
-    /*if(theTile===16 && this.inCage && endTile && !this.chosen) {
-        this.velY *= -1;
-        this.chosen =true;
-        console.log(this.currentTile + "  " + this.velY);
-    }*/
-    if(theTile===10 && !this.inCage) {// && (endTile || this.isDeadNow)) {
+
+    if(theTile===10 && !this.inCage) {
         if(this.isDeadNow) this.scared = false;
+        if(this===g_inky && this.isDeadNow) this.inCage=true;;
         this.isDeadNow = false;
-        spatialManager.register(this);
         this.centerx(this.currentTile);
         this.velX = 0;
         this.velY = -this.speed;

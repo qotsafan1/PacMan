@@ -46,13 +46,11 @@ var g_maze = {
     theManMoving : false,
     nextOut : 0,
     ghostScared : false,
-    backup : [],
     chaseScatter : [7,20,7,20,5,20,5,false],
     chaseScatterCounter : 0
 };
 
 g_maze.resetMaze = function () {
-    this.tiles = this.backup;
     this.nextOut = 0;
     this.scaredTimer = 0;
     this.theManMoving = false;
@@ -87,27 +85,25 @@ g_maze.update = function(du) {
                 this.scaredTimer=0;
                 this.stopBeingScared();
                 this.ghostScared = false;
-                return;
             }
-            this.scaredTimer += du/SECS_TO_NOMINALS;
+            else this.scaredTimer += du/SECS_TO_NOMINALS;
         }
         this.nextOut += du/SECS_TO_NOMINALS;
         if (g_inky.inCage && this.nextOut>g_inkyOut && g_inky.endOfTile(g_inky.currentTile)) {
             g_inky.centery(g_inky.currentTile);
             g_inky.inCage = false;
-            g_inky.velX = 1;
+            g_inky.velX = g_inky.speed;
             g_inky.velY = 0;
         }
         if (g_clyde.inCage && this.nextOut>g_clydeOut && g_clyde.endOfTile(g_clyde.currentTile)) {
             g_clyde.centery(g_clyde.currentTile);
             g_clyde.inCage = false;
-            g_clyde.velX =-1;
+            g_clyde.velX =-g_clyde.speed;
             g_clyde.velY = 0;
         }
         if (this.chaseScatter[0] && !this.ghostScared) {
             this.chaseScatterCounter += du/SECS_TO_NOMINALS;
             if(this.chaseScatterCounter>this.chaseScatter[0]) {
-                console.log(this.chaseScatterCounter);
                 this.chaseScatter.splice(0,1);
                 this.chaseScatterCounter = 0;
                 g_scatterToggle = !g_scatterToggle;
@@ -148,7 +144,6 @@ g_maze.fixMaze = function () {
     g_maze.tiles[29][16]=0;
     g_maze.tiles[29][17]=0;
     g_maze.tiles[29][18]=0;
-    this.backup = this.tiles;
 };
 
 g_maze.stopBeingScared = function() {
