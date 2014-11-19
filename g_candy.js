@@ -1,5 +1,4 @@
 var g_candy =  {
-	level : 1,
 	showTimer : 0,
 	cx : g_canvas.width/2,
 	cy : g_canvas.height/2+40,
@@ -23,7 +22,7 @@ g_candy.update = function(du) {
 }
 
 g_candy.render = function(ctx) {
-	 switch (this.level) {
+	 switch (g_currentLevel) {
         case 1:
             ctx.fillStyle = 'red';
 			util.fillCircle(ctx, g_canvas.width-50,g_canvas.height-20, this.radius);
