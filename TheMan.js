@@ -147,7 +147,7 @@ PacMan.prototype.animateDeath = function(){
     if(this.isDead === true){
         this.halt();
         this.sprite = g_deathSprites[this.i];
-        if(this.counter%5 === 0) this.i++;
+        if(this.counter%10 === 0) this.i++;
         this.counter++;
 
         if(this.i === g_deathSprites.length){
@@ -254,7 +254,7 @@ PacMan.prototype.die = function() {
     this.i = 0;
     this.counter = 0;
     g_maze.theManMoving = false;
-    
+    if(audioOn)g_pacmandeathAudio.play();
     g_lossOfLife();
 };
 
