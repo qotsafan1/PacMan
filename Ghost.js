@@ -27,8 +27,8 @@ function Ghost(descr) {
     this.scared = false;
     this.currentTile = [13,14];
     this.inCage = true;
-    this.deathTile = [14,17];
-    this.turn = false;
+    this.deathTile = [14,14];
+    this.shouldTurn = false;
 };
 
 Ghost.prototype = new Entity();
@@ -51,11 +51,11 @@ Ghost.prototype.resetGhost = function () {
 
 Ghost.prototype.move = function (target, myTile) {
     var go;
-    // turn around
-    if (this.turn) {
+    // shouldTurn around
+    if (this.shouldTurn) {
         this.velY *=-1;
         this.velX *=-1;
-        this.turn = false;
+        this.shouldTurn = false;
         this.chosen = true;
         return;
     }
@@ -64,7 +64,7 @@ Ghost.prototype.move = function (target, myTile) {
     if (this.scared && !this.isDeadNow) go = this.panicDecision();
     else go = this.shortWay(target, myTile);
 
-    // if is dead and is over ghostcage turn down
+    // if is dead and is over ghostcage shouldTurn down
     if (this.isDeadNow && g_maze.tiles[myTile[0]][myTile[1]]===13) {
             this.velX = 0;
             this.velY = this.speed;
@@ -177,7 +177,7 @@ Ghost.prototype.makingDecisions = function(theTile, myTile) {
     if(g_maze.isGhostDecTile(theTile, this)) {
         return this.move(this.targetTile, myTile);
     }
-    // here ghosts turn before crashing into a wall
+    // here ghosts shouldTurn before crashing into a wall
     else
     {
         if(this.inCage) {
@@ -209,11 +209,14 @@ Ghost.prototype.makingDecisions = function(theTile, myTile) {
 
 Ghost.prototype.fright = function() {
     this.scared = true;
-    if(!this.isDeadNow) this.turn = true;
+    if(!this.isDeadNow) this.shouldTurn = true;
 };
 
 Ghost.prototype.update = function (du) {
-    if (!g_maze.theManMoving) return;
+    if (!g_maze.theManMoving) {
+        this.setEyes();
+        return;
+    }
 
     if(this.scared) this.speed = g_scaredGhostSpeed*g_speed;
     else this.speed = g_ghostSpeed*g_speed;
@@ -233,8 +236,8 @@ Ghost.prototype.takeStep = function(du) {
     var endTile = this.endOfTile(this.currentTile);
     var theTile = g_maze.tiles[this.currentTile[0]][this.currentTile[1]];
     if(theTile===10 && !this.inCage) {
+        if(this.isDeadNow) this.scared = false;
         this.isDeadNow = false;
-        this.scared = false;
         this.centerx(this.currentTile);
         this.velX = 0;
         this.velY = -this.speed;
@@ -252,7 +255,15 @@ Ghost.prototype.takeStep = function(du) {
     this.wrapPosition();
     this.cx += this.velX*du;
     this.cy += this.velY*du;
+    this.setEyes();
     this.currentTile = this.tilePos();
+};
+
+Ghost.prototype.setEyes = function () {
+    if (this.velX>0 && this.velY===0) return this.turns = 'right';
+    if (this.velX<0 && this.velY===0) return this.turns = 'left';
+    if (this.velY>0 && this.velX===0) return this.turns = 'down';
+    if (this.velY<0 && this.velX===0) return this.turns = 'up';
 };
 
 Ghost.prototype.getRadius = function() {
@@ -260,16 +271,34 @@ Ghost.prototype.getRadius = function() {
 };
 
 Ghost.prototype.render = function (ctx) {
-    if (this.isDeadNow) {
-        var oldstyle = ctx.fillStyle;
-        ctx.fillStyle = 'green';
-        util.fillCircle(ctx, this.cx, this.cy, 10);
-        ctx.fillStyle = oldstyle;
-        return;
+    if (!this.isDeadNow) {
+        if(!this.scared) this.drawHealthyGhost(ctx);
+        else {
+            g_scaredSprite[0].scale = 0.45;
+            g_scaredSprite[0].drawWrappedCentredAt(ctx, this.cx,this.cy,0);
+        }
     }
-    if(!this.scared) this.drawHealthyGhost(ctx);
-    else {
-        g_scaredSprite[0].scale = 0.45;
-        g_scaredSprite[0].drawWrappedCentredAt(ctx, this.cx,this.cy,0);
+    var oldstyle = ctx.fillStyle;
+    ctx.fillStyle = 'white';
+    util.fillCircle(ctx, this.cx-5, this.cy-3, 4);
+    util.fillCircle(ctx, this.cx+5, this.cy-3, 4);
+    ctx.fillStyle = 'black';
+    var x = 0, y = 0;
+    switch (this.turns) {
+        case 'up':
+            y = -2;
+            break;
+        case 'left':
+            x = -2;
+            break;
+        case 'down':
+            y = 2;
+            break;
+        case 'right':
+            x = 2;
+            break;
     }
+    util.fillCircle(ctx, this.cx-5+x, this.cy-3+y, 2);
+    util.fillCircle(ctx, this.cx+5+x, this.cy-3+y, 2);
+    ctx.fillStyle = oldstyle;
 };
