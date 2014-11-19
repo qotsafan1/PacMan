@@ -32,8 +32,12 @@ Level.prototype.update = function(du) {
 	}
 };
 
-g_point = function() {
+g_SmallPoints = function() {
 	g_score+=10;
+};
+
+g_BigPoints = function() {
+	g_score+=50;
 };
 
 g_lossOfLife = function () {

@@ -166,7 +166,7 @@ PacMan.prototype.eatDot = function(){
         if((fruitEntity[i].cx > this.cx-this.getRadius() && fruitEntity[i].cx < this.cx +this.getRadius()) && (fruitEntity[i].cy > this.cy-this.getRadius() && fruitEntity[i].cy < this.cy +this.getRadius())) {
                 fruitEntity.splice(i,1);
                 g_dotCounter++;
-                g_point();
+                g_BigPoints();
                 this.makeGhostsScared();
         }
     }   
