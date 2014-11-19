@@ -28,7 +28,9 @@ function Level() {
 
 Level.prototype.update = function(du) {
 	//console.log(g_lives);
+	console.log("Array" + array_cx.length+ "entity"+entityManager._fruits.length);
 	if (array_cx.length === 0 && entityManager._fruits.length === 0) {
+
 		nextLevel();
 	}
 	if(g_lives === 0){
@@ -53,16 +55,16 @@ g_BigPoints = function() {
 };
 
 g_candyPoints = function() {
-	if(g_candy.level === 1) {
+	if(g_currentLevel === 1) {
    			g_score+=100;
     }
-    if(g_candy.level === 2) {
+    if(g_currentLevel === 2) {
    			g_score+=300;
     }
-    if(g_candy.level === 3 || g_candy.level === 4) {
+    if(g_currentLevel === 3 || g_candy.level === 4) {
    			g_score+=500;
     }
-    if(g_candy.level > 4) {
+    if(g_currentLevel > 4) {
    			g_score+=700;
     }  
 }
@@ -106,7 +108,6 @@ Level.prototype.render = function(ctx) {
 
 function nextLevel () {
 	g_currentLevel++;
-	g_candy.level++;
 	newLevel(g_currentLevel);
 	g_maze.resetMaze();
 	g_dotCounter = 0;
