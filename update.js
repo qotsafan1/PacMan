@@ -19,12 +19,6 @@ var g_isUpdateOdd = false;
 
 
 function update(dt) {
-    
-    // Pause game if esc key was pressed
-    if (pauseGameplay()) {
-        g_pausemenu.update();
-        return;
-    }
 
     // Get out if skipping (e.g. due to pause-mode)
     if (shouldSkipUpdate()) return;
@@ -62,14 +56,14 @@ var KEY_ESC = 27;
 
 var g_isUpdatePaused = false;
 
-var g_isGamePaused = false;
-
 function shouldSkipUpdate() {
     if (eatKey(KEY_PAUSE)) {
         g_isUpdatePaused = !g_isUpdatePaused;
     }
     return g_isUpdatePaused && !eatKey(KEY_STEP);    
 }
+
+var g_isGamePaused = false;
 
 function pauseGameplay() {
     if (eatKey(KEY_ESC)) {

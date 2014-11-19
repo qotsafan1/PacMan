@@ -37,6 +37,8 @@ Menu.prototype.strokecolor = "#000BDD";
 Menu.prototype.menu_radius = 20;
 Menu.prototype.menu_linewidth = 4;
 
+Menu.prototype.ON = false;
+
 Menu.prototype.update = function() {
 
 	for (var i = 0; i < this.buttons.length; i++) {
@@ -61,6 +63,13 @@ Menu.prototype.buttonreleased = function() {
 	for (var i = 0; i < this.buttons.length; i++) {
 		this.buttons[i].toggleoff();
 	}
+	this.ON = false;
+};
+
+Menu.prototype.checkPause = function() {
+    if (eatKey(KEY_ESC)) {
+        this.ON = !this.ON;
+    }
 };
 
 Menu.prototype.render = function(ctx) {

@@ -81,6 +81,13 @@ function updateSimulation(du) {
     if (g_startupscreen.timer >= g_startupscreen.startGame) g_startupscreen.update(du);
     else {
 
+        // Pause game if esc key was pressed
+        g_pausemenu.checkPause();
+        if (g_pausemenu.ON && !g_startupscreen.ON) {
+            g_pausemenu.update();
+            return;
+        }
+
         if(g_startupscreen.status() && g_startupscreen.ON) g_startupscreen.update(du);
 
         entityManager.update(du);
@@ -147,7 +154,7 @@ function renderSimulation(ctx) {
 
         if (g_renderSpatialDebug) spatialManager.render(ctx);
         
-        if (g_isGamePaused) g_pausemenu.render(ctx);
+        if (g_pausemenu.ON && !g_startupscreen.ON) g_pausemenu.render(ctx);
 
         if (g_startupscreen.status() && g_startupscreen.ON) g_startupscreen.render(ctx);
     }
