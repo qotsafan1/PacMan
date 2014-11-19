@@ -39,12 +39,13 @@ Level.prototype.render = function(ctx) {
 	//Render points
 	this.levelsprite.drawAt(ctx, this.cx, this.cy);
 	ctx.font = "20px Georgia";
-	ctx.fillText(g_score, 0, 50);
+	ctx.fillStyle = 'grey';
+	ctx.fillText(g_score, 100, 40);
+	ctx.fillText("HIGH SCORE", 165, 20);
 
 	//Render Lives
 	var width = 90;
-	for(var i=0; i<g_lives;i++) {
-		
+	for(var i=0; i<g_lives;i++) {	
 		ctx.fillStyle = 'yellow';
 		util.fillCircle(ctx, width, g_canvas.height - 20, 10);
 		width-=30;
