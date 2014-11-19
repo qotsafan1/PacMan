@@ -31,7 +31,6 @@ var g_dotsEaten = function() {
             g_SmallPoints();
             
             if(audioOn == true) g_chompAudio.play();
-
         }
     }
 }

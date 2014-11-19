@@ -30,6 +30,7 @@ function PacMan(descr) {
     this._scale = 0.45;
     this.speed = g_pacSpeed*g_speed;
     this.turns = "right";
+    this.ghostKilled = 100;
 };
 
 PacMan.prototype = new Entity();
@@ -195,6 +196,7 @@ PacMan.prototype.makeGhostsScared= function() {
     g_inky.fright();
     g_clyde.fright();
     g_maze.ghostScared = true;
+    this.ghostKilled = 100;
 };
 
 PacMan.prototype.update = function (du) {
@@ -229,12 +231,14 @@ PacMan.prototype.takeStep = function (du) {
     }
     if(this.isColliding() && !this.isDead){
         var thing = this.isColliding();
-        if (thing.scared || thing.isDeadNow) {
+        if (thing.scared && !thing.isDeadNow) {
             g_eatGhostsAudio.play();
             thing.isDeadNow = true;
+            this.ghostKilled *=2;
+            g_point(this.ghostKilled);
         }
         else {
-             this.die();
+             if(!thing.isDeadNow) this.die();
         }
     }
 };

@@ -36,6 +36,10 @@ Level.prototype.update = function(du) {
 	}
 };
 
+g_point = function(num) {
+	g_score+=num;
+};
+
 g_SmallPoints = function() {
 	g_score+=10;
 };
@@ -99,6 +103,7 @@ function newLevel (level) {
 		g_inkyOut = 4;
 		g_clydeOut = 8;
 		g_ghostFrigthTime = 6;
+		g_maze.chaseScatter = [7,20,7,20,5,20,5,false];
 		return; 
 	}
 	if (level>1 && level<5) {
@@ -109,6 +114,7 @@ function newLevel (level) {
 		g_inkyOut = 4;
 		g_clydeOut = 8;
 		g_ghostFrigthTime = 4;
+		g_maze.chaseScatter = [7,20,7,20,5,1033,1/60,false];
 		return;
 	}
 	if (level>4 && level<21) {
@@ -119,6 +125,7 @@ function newLevel (level) {
 		g_inkyOut = 4;
 		g_clydeOut = 8;
 		g_ghostFrigthTime = 2;
+		g_maze.chaseScatter = [5,20,5,20,5,1037,1/60,false];
 		return;
 	}
 	g_ghostSpeed = 0.95;
@@ -128,4 +135,5 @@ function newLevel (level) {
 	g_inkyOut = 4;
 	g_clydeOut = 8;
 	g_ghostFrigthTime = 0;
+	g_maze.chaseScatter = [5,20,5,20,5,1037,1/60,false];
 };
