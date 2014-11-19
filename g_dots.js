@@ -30,7 +30,7 @@ var g_dotsEaten = function(soundbite) {
             array_cy.splice(i,1);
             g_dotCounter++;
             g_SmallPoints();
-
+            g_maze.cageLogic();
             if(g_audioOn == true) g_chompAudio.play();
         }
     }
