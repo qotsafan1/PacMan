@@ -52,6 +52,7 @@ Ghost.prototype.resetGhost = function () {
     this.shouldTurn = false;
     this.turns = this.reset_turns;
     this.isDeadNow = false;
+    spatialManager.register(this);
 };
 
 Ghost.prototype.move = function (target, myTile) {
@@ -248,6 +249,7 @@ Ghost.prototype.takeStep = function(du) {
     if(theTile===10 && !this.inCage) {// && (endTile || this.isDeadNow)) {
         if(this.isDeadNow) this.scared = false;
         this.isDeadNow = false;
+        spatialManager.register(this);
         this.centerx(this.currentTile);
         this.velX = 0;
         this.velY = -this.speed;
