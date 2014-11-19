@@ -29,8 +29,8 @@ var g_dotsEaten = function() {
             array_cy.splice(i,1);
             g_dotCounter++;
             g_SmallPoints();
+            
             if(audioOn == true) g_chompAudio.play();
-            g_SmallPoints();
 
         }
     }
