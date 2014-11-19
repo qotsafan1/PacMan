@@ -89,16 +89,10 @@ g_maze.update = function(du) {
         }
         this.nextOut += du/SECS_TO_NOMINALS;
         if (g_inky.inCage && this.nextOut>g_inkyOut && g_inky.endOfTile(g_inky.currentTile)) {
-            g_inky.centery(g_inky.currentTile);
-            g_inky.inCage = false;
-            g_inky.velX = g_inky.speed;
-            g_inky.velY = 0;
+            g_inky.goOut();
         }
-        if (g_clyde.inCage && this.nextOut>g_clydeOut && g_clyde.endOfTile(g_clyde.currentTile)) {
-            g_clyde.centery(g_clyde.currentTile);
-            g_clyde.inCage = false;
-            g_clyde.velX =-g_clyde.speed;
-            g_clyde.velY = 0;
+        else if (g_clyde.inCage && this.nextOut>g_clydeOut && g_clyde.endOfTile(g_clyde.currentTile)) {
+            g_clyde.goOut();
         }
         if (this.chaseScatter[0] && !this.ghostScared) {
             this.chaseScatterCounter += du/SECS_TO_NOMINALS;

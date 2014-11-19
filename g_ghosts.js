@@ -126,6 +126,13 @@ g_inky.drawHealthyGhost = function(ctx) {
 		util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, '#00FFFF');
 };
 
+g_inky.goOut = function () {
+	this.centery(this.currentTile);
+    this.inCage = false;
+    this.velX =-this.speed;
+    this.velY = 0;
+};
+
 var g_clyde = new Ghost({
 	cx : 264,
     cy : 280,
@@ -169,4 +176,11 @@ g_clyde.fixYourFriends = function() {
     g_pinky.rememberResets();
     g_inky.rememberResets();
     g_clyde.rememberResets();
+};
+
+g_clyde.goOut = function () {
+	this.centery(this.currentTile);
+    this.inCage = false;
+    this.velX =-this.speed;
+    this.velY = 0;
 };

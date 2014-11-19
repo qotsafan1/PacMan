@@ -29,6 +29,7 @@ function Ghost(descr) {
     this.inCage = true;
     this.deathTile = [14,14];
     this.shouldTurn = false;
+    this.dotCounter = 0;
 };
 
 Ghost.prototype = new Entity();
