@@ -97,8 +97,6 @@ function nextLevel () {
 	entityManager.generateFourFruits();
 	g_scatterToggle = true;
 	makeDots();
-	g_inky.inCage = true;
-	g_clyde.inCage = true;
 };
 
 function newLevel (level) {

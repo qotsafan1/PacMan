@@ -51,7 +51,6 @@ var g_maze = {
 };
 
 g_maze.resetMaze = function () {
-    this.nextOut = 0;
     this.scaredTimer = 0;
     this.theManMoving = false;
     this.chaseScatterCounter = 0;
