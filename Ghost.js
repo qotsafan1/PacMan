@@ -286,8 +286,12 @@ Ghost.prototype.render = function (ctx) {
     if (!this.isDeadNow) {
         if(!this.scared) this.drawHealthyGhost(ctx);
         else {
-            g_scaredSprite[0].scale = 0.45;
-            g_scaredSprite[0].drawWrappedCentredAt(ctx, this.cx,this.cy,0);
+            if(this.counter === 0) this.i = 1;
+            if(this.counter === 5) this.i = 0;
+            g_scaredSprite[this.i].scale = 0.45;
+            g_scaredSprite[this.i].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
+            this.counter ++;
+            if(this.counter > 10) this.counter = 0;
         }
     }
     var oldstyle = ctx.fillStyle;
