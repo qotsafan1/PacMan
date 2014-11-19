@@ -33,11 +33,17 @@ Level.prototype.update = function(du) {
 };
 
 g_point = function() {
-	g_score++;
+	g_score+=10;
 };
 
 g_lossOfLife = function () {
 	g_lives--;
+}
+
+g_LostGame = function(g_score) {
+	if(g_lives === 0) {
+
+	}
 }
 
 Level.prototype.render = function(ctx) {
