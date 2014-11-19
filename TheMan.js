@@ -232,7 +232,7 @@ PacMan.prototype.takeStep = function (du) {
     if(this.isColliding() && !this.isDead){
         var thing = this.isColliding();
         if (thing.scared && !thing.isDeadNow) {
-            g_eatGhostsAudio.play();
+            if(g_audioOn)g_eatGhostsAudio.play();
             thing.isDeadNow = true;
             this.ghostKilled *=2;
             g_point(this.ghostKilled);
@@ -259,7 +259,7 @@ PacMan.prototype.die = function() {
     this.i = 0;
     this.counter = 0;
     g_maze.theManMoving = false;
-    if(audioOn)g_pacmandeathAudio.play();
+    if(g_audioOn)g_pacmandeathAudio.play();
     g_lossOfLife();
 };
 

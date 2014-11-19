@@ -30,7 +30,7 @@ var g_dotsEaten = function() {
             g_dotCounter++;
             g_SmallPoints();
             
-            if(audioOn == true) g_chompAudio.play();
+            if(g_audioOn == true) g_chompAudio.play();
         }
     }
 }

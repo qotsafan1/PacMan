@@ -96,7 +96,7 @@ function updateSimulation(du) {
 }
 //Audio stuff for toogleing
 var KEY_AUDIO = keyCode('Z');
-var audioOn = true;
+var g_audioOn = true;
 
 //load audio
 var g_chompAudio = new Audio('sounds/pacman_chomp.wav'),
