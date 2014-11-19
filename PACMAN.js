@@ -81,14 +81,14 @@ function updateSimulation(du) {
     if (g_startupscreen.timer >= g_startupscreen.startGame) g_startupscreen.update(du);
     else {
 
+        if(g_startupscreen.status() && g_startupscreen.ON) g_startupscreen.update(du);
+
         // Pause game if esc key was pressed
         if(!g_startupscreen.ON) g_pausemenu.checkPause();
         if(g_pausemenu.ON && !g_startupscreen.ON) {
             g_pausemenu.update();
             return;
         }
-
-        if(g_startupscreen.status() && g_startupscreen.ON) g_startupscreen.update(du);
 
         entityManager.update(du);
     }
@@ -100,6 +100,7 @@ var g_audioOn = true;
 
 //load audio
 var g_chompAudio = new Audio('sounds/pacman_chomp.wav'),
+    g_sirenAudio = new Audio('sounds/pacman_siren.wav'),
     g_pacmandeathAudio = new Audio('sounds/pacman_death.wav'),
     g_eatGhostsAudio = new Audio('sounds/pacman_eatghost.wav');
 
@@ -197,7 +198,8 @@ function requestPreloads() {
         pinky: "images/pinky.png",
         clyde: "images/clyde.png",
         scared: "images/scaredGhosts.png",
-        scaredEnd : "images/scaredGhostsEnd.png"
+        scaredEnd : "images/scaredGhostsEnd.png",
+        candy : "images/candy.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -224,6 +226,7 @@ var g_levelimg = [];
 var g_buttons = [];
 var g_paclogo = [];
 var g_deathSprites =[];
+var g_candySprite =[];
 
 //spriteArrays for the ghosts!
 var g_inkySprite = [],
@@ -238,6 +241,7 @@ function preloadDone() {
     createSpriteSheet(g_animateSpritesLeft,g_images.therealoneLeft,2,2);
     createSpriteSheet(g_deathSprites,g_images.deadPacman,2,3);
 
+    createSpriteSheet(g_candySprite,g_images.candy,4,2);
     //create ghosts sprites
     createSpriteSheet(g_inkySprite,g_images.inky,2,1);
     createSpriteSheet(g_blinkySprite,g_images.blinky,2,1);

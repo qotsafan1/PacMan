@@ -17,9 +17,7 @@ var g_blinky = new Ghost({
     scatterTile : [25,0],
     targetTile : [25,0],
     PacTile : [0,0],
-    turns : 'left',
-    counter : 0,
-    i : 0
+    turns : 'left'
 });
 
 g_blinky.findTargetTile = function() {
@@ -34,8 +32,6 @@ g_blinky.drawHealthyGhost = function(ctx) {
 	if(this.counter === 5) this.i = 0;
 	g_blinkySprite[this.i].scale = 0.45;
     g_blinkySprite[this.i].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
-    this.counter ++;
-    if(this.counter > 10) this.counter = 0;
     if(g_useUglyRedWall) 
     	util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, "red");
 };
@@ -46,9 +42,7 @@ var g_pinky = new Ghost({
 	scatterTile : [2,0],
 	targetTile : [2,0],
 	PacTurns : "right",
-    turns : 'up',
-    counter : 0,
-    i : 0
+    turns : 'up'
 });
 
 g_pinky.findTargetTile = function() {
@@ -76,8 +70,6 @@ g_pinky.drawHealthyGhost = function(ctx) {
 	if(this.counter === 5) this.i = 0;	
 	g_pinkySprite[this.i].scale = 0.45;
     g_pinkySprite[this.i].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
-    this.counter ++;
-    if(this.counter > 10) this.counter = 0;
 	if(g_useUglyRedWall)
 		util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, "pink");
 };
@@ -87,9 +79,7 @@ var g_inky = new Ghost({
 	cy : 280,
     scatterTile : [27,35],
     targetTile : [27,35],
-    turns : 'up',
-    counter : 0,
-    i : 0
+    turns : 'up'
 });
 
 g_inky.findTargetTile = function() {
@@ -120,8 +110,6 @@ g_inky.drawHealthyGhost = function(ctx) {
 	if(this.counter === 5) this.i = 0;
 	g_inkySprite[this.i].scale = 0.45;
     g_inkySprite[this.i].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
-    this.counter ++;
-    if(this.counter > 10) this.counter = 0;
 	if(g_useUglyRedWall)
 		util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, '#00FFFF');
 };
@@ -138,9 +126,7 @@ var g_clyde = new Ghost({
     cy : 280,
     scatterTile : [0,35],
     targetTile : [0,35],
-    turns : 'up',
-    counter : 0,
-    i : 0
+    turns : 'up'
 });
 
 g_clyde.findTargetTile = function() {
@@ -159,8 +145,6 @@ g_clyde.drawHealthyGhost = function(ctx) {
 	if(this.counter === 5) this.i = 0;	
 	g_clydeSprite[this.i].scale = 0.45;
     g_clydeSprite[this.i].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
-    this.counter ++;
-    if(this.counter > 10) this.counter = 0;
 	if(g_useUglyRedWall)
 		util.fillBox(ctx, this.targetTile[0]*16, this.targetTile[1]*16, 16, 16, '#DAA520');
 };

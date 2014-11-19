@@ -29,7 +29,12 @@ function Ghost(descr) {
     this.inCage = true;
     this.deathTile = [14,14];
     this.shouldTurn = false;
+<<<<<<< HEAD
     this.dotCounter = 0;
+=======
+    this.counter = 0;
+    this.i = 0;
+>>>>>>> 717428f0abc6d29b8be9226800759a73a7b536f5
 };
 
 Ghost.prototype = new Entity();
@@ -220,11 +225,11 @@ Ghost.prototype.fright = function() {
 };
 
 Ghost.prototype.update = function (du) {
+
     if (!g_maze.theManMoving) {
         this.setEyes();
         return;
     }
-
     if(this.scared) this.speed = g_scaredGhostSpeed*g_speed;
     else this.speed = g_ghostSpeed*g_speed;
     if(this.isDeadNow) this.speed = g_speed;
@@ -237,6 +242,9 @@ Ghost.prototype.update = function (du) {
     this.takeStep(du);
 
     spatialManager.register(this);
+    this.counter ++;
+    if(this.counter > 10) this.counter = 0;
+
 };
 
 Ghost.prototype.takeStep = function(du) {
@@ -280,23 +288,34 @@ Ghost.prototype.getRadius = function() {
 };
 
 Ghost.prototype.render = function (ctx) {
-    if (!this.isDeadNow) {
+    this.drawGhosts(ctx);
+};
+
+Ghost.prototype.drawGhosts = function(ctx){
+        if (!this.isDeadNow) {
         if(!this.scared) this.drawHealthyGhost(ctx);
         else {
-            if(this.counter === 0) this.i = 1;
-            if(this.counter === 5) this.i = 0;
-            if(g_maze.scaredTimer<=g_ghostFrightTime-2){
-            g_scaredSprite[this.i].scale = 0.45;
-            g_scaredSprite[this.i].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
-            }else if(g_ghostFrightTime-2 < g_maze.scaredTimer <= g_ghostFrightTime){
-                g_scaredEndSprite[this.i].scale = 0.45;
-                g_scaredEndSprite[this.i].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
-            }
-            this.counter ++;
-            if(this.counter > 10) this.counter = 0;
+            this.drawScaredGhosts(ctx)
         }
     }
-    var oldstyle = ctx.fillStyle;
+    this.drawEyes(ctx);
+
+};
+
+Ghost.prototype.drawScaredGhosts = function(ctx){
+
+    if(this.counter === 0) this.i = 1;
+    if(this.counter === 5) this.i = 0;
+    if(g_maze.scaredTimer<=g_ghostFrightTime-2){
+        g_scaredSprite[this.i].scale = 0.45;
+        g_scaredSprite[this.i].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
+    }else if(g_ghostFrightTime-2 < g_maze.scaredTimer <= g_ghostFrightTime){
+        g_scaredEndSprite[this.i].scale = 0.45;
+        g_scaredEndSprite[this.i].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
+    }
+};
+Ghost.prototype.drawEyes = function(ctx){
+   var oldstyle = ctx.fillStyle;
     ctx.fillStyle = 'white';
     util.fillCircle(ctx, this.cx-5, this.cy-3, 4);
     util.fillCircle(ctx, this.cx+5, this.cy-3, 4);
