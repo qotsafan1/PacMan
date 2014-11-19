@@ -55,6 +55,7 @@ g_maze.resetMaze = function () {
     this.scaredTimer = 0;
     this.theManMoving = false;
     this.chaseScatterCounter = 0;
+    this.dotCounter = 0;
 };
 
 g_maze.returnTilePos = function (cx, cy) {
