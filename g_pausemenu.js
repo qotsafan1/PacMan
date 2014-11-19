@@ -7,6 +7,9 @@ function pauseButtons(xpos, ypos) {
 
 	var b_continue = new Button(xpos, ypos+40, g_buttons[0].width, g_buttons[0].height, g_buttons[0]);
 
+	// var = b_newgame = new Button(xpos, ypos+90, g_buttons[0].width, g_buttons[0].height, g_buttons[0]);
+    // var = b_quit = new Button(xpos, ypos+140, g_buttons[0].width, g_buttons[0].height, g_buttons[0]);
+
 	var buttons = [b_continue];
 
 	return buttons;
@@ -23,11 +26,6 @@ function Menu(width, height, type) {
 	if(type === "pause") {
 		this.buttons = pauseButtons(g_canvas.width/2, this.menu_cy);
 	}
-
-    //console.log(this.buttons);
-
-    //this.b_newgame = new Button(g_canvas.width/2, this.menu_cy+90, 150,30, g_buttons[0]);
-    //this.b_quit = new Button(g_canvas.width/2, this.menu_cy+140, 150,30, g_buttons[0]);
 
 }
 

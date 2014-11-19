@@ -39,7 +39,7 @@ function createInitialObjects() {
 
 
     g_pausemenu = new Menu(300, 180, "pause");
-    //generatePauseMenu();
+
 
 
 }
@@ -76,11 +76,13 @@ function gatherInputs() {
 
 function updateSimulation(du) {
     
-    if (g_startupscreen.timer >= 0) g_startupscreen.update(du);
+    processDiagnostics();
+
+    if (g_startupscreen.timer >= g_startupscreen.startGame) g_startupscreen.update(du);
     else {
 
-        processDiagnostics();
-        
+        if(g_startupscreen.status() && g_startupscreen.ON) g_startupscreen.update(du);
+
         entityManager.update(du);
     }
 
@@ -138,7 +140,7 @@ function processDiagnostics() {
 
 function renderSimulation(ctx) {
 
-    if (g_startupscreen.timer >= 0) g_startupscreen.render(ctx);
+    if (g_startupscreen.timer >= g_startupscreen.startGame) g_startupscreen.render(ctx);
     else {
         
         entityManager.render(ctx);
@@ -146,6 +148,8 @@ function renderSimulation(ctx) {
         if (g_renderSpatialDebug) spatialManager.render(ctx);
         
         if (g_isGamePaused) g_pausemenu.render(ctx);
+
+        if (g_startupscreen.status() && g_startupscreen.ON) g_startupscreen.render(ctx);
     }
 }
 
