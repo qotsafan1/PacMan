@@ -82,8 +82,8 @@ function updateSimulation(du) {
     else {
 
         // Pause game if esc key was pressed
-        g_pausemenu.checkPause();
-        if (g_pausemenu.ON && !g_startupscreen.ON) {
+        if(!g_startupscreen.ON) g_pausemenu.checkPause();
+        if(g_pausemenu.ON && !g_startupscreen.ON) {
             g_pausemenu.update();
             return;
         }
@@ -96,7 +96,7 @@ function updateSimulation(du) {
 }
 //Audio stuff for toogleing
 var KEY_AUDIO = keyCode('Z');
-var audioOn = true;
+var g_audioOn = true;
 
 //load audio
 var g_chompAudio = new Audio('sounds/pacman_chomp.wav'),
@@ -183,7 +183,9 @@ function requestPreloads() {
     var requiredImages = {
         
         level_walls : "images/walls.png",
+
         b_continue : "images/continue.png",
+        b_quit : "images/quit.png",
 
         pacmanlogo : "images/pacmanlogo.png",
 
@@ -248,6 +250,10 @@ function preloadDone() {
     var button = g_images.b_continue;
     var continue_buttonsprite = new Sprite(button, 0, 0, button.width, button.height);
     g_buttons.push(continue_buttonsprite);
+
+    var button2 = g_images.b_quit;
+    var quit_buttonsprite = new Sprite(button2, 0, 0, button2.width, button2.height);
+    g_buttons.push(quit_buttonsprite);
 
     var logo = g_images.pacmanlogo;
     var logosprite = new Sprite(logo, 0, 0, logo.width, logo.height);

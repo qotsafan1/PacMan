@@ -8,9 +8,9 @@ function pauseButtons(xpos, ypos) {
 	var b_continue = new Button(xpos, ypos+40, g_buttons[0].width, g_buttons[0].height, g_buttons[0]);
 
 	// var = b_newgame = new Button(xpos, ypos+90, g_buttons[0].width, g_buttons[0].height, g_buttons[0]);
-    // var = b_quit = new Button(xpos, ypos+140, g_buttons[0].width, g_buttons[0].height, g_buttons[0]);
+    var b_quit = new Button(xpos, ypos+140, g_buttons[1].width, g_buttons[1].height, g_buttons[1]);
 
-	var buttons = [b_continue];
+	var buttons = [b_continue, b_quit];
 
 	return buttons;
 }
@@ -38,6 +38,7 @@ Menu.prototype.menu_radius = 20;
 Menu.prototype.menu_linewidth = 4;
 
 Menu.prototype.ON = false;
+Menu.prototype.KEY_ESC = 27;
 
 Menu.prototype.update = function() {
 
@@ -67,7 +68,7 @@ Menu.prototype.buttonreleased = function() {
 };
 
 Menu.prototype.checkPause = function() {
-    if (eatKey(KEY_ESC)) {
+    if (eatKey(this.KEY_ESC)) {
         this.ON = !this.ON;
     }
 };
