@@ -114,6 +114,7 @@ g_maze.update = function(du) {
             }
         }
     }
+    g_candy.update(du);
 };
 
 g_maze.render = function (ctx) {
@@ -128,6 +129,7 @@ g_maze.render = function (ctx) {
     }
 
     g_dotsRender(ctx);
+    g_candy.render(ctx);
 };
 
 //fixing tunnel that uses wrapparound

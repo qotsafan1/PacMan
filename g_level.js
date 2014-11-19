@@ -52,6 +52,22 @@ g_BigPoints = function() {
 	g_score+=50;
 };
 
+g_candyPoints = function() {
+	if(g_candy.level === 1) {
+   			g_score+=100;
+    }
+    if(g_candy.level === 2) {
+   			g_score+=300;
+    }
+    if(g_candy.level === 3 || g_candy.level === 4) {
+   			g_score+=500;
+    }
+    if(g_candy.level > 4) {
+   			g_score+=700;
+    }  
+}
+
+
 g_lossOfLife = function () {
 	g_lives--;
 }
@@ -88,6 +104,7 @@ Level.prototype.render = function(ctx) {
 
 function nextLevel () {
 	g_currentLevel++;
+	g_candy.level++;
 	newLevel(g_currentLevel);
 	g_maze.resetMaze();
 	g_dotCounter = 0;
