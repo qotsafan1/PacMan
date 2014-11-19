@@ -46,7 +46,9 @@ var g_maze = {
     theManMoving : false,
     nextOut : 0,
     ghostScared : false,
-    backup : []
+    backup : [],
+    chaseScatter : [7,20,7,20,5,20,5,false],
+    chaseScatterCounter : 0
 };
 
 g_maze.resetMaze = function () {
@@ -54,6 +56,7 @@ g_maze.resetMaze = function () {
     this.nextOut = 0;
     this.scaredTimer = 0;
     this.theManMoving = false;
+    this.chaseScatterCounter = 0;
 };
 
 g_maze.returnTilePos = function (cx, cy) {
@@ -100,6 +103,15 @@ g_maze.update = function(du) {
             g_clyde.inCage = false;
             g_clyde.velX =-1;
             g_clyde.velY = 0;
+        }
+        if (this.chaseScatter[0] && !this.ghostScared) {
+            this.chaseScatterCounter += du/SECS_TO_NOMINALS;
+            if(this.chaseScatterCounter>this.chaseScatter[0]) {
+                console.log(this.chaseScatterCounter);
+                this.chaseScatter.splice(0,1);
+                this.chaseScatterCounter = 0;
+                g_scatterToggle = !g_scatterToggle;
+            }
         }
     }
 };
