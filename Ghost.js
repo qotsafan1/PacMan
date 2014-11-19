@@ -241,15 +241,11 @@ Ghost.prototype.update = function (du) {
 Ghost.prototype.takeStep = function(du) {
     var endTile = this.endOfTile(this.currentTile);
     var theTile = g_maze.tiles[this.currentTile[0]][this.currentTile[1]];
-    /*if(theTile===16 && this.inCage && endTile && !this.chosen) {
-        this.velY *= -1;
-        this.chosen =true;
-        console.log(this.currentTile + "  " + this.velY);
-    }*/
-    if(theTile===10 && !this.inCage) {// && (endTile || this.isDeadNow)) {
+
+    if(theTile===10 && !this.inCage) {
         if(this.isDeadNow) this.scared = false;
+        if(this===g_inky && this.isDeadNow) this.inCage=true;;
         this.isDeadNow = false;
-        spatialManager.register(this);
         this.centerx(this.currentTile);
         this.velX = 0;
         this.velY = -this.speed;
@@ -286,8 +282,17 @@ Ghost.prototype.render = function (ctx) {
     if (!this.isDeadNow) {
         if(!this.scared) this.drawHealthyGhost(ctx);
         else {
-            g_scaredSprite[0].scale = 0.45;
-            g_scaredSprite[0].drawWrappedCentredAt(ctx, this.cx,this.cy,0);
+            if(this.counter === 0) this.i = 1;
+            if(this.counter === 5) this.i = 0;
+            if(g_maze.scaredTimer<=g_ghostFrightTime-2){
+            g_scaredSprite[this.i].scale = 0.45;
+            g_scaredSprite[this.i].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
+            }else if(g_ghostFrightTime-2 < g_maze.scaredTimer <= g_ghostFrightTime){
+                g_scaredEndSprite[this.i].scale = 0.45;
+                g_scaredEndSprite[this.i].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
+            }
+            this.counter ++;
+            if(this.counter > 10) this.counter = 0;
         }
     }
     var oldstyle = ctx.fillStyle;

@@ -28,7 +28,7 @@ function Level() {
 
 Level.prototype.update = function(du) {
 	//console.log(g_lives);
-	if (g_dotCounter===244) {
+	if (array_cx.length === 0 && entityManager._fruits.length === 0) {
 		nextLevel();
 	}
 	if(g_lives === 0){
@@ -52,14 +52,30 @@ g_BigPoints = function() {
 	g_score+=50;
 };
 
+g_candyPoints = function() {
+	if(g_candy.level === 1) {
+   			g_score+=100;
+    }
+    if(g_candy.level === 2) {
+   			g_score+=300;
+    }
+    if(g_candy.level === 3 || g_candy.level === 4) {
+   			g_score+=500;
+    }
+    if(g_candy.level > 4) {
+   			g_score+=700;
+    }  
+}
+
+
 g_lossOfLife = function () {
 	g_lives--;
 }
 
 g_LostGame = function() {
-	if(g_lives === 0) {
-		localStorage.setItem("highscore", g_score);
-	}
+	if(g_lives === 0 && g_score > highscore){
+		(localStorage.setItem("highscore", g_score));
+	} 
 }
 
 Level.prototype.render = function(ctx) {
@@ -76,9 +92,11 @@ Level.prototype.render = function(ctx) {
 
 	//Render Lives
 	var width = 90;
-	for(var i=0; i<g_lives;i++) {	
-		ctx.fillStyle = 'yellow';
-		util.fillCircle(ctx, width, g_canvas.height - 20, 10);
+	for(var i=0; i<g_lives;i++) {
+		g_animateSprites[i].scale = 0.45;
+		g_animateSprites[i].drawWrappedCentredAt(ctx,width,g_canvas.height-20,0);
+		//ctx.fillStyle = 'yellow';
+		//util.fillCircle(ctx, width, g_canvas.height - 20, 10);
 		width-=30;
 	}
 
@@ -88,6 +106,7 @@ Level.prototype.render = function(ctx) {
 
 function nextLevel () {
 	g_currentLevel++;
+	g_candy.level++;
 	newLevel(g_currentLevel);
 	g_maze.resetMaze();
 	g_dotCounter = 0;
