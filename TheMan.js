@@ -205,9 +205,9 @@ PacMan.prototype.update = function (du) {
     if (g_maze.ghostScared) this.speed = g_scaredPacSpeed*g_speed;
     else g_pacSpeed*g_speed;
 
-    while (du > 4) {
-        this.takeStep(4);
-        du -= 4;
+    while (du > 2) {
+        this.takeStep(2);
+        du -= 2;
     }
     this.takeStep(du);
 

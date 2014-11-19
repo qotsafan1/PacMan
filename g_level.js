@@ -33,6 +33,10 @@ Level.prototype.update = function(du) {
 	}
 	if(g_lives === 0){
 		g_LostGame();
+		g_score = 0;
+		g_lives = 3;
+		g_currentLevel = 0;
+		nextLevel();
 	}
 };
 

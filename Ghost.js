@@ -228,9 +228,9 @@ Ghost.prototype.update = function (du) {
     if(this.isDeadNow) this.speed = g_speed;
 
     spatialManager.unregister(this);
-    while (du>4) { //take smaller steps if du is too large
-        this.takeStep(4);
-        du-=4;
+    while (du>2) { //take smaller steps if du is too large
+        this.takeStep(2);
+        du-=2;
     }
     this.takeStep(du);
 
