@@ -45,13 +45,9 @@ Menu.prototype.update = function() {
 	for (var i = 0; i < this.buttons.length; i++) {
 		this.buttons[i].update();
 	}
-	//this.b_continue.update();
-	//this.b_newgame.update();
-	//this.b_quit.update();
 };
 
 Menu.prototype.buttonpushed = function() {
-	//this.b_continue.toggleon();
 
 	for (var i = 0; i < this.buttons.length; i++) {
 		this.buttons[i].toggleon();
@@ -59,7 +55,6 @@ Menu.prototype.buttonpushed = function() {
 };
 
 Menu.prototype.buttonreleased = function() {
-	//this.b_continue.toggleoff();
 
 	for (var i = 0; i < this.buttons.length; i++) {
 		this.buttons[i].toggleoff();
@@ -87,7 +82,4 @@ Menu.prototype.render = function(ctx) {
 	for (var i = 0; i < this.buttons.length; i++) {
 		this.buttons[i].render(ctx);
 	}
-	//this.b_continue.render(ctx);
-	//this.b_newgame.render(ctx);
-	//this.b_quit.render(ctx);
 };
