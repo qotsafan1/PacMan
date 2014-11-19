@@ -57,7 +57,9 @@ g_lossOfLife = function () {
 }
 
 g_LostGame = function() {
-	if(g_lives === 0 && g_score > highscore) (localStorage.setItem("highscore", g_score));
+	if(g_lives === 0 && g_score > highscore){
+		(localStorage.setItem("highscore", g_score));
+	} 
 }
 
 Level.prototype.render = function(ctx) {
