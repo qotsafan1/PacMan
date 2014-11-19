@@ -236,6 +236,7 @@ PacMan.prototype.takeStep = function (du) {
             thing.isDeadNow = true;
             this.ghostKilled *=2;
             g_point(this.ghostKilled);
+            spatialManager.unregister(thing);
         }
         else {
              if(!thing.isDeadNow) this.die();

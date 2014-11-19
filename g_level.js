@@ -95,6 +95,7 @@ function nextLevel () {
 	array_cy = [];
 	entityManager._pacMan[0].resetPacman();
 	entityManager.generateFourFruits();
+	g_scatterToggle = true;
 	makeDots();
 };
 

@@ -128,7 +128,7 @@ var KEY_2 = keyCode('2');
 var KEY_K = keyCode('K');
 
 function processDiagnostics() {
-    if (eatKey(KEY_SCATTER)) g_scatterToggle = !g_scatterToggle;
+    //if (eatKey(KEY_SCATTER)) g_scatterToggle = !g_scatterToggle;
 
     if (eatKey(KEY_AVE_VEL)) g_useAveVel = !g_useAveVel;
 
