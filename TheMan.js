@@ -160,7 +160,6 @@ PacMan.prototype.animateDeath = function(){
 PacMan.prototype.eatDot = function(){
     var fruitEntity = entityManager._fruits;
 
-
     g_dotsEaten();
 
     for(var i=0; i<fruitEntity.length;i++){
