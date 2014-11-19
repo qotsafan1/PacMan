@@ -28,7 +28,7 @@ function Level() {
 
 Level.prototype.update = function(du) {
 	//console.log(g_lives);
-	console.log("Array" + array_cx.length+ "entity"+entityManager._fruits.length);
+	//console.log("Array" + array_cx.length+ "entity"+entityManager._fruits.length);
 	if (array_cx.length === 0 && entityManager._fruits.length === 0) {
 
 		nextLevel();
