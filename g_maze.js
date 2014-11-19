@@ -45,7 +45,14 @@ var g_maze = {
     scaredTimer : 0,
     theManMoving : false,
     nextOut : 0,
-    ghostScared : false
+    ghostScared : false,
+    backup : []
+};
+
+g_maze.resetMaze = function () {
+    this.tiles = this.backup;
+    this.nextOut = 0;
+    this.scaredTimer = 0;
 };
 
 g_maze.returnTilePos = function (cx, cy) {
@@ -72,7 +79,7 @@ g_maze.drawTile = function (ctx, x, y, style) {
 g_maze.update = function(du) {
     if (this.theManMoving) {
         if (g_blinky.scared || g_pinky.scared || g_inky.scared || g_clyde.scared) {
-            if (this.scaredTimer>6) { 
+            if (this.scaredTimer>g_ghostFrightTime) { 
                 this.scaredTimer=0;
                 this.stopBeingScared();
                 this.ghostScared = false;
@@ -128,6 +135,7 @@ g_maze.fixMaze = function () {
     g_maze.tiles[29][16]=0;
     g_maze.tiles[29][17]=0;
     g_maze.tiles[29][18]=0;
+    this.backup = this.tiles;
 };
 
 g_maze.stopBeingScared = function() {

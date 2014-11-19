@@ -18,7 +18,8 @@ var g_blinky = new Ghost({
     targetTile : [25,0],
     PacTile : [0,0],
     velX : -g_ghostSpeed*g_speed,
-    velY : 0
+    velY : 0,
+    turns : 'left'
 });
 
 g_blinky.findTargetTile = function() {
@@ -46,7 +47,8 @@ var g_pinky = new Ghost({
 	targetTile : [2,0],
 	PacTurns : "right",
 	velX : 0,
-    velY : g_ghostSpeed*g_speed
+    velY : g_ghostSpeed*g_speed,
+    turns : 'up'
 });
 
 g_pinky.findTargetTile = function() {
@@ -86,7 +88,8 @@ var g_inky = new Ghost({
     scatterTile : [27,35],
     targetTile : [27,35],
     velX : 0,
-    velY : g_ghostSpeed*g_speed
+    velY : g_ghostSpeed*g_speed,
+    turns : 'up'
 });
 
 g_inky.findTargetTile = function() {
@@ -129,7 +132,8 @@ var g_clyde = new Ghost({
     scatterTile : [0,35],
     targetTile : [0,35],
     velX : 0,
-    velY : g_ghostSpeed*g_speed
+    velY : g_ghostSpeed*g_speed,
+    turns : 'up'
 });
 
 g_clyde.findTargetTile = function() {
