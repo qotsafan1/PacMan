@@ -36,17 +36,33 @@ g_point = function(num) {
 	g_score+=num;
 };
 
+g_SmallPoints = function() {
+	g_score+=10;
+};
+
+g_BigPoints = function() {
+	g_score+=50;
+};
+
 g_lossOfLife = function () {
 	g_lives--;
+}
+
+g_LostGame = function(g_score) {
+	if(g_lives === 0) {
+
+	}
 }
 
 Level.prototype.render = function(ctx) {
 
 	//Render points
 	this.levelsprite.drawAt(ctx, this.cx, this.cy);
-	ctx.font = "20px Georgia";
+	ctx.font = "bold 20px arial";
 	ctx.fillStyle = 'grey';
-	ctx.fillText(g_score, 100, 40);
+	ctx.fillText("1UP", 50, 20);
+	ctx.fillText(g_score, 50, 40);
+	if(g_score===0) ctx.fillText("  0", 50, 40);
 	ctx.fillText("HIGH SCORE", 165, 20);
 
 	//Render Lives
@@ -69,6 +85,7 @@ function nextLevel () {
 	array_cx = [];
 	array_cy = [];
 	entityManager._pacMan[0].resetPacman();
+	entityManager.generateFourFruits();
 	makeDots();
 };
 

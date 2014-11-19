@@ -148,7 +148,7 @@ PacMan.prototype.animateDeath = function(){
     if(this.isDead === true){
         this.halt();
         this.sprite = g_deathSprites[this.i];
-        if(this.counter%5 === 0) this.i++;
+        if(this.counter%10 === 0) this.i++;
         this.counter++;
 
         if(this.i === g_deathSprites.length){
@@ -167,7 +167,7 @@ PacMan.prototype.eatDot = function(){
         if((fruitEntity[i].cx > this.cx-this.getRadius() && fruitEntity[i].cx < this.cx +this.getRadius()) && (fruitEntity[i].cy > this.cy-this.getRadius() && fruitEntity[i].cy < this.cy +this.getRadius())) {
                 fruitEntity.splice(i,1);
                 g_dotCounter++;
-                g_point(50);
+                g_BigPoints();
                 this.makeGhostsScared();
         }
     }   
@@ -232,6 +232,7 @@ PacMan.prototype.takeStep = function (du) {
     if(this.isColliding() && !this.isDead){
         var thing = this.isColliding();
         if (thing.scared && !thing.isDeadNow) {
+            g_eatGhostsAudio.play();
             thing.isDeadNow = true;
             this.ghostKilled *=2;
             g_point(this.ghostKilled);
@@ -258,7 +259,7 @@ PacMan.prototype.die = function() {
     this.i = 0;
     this.counter = 0;
     g_maze.theManMoving = false;
-    
+    if(audioOn)g_pacmandeathAudio.play();
     g_lossOfLife();
 };
 

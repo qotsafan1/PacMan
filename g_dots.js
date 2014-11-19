@@ -28,8 +28,9 @@ var g_dotsEaten = function() {
             array_cx.splice(i,1);
             array_cy.splice(i,1);
             g_dotCounter++;
-
-            g_point(10);
+            g_SmallPoints();
+            
+            if(audioOn == true) g_chompAudio.play();
         }
     }
 }
