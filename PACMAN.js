@@ -138,7 +138,7 @@ function processDiagnostics() {
 
     if (eatKey(KEY_TAKETIME)) g_takingTime = !g_takingTime;  
 
-    if(eatKey(KEY_AUDIO)) audioOn = !audioOn; 
+    if(eatKey(KEY_AUDIO)) g_audioOn = !g_audioOn; 
 }
 
 

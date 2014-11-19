@@ -44,7 +44,7 @@ startUpScreen.prototype.update = function(du) {
 		}
 
 		if(!this.soundplayed) {
-			//if(g_audioOn) this.introSound.play();
+			if(g_audioOn) this.introSound.play();
 			this.soundplayed = true;
 		}
 	}

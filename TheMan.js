@@ -232,7 +232,7 @@ PacMan.prototype.takeStep = function (du) {
     if(this.isColliding() && !this.isDead){
         var thing = this.isColliding();
         if (thing.scared && !thing.isDeadNow) {
-            if(g_audioOn)g_eatGhostsAudio.play();
+            if(g_audioOn) g_eatGhostsAudio.play();
             thing.isDeadNow = true;
             this.ghostKilled *=2;
             g_point(this.ghostKilled);
