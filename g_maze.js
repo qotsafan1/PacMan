@@ -53,6 +53,7 @@ g_maze.resetMaze = function () {
     this.tiles = this.backup;
     this.nextOut = 0;
     this.scaredTimer = 0;
+    this.theManMoving = false;
 };
 
 g_maze.returnTilePos = function (cx, cy) {

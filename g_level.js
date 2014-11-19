@@ -10,6 +10,7 @@ var g_inkyOut = 4;
 var g_clydeOut = 8;
 var g_ghostFrightTime = 6;
 var g_currentLevel = 1;
+var g_dotCounter = 0;
 
 g_newGame = function() {
 	g_score = 0;
@@ -26,6 +27,9 @@ function Level() {
 
 Level.prototype.update = function(du) {
 	//console.log(g_lives);
+	if (g_dotCounter===244) {
+		nextLevel();
+	}
 };
 
 g_point = function() {
@@ -60,7 +64,11 @@ function nextLevel () {
 	g_currentLevel++;
 	newLevel(g_currentLevel);
 	g_maze.resetMaze();
-
+	g_dotCounter = 0;
+	array_cx = [];
+	array_cy = [];
+	entityManager._pacMan[0].resetPacman();
+	makeDots();
 };
 
 function newLevel (level) {
@@ -101,6 +109,4 @@ function newLevel (level) {
 	g_inkyOut = 4;
 	g_clydeOut = 8;
 	g_ghostFrigthTime = 0;
-	return;
-
 };

@@ -165,6 +165,7 @@ PacMan.prototype.eatDot = function(){
     for(var i=0; i<fruitEntity.length;i++){
         if((fruitEntity[i].cx > this.cx-this.getRadius() && fruitEntity[i].cx < this.cx +this.getRadius()) && (fruitEntity[i].cy > this.cy-this.getRadius() && fruitEntity[i].cy < this.cy +this.getRadius())) {
                 fruitEntity.splice(i,1);
+                g_dotCounter++;
                 g_point();
                 this.makeGhostsScared();
         }
@@ -207,7 +208,7 @@ PacMan.prototype.update = function (du) {
         du -= 4;
     }
     this.takeStep(du);
-    
+
     spatialManager.register(this);
     g_pinky.PacTurns = this.turns;
     g_blinky.PacTile = this.tilePos();

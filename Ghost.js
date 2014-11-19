@@ -40,6 +40,7 @@ Ghost.prototype.rememberResets = function () {
     this.reset_velX = this.velX;
     this.reset_velY = this.velY;
     this.reset_tile = this.tilePos();
+    this.reset_turns = this.turns;
 };
 
 Ghost.prototype.resetGhost = function () {
@@ -47,6 +48,9 @@ Ghost.prototype.resetGhost = function () {
     this.velX = this.reset_velX;
     this.velY = this.reset_velY;
     this.currentTile = this.reset_tile;
+    this.scared = false;
+    this.shouldTurn = false;
+    this.turns = this.reset_turns;
 };
 
 Ghost.prototype.move = function (target, myTile) {
