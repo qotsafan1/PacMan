@@ -23,6 +23,9 @@ startUpScreen.prototype.transparency = 1;
 
 startUpScreen.prototype.canvas_fillcolor = 'rgba(0,0,0,1)';
 
+startUpScreen.prototype.introSound = new Audio("sounds/pacman_beginning.wav");
+startUpScreen.prototype.soundplayed = false;
+
 startUpScreen.prototype.update = function(du) {
 
 	if(this.timer >= 0){
@@ -38,6 +41,11 @@ startUpScreen.prototype.update = function(du) {
 
 		if(this.transparency >= 0.8) {
 			this.runfade();
+		}
+
+		if(!this.soundplayed) {
+			//this.introSound.play();
+			this.soundplayed = true;
 		}
 	}
 };
