@@ -17,8 +17,6 @@ var g_blinky = new Ghost({
     scatterTile : [25,0],
     targetTile : [25,0],
     PacTile : [0,0],
-    velX : -g_ghostSpeed*g_speed,
-    velY : 0,
     turns : 'left'
 });
 
@@ -42,8 +40,6 @@ var g_pinky = new Ghost({
 	scatterTile : [2,0],
 	targetTile : [2,0],
 	PacTurns : "right",
-	velX : 0,
-    velY : g_ghostSpeed*g_speed,
     turns : 'up'
 });
 
@@ -79,8 +75,6 @@ var g_inky = new Ghost({
 	cy : 280,
     scatterTile : [27,35],
     targetTile : [27,35],
-    velX : 0,
-    velY : g_ghostSpeed*g_speed,
     turns : 'up'
 });
 
@@ -119,8 +113,6 @@ var g_clyde = new Ghost({
     cy : 280,
     scatterTile : [0,35],
     targetTile : [0,35],
-    velX : 0,
-    velY : g_ghostSpeed*g_speed,
     turns : 'up'
 });
 
@@ -145,10 +137,10 @@ g_clyde.drawHealthyGhost = function(ctx) {
 g_clyde.fixYourFriends = function() {
     g_blinky.inCage = false;
     g_pinky.inCage = false;
-    g_inky.velX = 0;
     g_inky.velY = -g_ghostSpeed*g_speed;
-    g_clyde.velX = 0;
     g_clyde.velY = -g_ghostSpeed*g_speed;
+    g_blinky.velX = -g_ghostSpeed*g_speed;
+    g_pinky.velY = -g_ghostSpeed*g_speed;
     g_blinky.rememberResets();
     g_pinky.rememberResets();
     g_inky.rememberResets();

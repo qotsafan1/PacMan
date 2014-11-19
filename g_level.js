@@ -11,6 +11,7 @@ var g_clydeOut = 8;
 var g_ghostFrightTime = 6;
 var g_currentLevel = 1;
 var g_dotCounter = 0;
+var highscore = localStorage.getItem("highscore");
 
 g_newGame = function() {
 	g_score = 0;
@@ -30,19 +31,34 @@ Level.prototype.update = function(du) {
 	if (g_dotCounter===244) {
 		nextLevel();
 	}
+	if(g_lives === 0){
+		g_LostGame();
+		g_score = 0;
+		g_lives = 3;
+		g_currentLevel = 0;
+		nextLevel();
+	}
 };
 
-g_point = function() {
+g_point = function(num) {
+	g_score+=num;
+};
+
+g_SmallPoints = function() {
 	g_score+=10;
+};
+
+g_BigPoints = function() {
+	g_score+=50;
 };
 
 g_lossOfLife = function () {
 	g_lives--;
 }
 
-g_LostGame = function(g_score) {
+g_LostGame = function() {
 	if(g_lives === 0) {
-
+		localStorage.setItem("highscore", g_score);
 	}
 }
 
@@ -50,10 +66,13 @@ Level.prototype.render = function(ctx) {
 
 	//Render points
 	this.levelsprite.drawAt(ctx, this.cx, this.cy);
-	ctx.font = "20px Georgia";
+	ctx.font = "bold 20px arial";
 	ctx.fillStyle = 'grey';
-	ctx.fillText(g_score, 100, 40);
+	ctx.fillText("1UP", 50, 20);
+	ctx.fillText(g_score, 50, 40);
+	if(g_score===0) ctx.fillText("  0", 50, 40);
 	ctx.fillText("HIGH SCORE", 165, 20);
+	if(highscore != null) ctx.fillText(highscore, 165, 40);
 
 	//Render Lives
 	var width = 90;
@@ -75,6 +94,7 @@ function nextLevel () {
 	array_cx = [];
 	array_cy = [];
 	entityManager._pacMan[0].resetPacman();
+	entityManager.generateFourFruits();
 	makeDots();
 };
 
@@ -87,6 +107,7 @@ function newLevel (level) {
 		g_inkyOut = 4;
 		g_clydeOut = 8;
 		g_ghostFrigthTime = 6;
+		g_maze.chaseScatter = [7,20,7,20,5,20,5,false];
 		return; 
 	}
 	if (level>1 && level<5) {
@@ -97,6 +118,7 @@ function newLevel (level) {
 		g_inkyOut = 4;
 		g_clydeOut = 8;
 		g_ghostFrigthTime = 4;
+		g_maze.chaseScatter = [7,20,7,20,5,1033,1/60,false];
 		return;
 	}
 	if (level>4 && level<21) {
@@ -107,6 +129,7 @@ function newLevel (level) {
 		g_inkyOut = 4;
 		g_clydeOut = 8;
 		g_ghostFrigthTime = 2;
+		g_maze.chaseScatter = [5,20,5,20,5,1037,1/60,false];
 		return;
 	}
 	g_ghostSpeed = 0.95;
@@ -116,4 +139,5 @@ function newLevel (level) {
 	g_inkyOut = 4;
 	g_clydeOut = 8;
 	g_ghostFrigthTime = 0;
+	g_maze.chaseScatter = [5,20,5,20,5,1037,1/60,false];
 };

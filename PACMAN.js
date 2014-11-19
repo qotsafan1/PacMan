@@ -94,6 +94,14 @@ function updateSimulation(du) {
     }
 
 }
+//Audio stuff for toogleing
+var KEY_AUDIO = keyCode('Z');
+var audioOn = true;
+
+//load audio
+var g_chompAudio = new Audio('sounds/pacman_chomp.wav'),
+    g_pacmandeathAudio = new Audio('sounds/pacman_death.wav'),
+    g_eatGhostsAudio = new Audio('sounds/pacman_eatghost.wav');
 
 // GAME-SPECIFIC DIAGNOSTICS
 
@@ -128,7 +136,9 @@ function processDiagnostics() {
 
     if (eatKey(KEY_REDWALL)) g_useUglyRedWall = !g_useUglyRedWall;   
 
-    if (eatKey(KEY_TAKETIME)) g_takingTime = !g_takingTime;   
+    if (eatKey(KEY_TAKETIME)) g_takingTime = !g_takingTime;  
+
+    if(eatKey(KEY_AUDIO)) audioOn = !audioOn; 
 }
 
 

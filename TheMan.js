@@ -30,6 +30,7 @@ function PacMan(descr) {
     this._scale = 0.45;
     this.speed = g_pacSpeed*g_speed;
     this.turns = "right";
+    this.ghostKilled = 100;
 };
 
 PacMan.prototype = new Entity();
@@ -147,7 +148,7 @@ PacMan.prototype.animateDeath = function(){
     if(this.isDead === true){
         this.halt();
         this.sprite = g_deathSprites[this.i];
-        if(this.counter%5 === 0) this.i++;
+        if(this.counter%10 === 0) this.i++;
         this.counter++;
 
         if(this.i === g_deathSprites.length){
@@ -166,7 +167,7 @@ PacMan.prototype.eatDot = function(){
         if((fruitEntity[i].cx > this.cx-this.getRadius() && fruitEntity[i].cx < this.cx +this.getRadius()) && (fruitEntity[i].cy > this.cy-this.getRadius() && fruitEntity[i].cy < this.cy +this.getRadius())) {
                 fruitEntity.splice(i,1);
                 g_dotCounter++;
-                g_point();
+                g_BigPoints();
                 this.makeGhostsScared();
         }
     }   
@@ -195,6 +196,7 @@ PacMan.prototype.makeGhostsScared= function() {
     g_inky.fright();
     g_clyde.fright();
     g_maze.ghostScared = true;
+    this.ghostKilled = 100;
 };
 
 PacMan.prototype.update = function (du) {
@@ -203,9 +205,9 @@ PacMan.prototype.update = function (du) {
     if (g_maze.ghostScared) this.speed = g_scaredPacSpeed*g_speed;
     else g_pacSpeed*g_speed;
 
-    while (du > 4) {
-        this.takeStep(4);
-        du -= 4;
+    while (du > 2) {
+        this.takeStep(2);
+        du -= 2;
     }
     this.takeStep(du);
 
@@ -229,11 +231,14 @@ PacMan.prototype.takeStep = function (du) {
     }
     if(this.isColliding() && !this.isDead){
         var thing = this.isColliding();
-        if (thing.scared || thing.isDeadNow) {
+        if (thing.scared && !thing.isDeadNow) {
+            g_eatGhostsAudio.play();
             thing.isDeadNow = true;
+            this.ghostKilled *=2;
+            g_point(this.ghostKilled);
         }
         else {
-             this.die();
+             if(!thing.isDeadNow) this.die();
         }
     }
 };
@@ -254,7 +259,7 @@ PacMan.prototype.die = function() {
     this.i = 0;
     this.counter = 0;
     g_maze.theManMoving = false;
-    
+    if(audioOn)g_pacmandeathAudio.play();
     g_lossOfLife();
 };
 

@@ -71,6 +71,18 @@ generateFruit : function(cx, cy) {
     }));
 },
 
+generateFourFruits : function() {
+    for(var i=0; i < g_maze.tiles.length; ++i) {
+        for(var j=0; j < g_maze.tiles[i].length; ++j) {
+    
+            if(g_maze.tiles[i][j] === 8) {
+                this.generateFruit(8+i*16, 8+j*16);
+            }
+
+        }
+    }
+},
+
 makeLevel : function(){
     this._level.push(new Level());
 },
@@ -107,15 +119,7 @@ init: function() {
     this._maze.push(g_maze);
     g_clyde.fixYourFriends();
 
-    for(var i=0; i < g_maze.tiles.length; ++i) {
-        for(var j=0; j < g_maze.tiles[i].length; ++j) {
-    
-            if(g_maze.tiles[i][j] === 8) {
-                this.generateFruit(8+i*16, 8+j*16);
-            }
-
-        }
-    }
+    this.generateFourFruits();
         
 
 },

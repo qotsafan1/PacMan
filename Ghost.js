@@ -21,7 +21,7 @@ function Ghost(descr) {
     // Set normal drawing scale
     this._scale = 0.45;
     this.speed = g_ghostSpeed*g_speed;
-    this.velX = -this.speed;
+    this.velX = 0;
     this.velY = 0;
     this.chosen = false;
     this.scared = false;
@@ -51,6 +51,7 @@ Ghost.prototype.resetGhost = function () {
     this.scared = false;
     this.shouldTurn = false;
     this.turns = this.reset_turns;
+    this.isDeadNow = false;
 };
 
 Ghost.prototype.move = function (target, myTile) {
@@ -227,9 +228,9 @@ Ghost.prototype.update = function (du) {
     if(this.isDeadNow) this.speed = g_speed;
 
     spatialManager.unregister(this);
-    while (du>4) { //take smaller steps if du is too large
-        this.takeStep(4);
-        du-=4;
+    while (du>2) { //take smaller steps if du is too large
+        this.takeStep(2);
+        du-=2;
     }
     this.takeStep(du);
 
@@ -239,7 +240,12 @@ Ghost.prototype.update = function (du) {
 Ghost.prototype.takeStep = function(du) {
     var endTile = this.endOfTile(this.currentTile);
     var theTile = g_maze.tiles[this.currentTile[0]][this.currentTile[1]];
-    if(theTile===10 && !this.inCage) {
+    /*if(theTile===16 && this.inCage && endTile && !this.chosen) {
+        this.velY *= -1;
+        this.chosen =true;
+        console.log(this.currentTile + "  " + this.velY);
+    }*/
+    if(theTile===10 && !this.inCage) {// && (endTile || this.isDeadNow)) {
         if(this.isDeadNow) this.scared = false;
         this.isDeadNow = false;
         this.centerx(this.currentTile);
