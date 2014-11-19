@@ -79,6 +79,7 @@ function nextLevel () {
 	array_cx = [];
 	array_cy = [];
 	entityManager._pacMan[0].resetPacman();
+	entityManager.generateFourFruits();
 	makeDots();
 };
 
