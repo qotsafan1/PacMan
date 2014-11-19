@@ -81,14 +81,14 @@ function updateSimulation(du) {
     if (g_startupscreen.timer >= g_startupscreen.startGame) g_startupscreen.update(du);
     else {
 
+        if(g_startupscreen.status() && g_startupscreen.ON) g_startupscreen.update(du);
+
         // Pause game if esc key was pressed
         if(!g_startupscreen.ON) g_pausemenu.checkPause();
         if(g_pausemenu.ON && !g_startupscreen.ON) {
             g_pausemenu.update();
             return;
         }
-
-        if(g_startupscreen.status() && g_startupscreen.ON) g_startupscreen.update(du);
 
         entityManager.update(du);
     }
@@ -100,6 +100,7 @@ var g_audioOn = true;
 
 //load audio
 var g_chompAudio = new Audio('sounds/pacman_chomp.wav'),
+    g_sirenAudio = new Audio('sounds/pacman_siren.wav'),
     g_pacmandeathAudio = new Audio('sounds/pacman_death.wav'),
     g_eatGhostsAudio = new Audio('sounds/pacman_eatghost.wav');
 
