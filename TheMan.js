@@ -142,6 +142,9 @@ PacMan.prototype.resetPacman = function(){
     g_pinky.resetGhost();
     g_inky.resetGhost();
     g_clyde.resetGhost();
+    g_maze.nextOut = 0;
+    g_inky.inCage = true;
+    g_clyde.inCage = true;
 };
 
 PacMan.prototype.animateDeath = function(){
@@ -236,7 +239,6 @@ PacMan.prototype.takeStep = function (du) {
             thing.isDeadNow = true;
             this.ghostKilled *=2;
             g_point(this.ghostKilled);
-            spatialManager.unregister(thing);
         }
         else {
              if(!thing.isDeadNow) this.die();

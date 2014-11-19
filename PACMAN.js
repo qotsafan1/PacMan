@@ -196,7 +196,8 @@ function requestPreloads() {
         blinky: "images/blinky.png",
         pinky: "images/pinky.png",
         clyde: "images/clyde.png",
-        scared: "images/scaredGhosts.png"
+        scared: "images/scaredGhosts.png",
+        scaredEnd : "images/scaredGhostsEnd.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -229,7 +230,8 @@ var g_inkySprite = [],
     g_blinkySprite = [],
     g_pinkySprite = [],
     g_clydeSprite = [],
-    g_scaredSprite = [];
+    g_scaredSprite = [],
+    g_scaredEndSprite = [];
 
 function preloadDone() {
     createSpriteSheet(g_animateSprites,g_images.therealone,2,2);
@@ -242,6 +244,7 @@ function preloadDone() {
     createSpriteSheet(g_pinkySprite,g_images.pinky,2,1);
     createSpriteSheet(g_clydeSprite,g_images.clyde,2,1);
     createSpriteSheet(g_scaredSprite,g_images.scared,2,1);
+    createSpriteSheet(g_scaredEndSprite,g_images.scaredEnd,2,1);
 
     var levelimage = g_images.level_walls;
     var levelsprite = new Sprite(levelimage, 0, 0, levelimage.width, levelimage.height);

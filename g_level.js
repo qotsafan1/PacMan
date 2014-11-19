@@ -92,9 +92,11 @@ Level.prototype.render = function(ctx) {
 
 	//Render Lives
 	var width = 90;
-	for(var i=0; i<g_lives;i++) {	
-		ctx.fillStyle = 'yellow';
-		util.fillCircle(ctx, width, g_canvas.height - 20, 10);
+	for(var i=0; i<g_lives;i++) {
+		g_animateSprites[i].scale = 0.45;
+		g_animateSprites[i].drawWrappedCentredAt(ctx,width,g_canvas.height-20,0);
+		//ctx.fillStyle = 'yellow';
+		//util.fillCircle(ctx, width, g_canvas.height - 20, 10);
 		width-=30;
 	}
 
