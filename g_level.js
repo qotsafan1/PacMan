@@ -40,8 +40,6 @@ Level.prototype.flickercounter = 0.1*SECS_TO_NOMINALS;
 
 Level.prototype.update = function(du) {
 	if(g_score>highscore) highscore = g_score;
-	//console.log(g_lives);
-	//console.log("Array" + array_cx.length+ "entity"+entityManager._fruits.length);
 	if (array_cx.length === 0 && entityManager._fruits.length === 0) {
 
 		g_levelchange = true;
@@ -140,13 +138,10 @@ Level.prototype.render = function(ctx) {
 	//Render Lives
 	var width = 30;
 	for(var i=0; i<g_lives;i++) {
-		g_animateSprites[i].scale = 0.45;
-		g_animateSprites[i].drawWrappedCentredAt(ctx,width,g_canvas.height-20,0);
+		g_animateSprites[0].scale = 0.45;
+		g_animateSprites[0].drawWrappedCentredAt(ctx,width,g_canvas.height-20,0);
 		width+=30;
 	}
-
-	//console.log("buja");
-	//ctx.drawImage("images/levelwalls.png", this.cx, this.cy);
 };
 
 // starting next level
