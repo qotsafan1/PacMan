@@ -1,4 +1,6 @@
 // Level stuff
+var g_level;
+
 var g_score = 0;
 var g_lives = 3;
 var g_speed = 2;
