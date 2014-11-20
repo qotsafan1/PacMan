@@ -50,7 +50,7 @@ main.iter = function (frameTime) {
         util.drawPixelText(g_ctx, g_canvas.width/2, g_canvas.height/2-20, "YOU HAVE", 40, "#FE0000");
         util.drawPixelText(g_ctx, g_canvas.width/2, g_canvas.height/2+20, "QUIT!", 40, "#FE0000");
         util.drawPixelText(g_ctx, g_canvas.width/2, g_canvas.height/2+60, "YOU NEED TO REFRESH", 10, "#FE0000");
-        util.drawPixelText(g_ctx, g_canvas.width/2, g_canvas.height/2+75, "YOUR BROWSER", 10, "#FE0000");
+        util.drawPixelText(g_ctx, g_canvas.width/2, g_canvas.height/2+75, "YOUR BROWSER TO PLAY", 10, "#FE0000");
     }
 };
 
