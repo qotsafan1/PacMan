@@ -82,22 +82,22 @@ Level.prototype.render = function(ctx) {
 	this.levelsprite.drawAt(ctx, this.cx, this.cy);
 
 	// Render 1UP text
-	util.drawPixelText(ctx, 50, 20, "1UP", 16, "#DEDEDE");
+	util.drawPixelText(ctx, 70, 20, "1UP", 16, "#DEDEDE");
 
 	// Render current score
 	if(g_score === 0) util.drawPixelText(ctx, 70, 40, "00", 16, "#DEDEDE");
 	else util.drawPixelText(ctx, 70, 40, g_score, 16, "#DEDEDE");
 
 	// Render the highest score
-	util.drawPixelText(ctx, 150, 20, "HIGH SCORE", 16, "#DEDEDE");
-	if(highscore != null) util.drawPixelText(ctx, 250, 40, "00", 16, "#DEDEDE");
-	else util.drawPixelText(ctx, 250, 40, highscore, 16, "#DEDEDE");
+	util.drawPixelText(ctx, g_canvas.width/2, 20, "HIGH SCORE", 16, "#DEDEDE");
+	if(highscore === null) util.drawPixelText(ctx, g_canvas.width/2, 40, "00", 16, "#DEDEDE");
+	else util.drawPixelText(ctx, g_canvas.width/2, 40, highscore, 16, "#DEDEDE");
 
 	// Render ready text above pacman before he starts
-	if(!g_maze.theManMoving) util.drawPixelText(ctx, 186, 336, "READY!", 14, "#FFFF00");
+	if(!g_maze.theManMoving) util.drawPixelText(ctx, g_canvas.width/2, 336, "READY!", 14, "#FFFF00");
 
 	// THIS NEEDS TO BE FIXED?
-	if(g_lives === 0) util.drawPixelText(ctx, 148, 336, "GAME   OVER", 14, "FE0000");
+	if(g_lives === 0) util.drawPixelText(ctx, g_canvas.width/2, 336, "GAME   OVER", 14, "FE0000");
 
 	//Render Lives
 	var width = 90;
