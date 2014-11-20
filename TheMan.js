@@ -31,6 +31,7 @@ function PacMan(descr) {
     this.speed = g_pacSpeed*g_speed;
     this.turns = "right";
     this.ghostKilled = 100;
+    this.killScore = [];
 };
 
 PacMan.prototype = new Entity();
@@ -119,6 +120,14 @@ PacMan.prototype.move = function(du, tileP) {
     //change image
     this.animateDeath();
     this.animate();
+    if(this.killScore[0]) this.updateKillScore(du);
+};
+
+// update time for score you get for killing ghosts
+PacMan.prototype.updateKillScore = function(du) {
+    for (var i=0; i<this.killScore.length; ++i) {
+        this.killScore[i][2]-=du/SECS_TO_NOMINALS;
+    }
 };
 
 PacMan.prototype.resetPacman = function(){
@@ -238,8 +247,11 @@ PacMan.prototype.takeStep = function (du) {
         if (thing.scared && !thing.isDeadNow) {
             if(g_audioOn) g_eatGhostsAudio.play();
             thing.isDeadNow = true; // ghost is killed if you eat him
+            thing.shouldTurn = false;
             this.ghostKilled *=2; 
             g_point(this.ghostKilled);
+            spatialManager.unregister(thing);
+            this.killScore.push([thing.cx, thing.cy, 0.8, this.ghostKilled]);
         }
         else {
              if(!thing.isDeadNow) this.die(); 
@@ -272,6 +284,14 @@ PacMan.prototype.die = function() {
 
 var NOMINAL_ROTATE_RATE = 0.1;
 
+// draw scores you get for killing ghosts
+PacMan.prototype.renderKillScore = function(ctx) {
+    for (var i=0; i<this.killScore.length; ++i) {
+        util.drawPixelText(ctx, this.killScore[i][0], this.killScore[i][1] , this.killScore[i][3], 10, "#DEDEDE");
+        if(this.killScore[i][2]<0) this.killScore.splice(i,1);
+    }
+};
+
 PacMan.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
@@ -280,4 +300,5 @@ PacMan.prototype.render = function (ctx) {
     ctx, this.cx, this.cy, this.rotation
     );
     this.sprite.scale = origScale;
+    if(this.killScore[0]) this.renderKillScore(ctx);
 };
