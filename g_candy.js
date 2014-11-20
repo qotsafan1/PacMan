@@ -39,7 +39,14 @@ g_candy.render = function(ctx) {
 	 			g_candySprite[1].drawWrappedCentredAt(ctx,this.cx,this.cy,0);
 	 		}
             break;
-        case 3||4:
+        case 3:
+			g_candySprite[2].scale = this.scale;
+			g_candySprite[2].drawWrappedCentredAt(ctx,g_canvas.width-50,g_canvas.height-20,0);
+			if(this.showTime) {
+	 			g_candySprite[2].drawWrappedCentredAt(ctx,this.cx,this.cy,0);
+	 		}
+            break;
+        case 4:
 			g_candySprite[2].scale = this.scale;
 			g_candySprite[2].drawWrappedCentredAt(ctx,g_canvas.width-50,g_canvas.height-20,0);
 			if(this.showTime) {
@@ -49,7 +56,66 @@ g_candy.render = function(ctx) {
         case 5:
 			g_candySprite[3].scale = this.scale;
 			g_candySprite[3].drawWrappedCentredAt(ctx,g_canvas.width-50,g_canvas.height-20,0);
-            break;    
+			if(this.showTime) {
+	 			g_candySprite[3].drawWrappedCentredAt(ctx,this.cx,this.cy,0);
+	 		}
+            break;
+        case 6:
+			g_candySprite[3].scale = this.scale;
+			g_candySprite[3].drawWrappedCentredAt(ctx,g_canvas.width-50,g_canvas.height-20,0);
+			if(this.showTime) {
+	 			g_candySprite[3].drawWrappedCentredAt(ctx,this.cx,this.cy,0);
+	 		}
+            break;
+        case 7:
+			g_candySprite[4].scale = this.scale;
+			g_candySprite[4].drawWrappedCentredAt(ctx,g_canvas.width-50,g_canvas.height-20,0);
+			if(this.showTime) {
+	 			g_candySprite[4].drawWrappedCentredAt(ctx,this.cx,this.cy,0);
+	 		}
+            break;
+        case 8:
+			g_candySprite[4].scale = this.scale;
+			g_candySprite[4].drawWrappedCentredAt(ctx,g_canvas.width-50,g_canvas.height-20,0);
+			if(this.showTime) {
+	 			g_candySprite[4].drawWrappedCentredAt(ctx,this.cx,this.cy,0);
+	 		}
+            break;
+        case 9:
+			g_candySprite[5].scale = this.scale;
+			g_candySprite[5].drawWrappedCentredAt(ctx,g_canvas.width-50,g_canvas.height-20,0);
+			if(this.showTime) {
+	 			g_candySprite[5].drawWrappedCentredAt(ctx,this.cx,this.cy,0);
+	 		}
+            break;
+        case 10:
+			g_candySprite[5].scale = this.scale;
+			g_candySprite[5].drawWrappedCentredAt(ctx,g_canvas.width-50,g_canvas.height-20,0);
+			if(this.showTime) {
+	 			g_candySprite[5].drawWrappedCentredAt(ctx,this.cx,this.cy,0);
+	 		}
+            break;
+        case 11:
+			g_candySprite[6].scale = this.scale;
+			g_candySprite[6].drawWrappedCentredAt(ctx,g_canvas.width-50,g_canvas.height-20,0);
+			if(this.showTime) {
+	 			g_candySprite[6].drawWrappedCentredAt(ctx,this.cx,this.cy,0);
+	 		}
+            break;
+        case 12:
+			g_candySprite[6].scale = this.scale;
+			g_candySprite[6].drawWrappedCentredAt(ctx,g_canvas.width-50,g_canvas.height-20,0);
+			if(this.showTime) {
+	 			g_candySprite[6].drawWrappedCentredAt(ctx,this.cx,this.cy,0);
+	 		}
+            break;
     }
+    if(g_currentLevel > 12){
+		g_candySprite[7].scale = this.scale;
+		g_candySprite[7].drawWrappedCentredAt(ctx,g_canvas.width-50,g_canvas.height-20,0);
+		if(this.showTime) {
+	 		g_candySprite[7].drawWrappedCentredAt(ctx,this.cx,this.cy,0);
+	 	}
+	 }
 
 }

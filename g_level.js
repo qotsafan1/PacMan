@@ -57,9 +57,23 @@ g_candyPoints = function() {
     if(g_currentLevel === 3 || g_candy.level === 4) {
    			g_score+=500;
     }
-    if(g_currentLevel > 4) {
+    if(g_currentLevel === 5 || g_candy.level === 6) {
    			g_score+=700;
-    }  
+    }
+    if(g_currentLevel === 7 || g_candy.level === 8) {
+   			g_score+=1000;
+    }
+    if(g_currentLevel === 9 || g_candy.level === 10) {
+   			g_score+=2000;
+    }
+    if(g_currentLevel === 11 || g_candy.level === 12) {
+   			g_score+=3000;
+    }
+    if(g_currentLevel > 12) {
+   			g_score+=5000;
+    }
+
+
 }
 
 
