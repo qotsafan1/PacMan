@@ -28,6 +28,8 @@ Level.prototype.smallersize = 14;
 
 Level.prototype.update = function(du) {
 	if(g_score>highscore) highscore = g_score;
+	//console.log(g_lives);
+	//console.log("Array" + array_cx.length+ "entity"+entityManager._fruits.length);
 	if (array_cx.length === 0 && entityManager._fruits.length === 0) {
 
 		nextLevel();
