@@ -43,10 +43,10 @@ PacMan.prototype.rememberResets = function () {
     this.reset_rotation = this.rotation;
 };
 
-PacMan.prototype.KEY_UP = 'W'.charCodeAt(0);
-PacMan.prototype.KEY_DOWN  = 'S'.charCodeAt(0);
-PacMan.prototype.KEY_LEFT   = 'A'.charCodeAt(0);
-PacMan.prototype.KEY_RIGHT  = 'D'.charCodeAt(0);
+PacMan.prototype.KEY_UP = 38;
+PacMan.prototype.KEY_DOWN  = 40;
+PacMan.prototype.KEY_LEFT   = 37;
+PacMan.prototype.KEY_RIGHT  = 39;
 
 // Initial, inheritable, default values
 PacMan.prototype.rotation = 0;
@@ -185,7 +185,7 @@ PacMan.prototype.eatDot = function(){
 }
 
 PacMan.prototype.animate = function(){
-    if(this.animationOn){
+    if(this.animationOn && !(this.velX===0 && this.velY===0)){
         if(this.counter%5 === 0 && this.counter <= 10)this.i++;
         if(this.counter%5 === 0 && this.counter > 10) this.i--;
         if(this.directionX === -1){
