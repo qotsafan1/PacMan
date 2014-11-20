@@ -1,6 +1,7 @@
 // Level stuff
 var g_level;
 
+// level globals
 var g_score = 0;
 var g_lives = 3;
 var g_speed = 2;
@@ -13,6 +14,8 @@ var g_currentLevel = 1;
 var g_dotCounter = 0;
 var highscore = localStorage.getItem("highscore");
 
+var g_levelchange = false; 
+
 g_newGame = function() {
 	g_score = 0;
 	g_lives = 3;
@@ -22,17 +25,25 @@ function Level() {
     this.cx = 0;
     this.cy = 0;
     this.levelsprite = this.levelsprite || g_levelimg[0];
+    this.levelsprite_white = this.levelsprite_white || g_levelimg[1];
 }
 
 Level.prototype.pacwhite = "#DEDEDE";
 Level.prototype.standardsize = 16;
 Level.prototype.smallersize = 14;
+Level.prototype.delay = 2*SECS_TO_NOMINALS;
+Level.prototype.flicker = false;
+//Level.prototype.flickercounter = 0.2*SECS
 
-Level.prototype.update = function(du) {
+
+Level.prototype.update = function() {
 	if(g_score>highscore) highscore = g_score;
 	//console.log(g_lives);
 	//console.log("Array" + array_cx.length+ "entity"+entityManager._fruits.length);
-	if (array_cx.length === 0 && entityManager._fruits.length === 0) {
+	//if (array_cx.length === 0 && entityManager._fruits.length === 0) {
+	if(array_cx.length === 230) {
+
+		g_levelchange = true;
 
 		nextLevel();
 	}
@@ -83,7 +94,18 @@ g_LostGame = function(du) {
 Level.prototype.render = function(ctx) {
 
 	// Draw wall image
-	this.levelsprite.drawAt(ctx, this.cx, this.cy);
+	if(g_levelchange) {
+		if(this.flicker) {
+			this.levelsprite.drawAt(ctx, this.cx, this.cy);
+			this.flicker = false;
+		}
+		else {
+			this.levelsprite_white.drawAt(ctx, this.cx, this.cy);
+			this.flicker = true;
+		}
+	}
+	else this.levelsprite.drawAt(ctx, this.cx, this.cy);
+
 
 	// Render current level
 	util.drawPixelText(ctx, g_canvas.width-70, 20, "LEVEL", this.standardsize, this.pacwhite);
@@ -103,7 +125,8 @@ Level.prototype.render = function(ctx) {
 	else util.drawPixelText(ctx, g_canvas.width/2, 40, highscore, this.standardsize, this.pacwhite);
 
 	// Render ready text above pacman before he starts
-	if(!g_maze.theManMoving && !entityManager._pacMan[0].isDead) util.drawPixelText(ctx, g_canvas.width/2, 336, "READY!", this.smallersize, "#FFFF00");
+	if(!g_maze.theManMoving && !entityManager._pacMan[0].isDead && !g_levelchange) 
+		util.drawPixelText(ctx, g_canvas.width/2, 336, "READY!", this.smallersize, "#FFFF00");
 
 	// Render the game is over
 	if(g_lives === 0) util.drawPixelText(ctx, g_canvas.width/2, 336, "GAME  OVER", this.smallersize, "#FE0000");
