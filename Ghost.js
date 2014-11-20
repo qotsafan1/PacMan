@@ -250,16 +250,6 @@ Ghost.prototype.takeStep = function(du) {
 
     if(theTile===10 && !this.inCage) {
         if(this.isDeadNow) this.scared = false;
-        /*if(this===g_inky && this.isDeadNow) { //inky stays in cage if he is killed
-            this.resetGhost();
-            g_maze.dotCounter = 0;
-            this.inCage = true; 
-        }
-        if(this===g_clyde && this.isDeadNow) { //clyde stays in cage if he is killed
-            this.resetGhost();
-            g_maze.dotCounter = 0;
-            this.inCage = true;
-        }*/
         this.isDeadNow = false; 
         this.centerx(this.currentTile);
         this.velX = 0;
