@@ -103,17 +103,15 @@ Level.prototype.render = function(ctx) {
 	// Render ready text above pacman before he starts
 	if(!g_maze.theManMoving && !entityManager._pacMan[0].isDead) util.drawPixelText(ctx, g_canvas.width/2, 336, "READY!", this.smallersize, "#FFFF00");
 
-	// THIS NEEDS TO BE FIXED?
-	if(g_lives === 0) util.drawPixelText(ctx, g_canvas.width/2, 336, "GAME   OVER", this.smallersize, "#FE0000");
+	// Render the game is over
+	if(g_lives === 0) util.drawPixelText(ctx, g_canvas.width/2, 336, "GAME  OVER", this.smallersize, "#FE0000");
 
 	//Render Lives
-	var width = 90;
+	var width = 30;
 	for(var i=0; i<g_lives;i++) {
 		g_animateSprites[i].scale = 0.45;
 		g_animateSprites[i].drawWrappedCentredAt(ctx,width,g_canvas.height-20,0);
-		//ctx.fillStyle = 'yellow';
-		//util.fillCircle(ctx, width, g_canvas.height - 20, 10);
-		width-=30;
+		width+=30;
 	}
 
 	//console.log("buja");

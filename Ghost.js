@@ -232,14 +232,13 @@ Ghost.prototype.update = function (du) {
     else this.speed = g_ghostSpeed*g_speed;
     if(this.isDeadNow) this.speed = g_speed;
 
-    spatialManager.unregister(this);
     while (du>2) { //take smaller steps if du is too large
         this.takeStep(2);
         du-=2;
     }
     this.takeStep(du);
 
-    spatialManager.register(this);
+    if(!this.isDeadNow) spatialManager.register(this);
     this.counter ++;
     if(this.counter > 10) this.counter = 0;
 

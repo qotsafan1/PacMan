@@ -64,7 +64,7 @@ startUpScreen.prototype.update = function(du) {
 			this.soundplayed = true;
 		}
 
-		//this.entertextchange();
+		this.entertextchange();
 	}
 };
 
@@ -83,12 +83,12 @@ startUpScreen.prototype.entertextchange = function() {
 	if(this.blue < 1  || this.blue > 222) this.fadedirection = !this.fadedirection;
 
 	if(this.fadedirection) {
-		this.blue += 5;
-		this.green += 5;
+		this.blue += 10;
+		this.green += 10;
 	} 
 	else if (!this.fadedirection) {
-		this.blue -= 5;
-		this.green -= 5;
+		this.blue -= 10;
+		this.green -= 10;
 	}
 	
 	this.colorfadeinout = 'rgb(' + this.red + ',' + this.green + ',' + this.blue + ')';
