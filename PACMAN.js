@@ -31,7 +31,7 @@ function createInitialObjects() {
     });
 
     g_pausemenu = new Menu(300, 180, 15, "pause");
-    g_intromenu = new Menu(300, 180, -220, "intro");
+    //g_intromenu = new Menu(300, 180, -250, "intro");
 
 }
 

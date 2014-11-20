@@ -16,6 +16,8 @@ startUpScreen.prototype.timer = 3 * SECS_TO_NOMINALS;
 
 startUpScreen.prototype.startgame = 1.5 * SECS_TO_NOMINALS;
 
+startUpScreen.prototype.shift = 20;
+
 startUpScreen.prototype.ON = true;
 startUpScreen.prototype.KEY_ENTER = 13;
 
@@ -26,6 +28,12 @@ startUpScreen.prototype.canvas_fillcolor = 'rgba(0,0,0,1)';
 startUpScreen.prototype.text_fillcolor = 'rgba(0,0,0,1)';
 
 startUpScreen.prototype.pacwhite = "#DEDEDE";
+
+startUpScreen.prototype.red = 222;
+startUpScreen.prototype.green = 222;
+startUpScreen.prototype.blue = 222;
+startUpScreen.prototype.colorfadeinout = 'rgb(222,222,222)';
+startUpScreen.prototype.fadedirection = false;
 
 startUpScreen.prototype.introSound = new Audio("sounds/pacman_beginning.wav");
 startUpScreen.prototype.soundplayed = false;
@@ -55,6 +63,8 @@ startUpScreen.prototype.update = function(du) {
 			if(g_audioOn) this.introSound.play();
 			this.soundplayed = true;
 		}
+
+		//this.entertextchange();
 	}
 };
 
@@ -66,6 +76,22 @@ startUpScreen.prototype.canvasrunfade = function() {
 startUpScreen.prototype.textrunfade = function() {
 	this.text_transparency -= 0.5;
 	this.text_fillcolor = 'rgba(0,0,0,' + this.text_transparency + ')';
+};
+
+startUpScreen.prototype.entertextchange = function() {
+
+	if(this.blue < 1  || this.blue > 222) this.fadedirection = !this.fadedirection;
+
+	if(this.fadedirection) {
+		this.blue += 5;
+		this.green += 5;
+	} 
+	else if (!this.fadedirection) {
+		this.blue -= 5;
+		this.green -= 5;
+	}
+	
+	this.colorfadeinout = 'rgb(' + this.red + ',' + this.green + ',' + this.blue + ')';
 };
 
 
@@ -83,19 +109,28 @@ startUpScreen.prototype.render = function(ctx) {
 	util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, this.canvas_fillcolor);
 
 	// Draw "press enter to start"
-	util.drawPixelText(ctx, g_canvas.width/2, g_canvas.height/2, "press enter to start", 14, this.pacwhite);
+	util.drawPixelText(ctx, g_canvas.width/2, g_canvas.height/2, "press enter to start", 14, this.colorfadeinout);
 
 	// Instructions
-	g_intromenu.render(ctx);
-	util.drawPixelText(ctx, g_canvas.width/2, g_canvas.height/2+60, "Instructions:", 16, this.pacwhite);
-	util.drawPixelText(ctx, g_canvas.width/2, g_canvas.height/2+90, "use WASD to move", 12, this.pacwhite);
-	util.drawPixelText(ctx, g_canvas.width/2, g_canvas.height/2+110, "sound ON/OFF with Z", 12, this.pacwhite);
-	util.drawPixelText(ctx, g_canvas.width/2, g_canvas.height/2+150, "10 PTS", 12, this.pacwhite);
-	util.drawPixelText(ctx, g_canvas.width/2, g_canvas.height/2+170, "50 PTS", 12, this.pacwhite);
-
+	this.introframe(ctx, 340, 300, 180);
+	
 	// Another fillbox darkens the whole screen to hide the text
 	util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, this.text_fillcolor);
 
 	// Draw pacman logo
 	this.pacmanlogo.drawCentredAt(ctx, this.cx, this.cy, 0);	
 };
+
+startUpScreen.prototype.introframe = function(ctx, ypos, width, height) {
+
+	util.roundedBox(ctx, (g_canvas.width-width)/2, ypos, width, height, 20, 'rgba(0,0,0,0.7)', 4, "#000BDD");
+	util.drawPixelText(ctx, g_canvas.width/2, ypos+20+this.shift, "Instructions:", 16, this.pacwhite);
+	util.drawPixelText(ctx, g_canvas.width/2, ypos+50+this.shift, "use WASD to move", 12, this.pacwhite);
+	util.drawPixelText(ctx, g_canvas.width/2, ypos+70+this.shift, "sound ON/OFF with Z", 12, this.pacwhite);
+	util.drawPixelText(ctx, g_canvas.width/2, ypos+110+this.shift, "10 PTS", 12, this.pacwhite);
+	util.drawPixelText(ctx, g_canvas.width/2, ypos+130+this.shift, "50 PTS", 12, this.pacwhite);
+
+	util.fillCircle(ctx, g_canvas.width/2-55, ypos+103+this.shift, 2);
+	util.fillCircle(ctx, g_canvas.width/2-55, ypos+123+this.shift, 6);
+
+}
