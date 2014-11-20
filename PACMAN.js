@@ -22,6 +22,8 @@ var g_ctx = g_canvas.getContext("2d");
 // ====================
 function createInitialObjects() {
 
+    g_level = new Level();
+
     g_startupscreen = new startUpScreen({
 
         cx : g_canvas.width/2,
@@ -64,6 +66,18 @@ function gatherInputs() {
 
 
 // GAME-SPECIFIC UPDATE LOGIC
+var timedelay = 2*SECS_TO_NOMINALS;
+var restoredelay = timedelay;
+function delayUpdate(du) {
+    if(timedelay > 0) {
+        timedelay -= du
+        return true;
+    }
+    else{
+        timedelay = restoredelay;
+        return false;
+    }
+}
 
 function updateSimulation(du) {
     
@@ -78,12 +92,18 @@ function updateSimulation(du) {
         else {
 
             // Pause game if esc key was pressed
+            if(g_levelchange) {
+                if(delayUpdate(du)) return;
+                else g_levelchange = false;
+                g_level.update();
+            }
             if(!g_startupscreen.ON) g_pausemenu.checkPause();
             if(g_pausemenu.ON && !g_startupscreen.ON) {
                 g_pausemenu.update();
                 return;
             }
 
+            g_level.update();
             entityManager.update(du);
         }
     }
@@ -140,6 +160,7 @@ function renderSimulation(ctx) {
     if (g_startupscreen.timer >= g_startupscreen.startGame) g_startupscreen.render(ctx);
     else {
         
+        g_level.render(ctx);
         entityManager.render(ctx);
 
         if (g_renderSpatialDebug) spatialManager.render(ctx);
@@ -166,6 +187,7 @@ function requestPreloads() {
         levelwalls_white : "images/walls_white.png",
 
         b_continue : "images/continue.png",
+        b_newgame : "images/newgame.png",
         b_quit : "images/quit.png",
 
         pacmanlogo : "images/pacmanlogo.png",
@@ -241,12 +263,16 @@ function preloadDone() {
     g_levelimg.push(levelsprite2);
 
     // BUTTONS
-    var button = g_images.b_continue;
-    var continue_buttonsprite = new Sprite(button, 0, 0, button.width, button.height);
+    var button1 = g_images.b_continue;
+    var continue_buttonsprite = new Sprite(button1, 0, 0, button1.width, button1.height);
     g_buttons.push(continue_buttonsprite);
 
-    var button2 = g_images.b_quit;
-    var quit_buttonsprite = new Sprite(button2, 0, 0, button2.width, button2.height);
+    var button2 = g_images.b_newgame;
+    var newgame_buttonsprite = new Sprite(button2, 0, 0, button2.width, button2.height);
+    g_buttons.push(newgame_buttonsprite);
+
+    var button3 = g_images.b_quit;
+    var quit_buttonsprite = new Sprite(button3, 0, 0, button3.width, button3.height);
     g_buttons.push(quit_buttonsprite);
 
     // LOGO
