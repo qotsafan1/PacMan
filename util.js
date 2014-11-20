@@ -118,7 +118,8 @@ drawPixelText: function(ctx, x, y, text, size, color) {
     //Draw
     ctx.fillStyle = color;
     ctx.font = size +'px "Press Start 2P"'
-    ctx.fillText(text, x, y);
+    var textWidth = ctx.measureText(text).width;
+    ctx.fillText(text, (x-textWidth/2), y);
 
     //Restore previous
     ctx.font = oldfont;

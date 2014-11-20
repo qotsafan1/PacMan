@@ -1,7 +1,7 @@
 // Pause menu
 
 var g_pausemenu;
-var g_mainmenu;
+var g_intromenu;
 
 function pauseButtons(xpos, ypos) {
 
@@ -15,13 +15,15 @@ function pauseButtons(xpos, ypos) {
 	return buttons;
 }
 
-function Menu(width, height, type) {
+function Menu(width, height, offset, type) {
 
 	this.menu_width = width;
 	this.menu_height = height;
 
 	this.menu_cx = (g_canvas.width-this.menu_width)/2;
-	this.menu_cy = (g_canvas.height-this.menu_height-15)/2;
+	this.menu_cy = (g_canvas.height-this.menu_height-offset)/2;
+
+	this.menu_type = type;
 
 	if(type === "pause") {
 		this.buttons = pauseButtons(g_canvas.width/2, this.menu_cy);
@@ -71,15 +73,17 @@ Menu.prototype.checkPause = function() {
 Menu.prototype.render = function(ctx) {
 
 	// This fillbox darkens the whole screen
-	util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, this.canvas_fillcolor);
+	if(this.menu_type === "pause") util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, this.canvas_fillcolor);
 
 	// Draws a rounded menu rectangle
 	util.roundedBox(ctx, this.menu_cx, this.menu_cy, this.menu_width, 
 						 this.menu_height, this.menu_radius, 
 						 this.menu_fillcolor, this.menu_linewidth, this.strokecolor);
 
-	// Draw buttons
-	for (var i = 0; i < this.buttons.length; i++) {
-		this.buttons[i].render(ctx);
+	// Draw buttons if any
+	if(this.buttons !== undefined){
+		for (var i = 0; i < this.buttons.length; i++) {
+			this.buttons[i].render(ctx);
+		}
 	}
 };

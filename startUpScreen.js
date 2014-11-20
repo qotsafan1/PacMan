@@ -10,7 +10,7 @@ startUpScreen.prototype = new Entity();
 
 startUpScreen.prototype.yvel = -4;
 
-startUpScreen.prototype.logo_toppos = 130;
+startUpScreen.prototype.logo_toppos = 180;
 
 startUpScreen.prototype.timer = 3 * SECS_TO_NOMINALS;
 
@@ -83,16 +83,15 @@ startUpScreen.prototype.render = function(ctx) {
 	util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, this.canvas_fillcolor);
 
 	// Draw "press enter to start"
-	util.drawPixelText(ctx, g_canvas.width/2-137, g_canvas.height/2, "press enter to start", 14, this.pacwhite);
+	util.drawPixelText(ctx, g_canvas.width/2, g_canvas.height/2, "press enter to start", 14, this.pacwhite);
 
 	// Instructions
-	util.drawPixelText(ctx, g_canvas.width/2-110, g_canvas.height/2+60, "Instructions:", 16, this.pacwhite);
-	util.drawPixelText(ctx, g_canvas.width/2-105, g_canvas.height/2+90, "use WASD to move", 12, this.pacwhite);
-	util.drawPixelText(ctx, g_canvas.width/2-120, g_canvas.height/2+110, "sound ON/OFF with Z", 12, this.pacwhite);
-	util.drawPixelText(ctx, g_canvas.width/2-25, g_canvas.height/2+150, "10 PTS", 12, this.pacwhite);
-	util.drawPixelText(ctx, g_canvas.width/2-25, g_canvas.height/2+170, "50 PTS", 12, this.pacwhite);
-
-
+	g_intromenu.render(ctx);
+	util.drawPixelText(ctx, g_canvas.width/2, g_canvas.height/2+60, "Instructions:", 16, this.pacwhite);
+	util.drawPixelText(ctx, g_canvas.width/2, g_canvas.height/2+90, "use WASD to move", 12, this.pacwhite);
+	util.drawPixelText(ctx, g_canvas.width/2, g_canvas.height/2+110, "sound ON/OFF with Z", 12, this.pacwhite);
+	util.drawPixelText(ctx, g_canvas.width/2, g_canvas.height/2+150, "10 PTS", 12, this.pacwhite);
+	util.drawPixelText(ctx, g_canvas.width/2, g_canvas.height/2+170, "50 PTS", 12, this.pacwhite);
 
 	// Another fillbox darkens the whole screen to hide the text
 	util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, this.text_fillcolor);
