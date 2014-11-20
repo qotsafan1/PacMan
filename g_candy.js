@@ -17,7 +17,10 @@ g_candy.update = function(du) {
 		if(this.showTimer < 0) this.showTime = false;
 		if(entityManager._pacMan[0].isDead) this.showTime = false;
 	}
-	if((entityManager._pacMan[0].cx > this.cx-this.radius && entityManager._pacMan[0].cx < this.cx+this.radius) && (entityManager._pacMan[0].cy > this.cy-this.radius && entityManager._pacMan[0].cy < this.cy +this.radius) && this.showTime===true) {
+	if((entityManager._pacMan[0].cx > this.cx-this.radius && entityManager._pacMan[0].cx < this.cx+this.radius) && 
+		(entityManager._pacMan[0].cy > this.cy-this.radius && entityManager._pacMan[0].cy < this.cy +this.radius) && 
+		this.showTime===true) {
+		
 		this.showTime = false;
 		g_candyPoints();	
 	}

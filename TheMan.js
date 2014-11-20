@@ -174,7 +174,8 @@ PacMan.prototype.eatDot = function(){
     g_dotsEaten();
 
     for(var i=0; i<fruitEntity.length;i++){
-        if((fruitEntity[i].cx > this.cx-this.getRadius() && fruitEntity[i].cx < this.cx +this.getRadius()) && (fruitEntity[i].cy > this.cy-this.getRadius() && fruitEntity[i].cy < this.cy +this.getRadius())) {
+        if((fruitEntity[i].cx > this.cx-this.getRadius() && fruitEntity[i].cx < this.cx +this.getRadius()) && 
+            (fruitEntity[i].cy > this.cy-this.getRadius() && fruitEntity[i].cy < this.cy +this.getRadius())) {
                 fruitEntity.splice(i,1);
                 g_dotCounter++;
                 g_BigPoints();
