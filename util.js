@@ -110,6 +110,21 @@ fillBox: function (ctx, x, y, w, h, style) {
     ctx.fillStyle = oldStyle;
 },
 
+drawPixelText: function(ctx, x, y, text, size, color) {
+    //Save old
+    var oldfont = ctx.font;
+    var oldstyle = ctx.fillStyle;
+
+    //Draw
+    ctx.fillStyle = color;
+    ctx.font = size +'px "Press Start 2P"'
+    ctx.fillText(text, x, y);
+
+    //Restore previous
+    ctx.font = oldfont;
+    ctx.fillStyle = oldstyle;
+},
+
 roundedBox: function (ctx, x, y, width, height, radius, fillstyle, linewidth, strokestyle) {
 
   // Save

@@ -22,13 +22,11 @@ function Level() {
     this.cx = 0;
     this.cy = 0;
     this.levelsprite = this.levelsprite || g_levelimg[0];
-
-    this.score = 0;
 }
 
 Level.prototype.update = function(du) {
 	//console.log(g_lives);
-	console.log("Array" + array_cx.length+ "entity"+entityManager._fruits.length);
+	//console.log("Array" + array_cx.length+ "entity"+entityManager._fruits.length);
 	if (array_cx.length === 0 && entityManager._fruits.length === 0) {
 
 		nextLevel();
@@ -84,13 +82,24 @@ Level.prototype.render = function(ctx) {
 
 	//Render points
 	this.levelsprite.drawAt(ctx, this.cx, this.cy);
-	ctx.font = "bold 20px arial";
-	ctx.fillStyle = 'grey';
-	ctx.fillText("1UP", 50, 20);
-	ctx.fillText(g_score, 50, 40);
-	if(g_score===0) ctx.fillText("  0", 50, 40);
-	ctx.fillText("HIGH SCORE", 165, 20);
-	if(highscore != null) ctx.fillText(highscore, 165, 40);
+
+	// Render 1UP text
+	util.drawPixelText(ctx, 50, 20, "1UP", 16, "#DEDEDE");
+
+	// Render current score
+	if(g_score === 0) util.drawPixelText(ctx, 70, 40, "00", 16, "#DEDEDE");
+	else util.drawPixelText(ctx, 70, 40, g_score, 16, "#DEDEDE");
+
+	// Render the highest score
+	util.drawPixelText(ctx, 150, 20, "HIGH SCORE", 16, "#DEDEDE");
+	if(highscore != null) util.drawPixelText(ctx, 250, 40, "00", 16, "#DEDEDE");
+	else util.drawPixelText(ctx, 250, 40, highscore, 16, "#DEDEDE");
+
+	// Render ready text above pacman before he starts
+	if(!g_maze.theManMoving) util.drawPixelText(ctx, 186, 336, "READY!", 14, "#FFFF00");
+
+	// THIS NEEDS TO BE FIXED?
+	if(g_lives === 0) util.drawPixelText(ctx, 148, 336, "GAME   OVER", 14, "FE0000");
 
 	//Render Lives
 	var width = 90;

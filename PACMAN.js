@@ -22,13 +22,6 @@ var g_ctx = g_canvas.getContext("2d");
 // ====================
 function createInitialObjects() {
 
-    //entityManager.generatePacMan({
-      //  cx : 224,
-     //   cy : 424
-    //});
-
-    //entityManager.makeLevel();
-
     g_startupscreen = new startUpScreen({
 
         cx : g_canvas.width/2,
@@ -37,10 +30,7 @@ function createInitialObjects() {
 
     });
 
-
     g_pausemenu = new Menu(300, 180, "pause");
-
-
 
 }
 
@@ -78,19 +68,23 @@ function updateSimulation(du) {
     
     processDiagnostics();
 
+    // Nothing updates for the first seconds the game is run
     if (g_startupscreen.timer >= g_startupscreen.startGame) g_startupscreen.update(du);
     else {
 
+        // Check if startupscreen is on, else allow game to run
         if(g_startupscreen.status() && g_startupscreen.ON) g_startupscreen.update(du);
+        else {
 
-        // Pause game if esc key was pressed
-        if(!g_startupscreen.ON) g_pausemenu.checkPause();
-        if(g_pausemenu.ON && !g_startupscreen.ON) {
-            g_pausemenu.update();
-            return;
+            // Pause game if esc key was pressed
+            if(!g_startupscreen.ON) g_pausemenu.checkPause();
+            if(g_pausemenu.ON && !g_startupscreen.ON) {
+                g_pausemenu.update();
+                return;
+            }
+
+            entityManager.update(du);
         }
-
-        entityManager.update(du);
     }
 
 }
@@ -183,7 +177,8 @@ function requestPreloads() {
 
     var requiredImages = {
         
-        level_walls : "images/walls.png",
+        levelwalls_blue : "images/walls_blue.png",
+        levelwalls_white : "images/walls_white.png",
 
         b_continue : "images/continue.png",
         b_quit : "images/quit.png",
@@ -247,10 +242,16 @@ function preloadDone() {
     createSpriteSheet(g_scaredSprite,g_images.scared,2,1);
     createSpriteSheet(g_scaredEndSprite,g_images.scaredEnd,2,1);
 
-    var levelimage = g_images.level_walls;
-    var levelsprite = new Sprite(levelimage, 0, 0, levelimage.width, levelimage.height);
-    g_levelimg.push(levelsprite);
+    // LEVEL WALLS
+    var levelimage1 = g_images.levelwalls_blue;
+    var levelsprite1 = new Sprite(levelimage1, 0, 0, levelimage1.width, levelimage1.height);
+    g_levelimg.push(levelsprite1);
 
+    var levelimage2 = g_images.levelwalls_white;
+    var levelsprite2 = new Sprite(levelimage2, 0, 0, levelimage2.width, levelimage2.height);
+    g_levelimg.push(levelsprite2);
+
+    // BUTTONS
     var button = g_images.b_continue;
     var continue_buttonsprite = new Sprite(button, 0, 0, button.width, button.height);
     g_buttons.push(continue_buttonsprite);
@@ -259,6 +260,7 @@ function preloadDone() {
     var quit_buttonsprite = new Sprite(button2, 0, 0, button2.width, button2.height);
     g_buttons.push(quit_buttonsprite);
 
+    // LOGO
     var logo = g_images.pacmanlogo;
     var logosprite = new Sprite(logo, 0, 0, logo.width, logo.height);
     g_paclogo.push(logosprite);
