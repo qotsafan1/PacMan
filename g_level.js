@@ -22,6 +22,10 @@ function Level() {
     this.levelsprite = this.levelsprite || g_levelimg[0];
 }
 
+Level.prototype.pacwhite = "#DEDEDE";
+Level.prototype.standardsize = 16;
+Level.prototype.smallersize = 14;
+
 Level.prototype.update = function(du) {
 	//console.log(g_lives);
 	//console.log("Array" + array_cx.length+ "entity"+entityManager._fruits.length);
@@ -74,30 +78,32 @@ g_LostGame = function(du) {
 }
 
 Level.prototype.render = function(ctx) {
-	//render current level
-	util.drawPixelText(ctx, g_canvas.width-70, 20, "LEVEL", 16, "#DEDEDE");
-	if(g_currentLevel<10) util.drawPixelText(ctx, g_canvas.width-70, 40, "0"+g_currentLevel, 16, "#DEDEDE");
-	else util.drawPixelText(ctx, g_canvas.width-70, 40, g_currentLevel, 16, "#DEDEDE");
-	//Render points
+
+	// Draw wall image
 	this.levelsprite.drawAt(ctx, this.cx, this.cy);
 
+	// Render current level
+	util.drawPixelText(ctx, g_canvas.width-70, 20, "LEVEL", this.standardsize, this.pacwhite);
+	if(g_currentLevel<10) util.drawPixelText(ctx, g_canvas.width-70, 40, "0"+g_currentLevel, this.standardsize, this.pacwhite);
+	else util.drawPixelText(ctx, g_canvas.width-70, 40, g_currentLevel, this.standardsize, this.pacwhite);
+
 	// Render 1UP text
-	util.drawPixelText(ctx, 70, 20, "1UP", 16, "#DEDEDE");
+	util.drawPixelText(ctx, 70, 20, "1UP", 16, this.pacwhite);
 
 	// Render current score
-	if(g_score === 0) util.drawPixelText(ctx, 70, 40, "00", 16, "#DEDEDE");
-	else util.drawPixelText(ctx, 70, 40, g_score, 16, "#DEDEDE");
+	if(g_score === 0) util.drawPixelText(ctx, 70, 40, "00", this.standardsize, this.pacwhite);
+	else util.drawPixelText(ctx, 70, 40, g_score, this.standardsize, this.pacwhite);
 
 	// Render the highest score
-	util.drawPixelText(ctx, g_canvas.width/2, 20, "HIGH SCORE", 16, "#DEDEDE");
-	if(highscore === null) util.drawPixelText(ctx, g_canvas.width/2, 40, "00", 16, "#DEDEDE");
-	else util.drawPixelText(ctx, g_canvas.width/2, 40, highscore, 16, "#DEDEDE");
+	util.drawPixelText(ctx, g_canvas.width/2, 20, "HIGH SCORE", this.standardsize, this.pacwhite);
+	if(highscore === null) util.drawPixelText(ctx, g_canvas.width/2, 40, "00", this.standardsize, this.pacwhite);
+	else util.drawPixelText(ctx, g_canvas.width/2, 40, highscore, this.standardsize, this.pacwhite);
 
 	// Render ready text above pacman before he starts
-	if(!g_maze.theManMoving && !entityManager._pacMan[0].isDead) util.drawPixelText(ctx, g_canvas.width/2, 336, "READY!", 14, "#FFFF00");
+	if(!g_maze.theManMoving && !entityManager._pacMan[0].isDead) util.drawPixelText(ctx, g_canvas.width/2, 336, "READY!", this.smallersize, "#FFFF00");
 
 	// THIS NEEDS TO BE FIXED?
-	if(g_lives === 0) util.drawPixelText(ctx, g_canvas.width/2, 336, "GAME   OVER", 14, "#FE0000");
+	if(g_lives === 0) util.drawPixelText(ctx, g_canvas.width/2, 336, "GAME   OVER", this.smallersize, "#FE0000");
 
 	//Render Lives
 	var width = 90;
