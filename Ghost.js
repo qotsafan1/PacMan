@@ -60,14 +60,6 @@ Ghost.prototype.resetGhost = function () {
 
 Ghost.prototype.move = function (target, myTile) {
     var go;
-    // turn around if the ghost has become frightened 
-    if (this.shouldTurn) {
-        this.velY *=-1;
-        this.velX *=-1;
-        this.shouldTurn = false;
-        this.chosen = true;
-        return;
-    }
 
     // Choses shortest distance to target tile
     if (this.scared && !this.isDeadNow) go = this.panicDecision();
@@ -83,6 +75,14 @@ Ghost.prototype.move = function (target, myTile) {
 
     // move to the tile that is closest to the target tile
     if (!this.chosen && this.endOfTile(myTile)) {
+        // turn around if the ghost has become frightened 
+        if (this.shouldTurn) {
+        this.velY *=-1;
+        this.velX *=-1;
+        this.shouldTurn = false;
+        this.chosen = true;
+        return;
+        }
         for (var i=0; i<go.length; ++i) {
             if(this.canGoUp(myTile) && go[i]===0 && !(this.velY>0) && 
                 g_maze.tiles[myTile[0]][myTile[1]]!==3 && 

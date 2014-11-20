@@ -27,6 +27,7 @@ Level.prototype.standardsize = 16;
 Level.prototype.smallersize = 14;
 
 Level.prototype.update = function(du) {
+	if(g_score>highscore) highscore = g_score;
 	//console.log(g_lives);
 	//console.log("Array" + array_cx.length+ "entity"+entityManager._fruits.length);
 	if (array_cx.length === 0 && entityManager._fruits.length === 0) {
@@ -68,7 +69,7 @@ g_lossOfLife = function () {
 }
 
 g_LostGame = function(du) {
-	if(g_lives === 0 && g_score > highscore){
+	if(g_lives === 0 && highscore > localStorage.getItem("highscore")) {
 		(localStorage.setItem("highscore", g_score));
 	} 
 	g_score = 0;
