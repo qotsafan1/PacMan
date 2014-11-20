@@ -33,6 +33,7 @@ Button.prototype.toggleon = function() {
 Button.prototype.toggleoff = function() {
 	if (this.overButton()) { 
 		if(this.ID===1) g_isGamePaused = false;
+		if(this.ID===2) g_newGame();
 		if(this.ID===3) main.gameOver();
 		this.icon.scale = 1;
 	}

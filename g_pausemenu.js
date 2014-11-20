@@ -7,10 +7,10 @@ function pauseButtons(xpos, ypos) {
 
 	var b_continue = new Button(xpos, ypos+40, g_buttons[0].width, g_buttons[0].height, g_buttons[0], 1);
 
-	//var b_newgame = new Button(xpos, ypos+90, g_buttons[1].width, g_buttons[1].height, g_buttons[1], 2);
-    var b_quit = new Button(xpos, ypos+140, g_buttons[1].width, g_buttons[1].height, g_buttons[1], 3);
+	var b_newgame = new Button(xpos, ypos+90, g_buttons[1].width, g_buttons[1].height, g_buttons[1], 2);
+    var b_quit = new Button(xpos, ypos+140, g_buttons[1].width, g_buttons[1].height, g_buttons[2], 3);
 
-	var buttons = [b_continue, b_quit];
+	var buttons = [b_continue, b_newgame,b_quit];
 
 	return buttons;
 }
