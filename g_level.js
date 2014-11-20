@@ -14,6 +14,8 @@ var highscore = localStorage.getItem("highscore");
 g_newGame = function() {
 	g_score = 0;
 	g_lives = 3;
+	g_currentLevel = 0;
+	nextLevel();
 }
 
 function Level() {
@@ -72,10 +74,7 @@ g_LostGame = function(du) {
 	if(g_lives === 0 && highscore > localStorage.getItem("highscore")) {
 		(localStorage.setItem("highscore", g_score));
 	} 
-	g_score = 0;
-	g_lives = 3;
-	g_currentLevel = 0;
-	nextLevel();
+	g_newGame();
 }
 
 Level.prototype.render = function(ctx) {

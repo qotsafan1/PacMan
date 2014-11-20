@@ -1,6 +1,6 @@
 // Button stuff
 
-function Button(x, y, width, height, img) {
+function Button(x, y, width, height, img, id) {
 	this.cx = x;
 	this.cy = y;
 
@@ -11,7 +11,11 @@ function Button(x, y, width, height, img) {
 
 	this.centerX = this.cx-this.buttonwidth/2;
 	this.centerY = this.cy-this.buttonheight/2;
+
+	this.ID = id;
 }
+
+
 
 Button.prototype.buttoncolor = '#000BDD';
 
@@ -28,8 +32,9 @@ Button.prototype.toggleon = function() {
 
 Button.prototype.toggleoff = function() {
 	if (this.overButton()) { 
+		if(this.ID===1) g_isGamePaused = false;
+		if(this.ID===3) main.gameOver();
 		this.icon.scale = 1;
-		g_isGamePaused = false;
 	}
 };
 

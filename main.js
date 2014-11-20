@@ -45,6 +45,13 @@ main.iter = function (frameTime) {
     
     // Request the next iteration if needed
     if (!this._isGameOver) this._requestNextIteration();
+    else {
+        util.fillBox(g_ctx, 0, 0, g_canvas.width, g_canvas.height, 'rgba(0,0,0,0.8)');
+        util.drawPixelText(g_ctx, g_canvas.width/2, g_canvas.height/2-20, "YOU HAVE", 40, "#FE0000");
+        util.drawPixelText(g_ctx, g_canvas.width/2, g_canvas.height/2+20, "QUIT!", 40, "#FE0000");
+        util.drawPixelText(g_ctx, g_canvas.width/2, g_canvas.height/2+60, "YOU NEED TO REFRESH", 10, "#FE0000");
+        util.drawPixelText(g_ctx, g_canvas.width/2, g_canvas.height/2+75, "YOUR BROWSER", 10, "#FE0000");
+    }
 };
 
 main._updateClocks = function (frameTime) {
@@ -60,10 +67,10 @@ main._updateClocks = function (frameTime) {
 main._iterCore = function (dt) {
     
     // Handle QUIT
-    if (requestedQuit()) {
+    /*if (requestedQuit()) {
         this.gameOver();
         return;
-    }
+    }*/
     
     gatherInputs();
     update(dt);
@@ -79,10 +86,10 @@ main.gameOver = function () {
 
 // Simple voluntary quit mechanism
 //
-var KEY_QUIT = 'Q'.charCodeAt(0);
+/*var KEY_QUIT = 'Q'.charCodeAt(0);
 function requestedQuit() {
     return keys[KEY_QUIT];
-}
+}*/
 
 // Annoying shim for Firefox and Safari
 window.requestAnimationFrame = 

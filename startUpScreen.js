@@ -125,7 +125,7 @@ startUpScreen.prototype.introframe = function(ctx, ypos, width, height) {
 
 	util.roundedBox(ctx, (g_canvas.width-width)/2, ypos, width, height, 20, 'rgba(0,0,0,0.7)', 4, "#000BDD");
 	util.drawPixelText(ctx, g_canvas.width/2, ypos+20+this.shift, "Instructions:", 16, this.pacwhite);
-	util.drawPixelText(ctx, g_canvas.width/2, ypos+50+this.shift, "use WASD to move", 12, this.pacwhite);
+	util.drawPixelText(ctx, g_canvas.width/2, ypos+50+this.shift, "use arrow keys to move", 12, this.pacwhite);
 	util.drawPixelText(ctx, g_canvas.width/2, ypos+70+this.shift, "sound ON/OFF with Z", 12, this.pacwhite);
 	util.drawPixelText(ctx, g_canvas.width/2, ypos+110+this.shift, "10 PTS", 12, this.pacwhite);
 	util.drawPixelText(ctx, g_canvas.width/2, ypos+130+this.shift, "50 PTS", 12, this.pacwhite);
