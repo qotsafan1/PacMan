@@ -34,7 +34,9 @@ Level.prototype.smallersize = 14;
 Level.prototype.delay = 2*SECS_TO_NOMINALS;
 Level.prototype.flicker = false;
 
+
 Level.prototype.update = function() {
+	if(g_score>highscore) highscore = g_score;
 	//console.log(g_lives);
 	//console.log("Array" + array_cx.length+ "entity"+entityManager._fruits.length);
 	//if (array_cx.length === 0 && entityManager._fruits.length === 0) {
@@ -79,7 +81,7 @@ g_lossOfLife = function () {
 }
 
 g_LostGame = function(du) {
-	if(g_lives === 0 && g_score > highscore){
+	if(g_lives === 0 && highscore > localStorage.getItem("highscore")) {
 		(localStorage.setItem("highscore", g_score));
 	} 
 	g_score = 0;
@@ -125,17 +127,15 @@ Level.prototype.render = function(ctx) {
 	if(!g_maze.theManMoving && !entityManager._pacMan[0].isDead && !g_levelchange) 
 		util.drawPixelText(ctx, g_canvas.width/2, 336, "READY!", this.smallersize, "#FFFF00");
 
-	// THIS NEEDS TO BE FIXED?
-	if(g_lives === 0) util.drawPixelText(ctx, g_canvas.width/2, 336, "GAME   OVER", this.smallersize, "#FE0000");
+	// Render the game is over
+	if(g_lives === 0) util.drawPixelText(ctx, g_canvas.width/2, 336, "GAME  OVER", this.smallersize, "#FE0000");
 
 	//Render Lives
-	var width = 90;
+	var width = 30;
 	for(var i=0; i<g_lives;i++) {
 		g_animateSprites[i].scale = 0.45;
 		g_animateSprites[i].drawWrappedCentredAt(ctx,width,g_canvas.height-20,0);
-		//ctx.fillStyle = 'yellow';
-		//util.fillCircle(ctx, width, g_canvas.height - 20, 10);
-		width-=30;
+		width+=30;
 	}
 
 	//console.log("buja");
