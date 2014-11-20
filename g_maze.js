@@ -138,19 +138,19 @@ g_maze.fixMaze = function () {
     g_maze.tiles[-1]=[];
     g_maze.tiles[-2]=[];
     g_maze.tiles[-1][16]=1;
-    g_maze.tiles[-1][17]=0;
+    g_maze.tiles[-1][17]=9;
     g_maze.tiles[-1][18]=1;
     g_maze.tiles[-2][16]=1;
-    g_maze.tiles[-2][17]=0;
+    g_maze.tiles[-2][17]=9;
     g_maze.tiles[-2][18]=1;
     g_maze.tiles[28]=[];
     g_maze.tiles[29]=[];
     g_maze.tiles[28][16]=1;
-    g_maze.tiles[28][17]=0;
+    g_maze.tiles[28][17]=9;
     g_maze.tiles[28][18]=1;
-    g_maze.tiles[29][16]=0;
-    g_maze.tiles[29][17]=0;
-    g_maze.tiles[29][18]=0;
+    g_maze.tiles[29][16]=9;
+    g_maze.tiles[29][17]=9;
+    g_maze.tiles[29][18]=9;
 };
 
 g_maze.stopBeingScared = function() {
