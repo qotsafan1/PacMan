@@ -90,19 +90,24 @@ function updateSimulation(du) {
         if(g_startupscreen.status() && g_startupscreen.ON) g_startupscreen.update(du);
         else {
 
-            // Pause game if esc key was pressed
+            // Pause game if between levels
             if(g_levelchange) {
-                if(delayUpdate(du)) return;
+                if(delayUpdate(du)){
+                    g_level.update(du);
+                    return;
+                }
                 else g_levelchange = false;
-                g_level.update();
+                
             }
+
+            // Pause game if esc key was pressed
             if(!g_startupscreen.ON) g_pausemenu.checkPause();
             if(g_pausemenu.ON && !g_startupscreen.ON) {
                 g_pausemenu.update();
                 return;
             }
 
-            g_level.update();
+            g_level.update(du);
             entityManager.update(du);
         }
     }
