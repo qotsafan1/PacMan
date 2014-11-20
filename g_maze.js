@@ -47,13 +47,15 @@ var g_maze = {
     nextOut : 0,
     ghostScared : false,
     chaseScatter : [7,20,7,20,5,20,5,false],
-    chaseScatterCounter : 0
+    chaseScatterCounter : 0,
+    dotCounter : 0
 };
 
 g_maze.resetMaze = function () {
     this.scaredTimer = 0;
     this.theManMoving = false;
     this.chaseScatterCounter = 0;
+    this.dotCounter = 0;
 };
 
 g_maze.returnTilePos = function (cx, cy) {
@@ -77,6 +79,11 @@ g_maze.drawTile = function (ctx, x, y, style) {
     ctx.strokeStyle = oldStyle;
 };
 
+g_maze.cageLogic = function () {
+    this.nextOut = 0;
+    this.dotCounter++;
+};
+
 g_maze.update = function(du) {
     if (this.theManMoving) {
         if (g_blinky.scared || g_pinky.scared || g_inky.scared || g_clyde.scared) {
@@ -87,18 +94,17 @@ g_maze.update = function(du) {
             }
             else this.scaredTimer += du/SECS_TO_NOMINALS;
         }
+
         this.nextOut += du/SECS_TO_NOMINALS;
-        if (g_inky.inCage && this.nextOut>g_inkyOut && g_inky.endOfTile(g_inky.currentTile)) {
-            g_inky.centery(g_inky.currentTile);
-            g_inky.inCage = false;
-            g_inky.velX = g_inky.speed;
-            g_inky.velY = 0;
+        if (g_inky.inCage && g_inky.endOfTile(g_inky.currentTile) && (this.nextOut>4 || 
+                this.dotCounter===17)) {
+            g_inky.goOut();
+            this.dotCounter = 0;
         }
-        if (g_clyde.inCage && this.nextOut>g_clydeOut && g_clyde.endOfTile(g_clyde.currentTile)) {
-            g_clyde.centery(g_clyde.currentTile);
-            g_clyde.inCage = false;
-            g_clyde.velX =-g_clyde.speed;
-            g_clyde.velY = 0;
+        else if (g_clyde.inCage && g_clyde.endOfTile(g_clyde.currentTile) && (this.nextOut>4 || 
+                this.dotCounter===32)) {
+            g_clyde.goOut();
+            this.dotCounter = 0;
         }
         if (this.chaseScatter[0] && !this.ghostScared) {
             this.chaseScatterCounter += du/SECS_TO_NOMINALS;
@@ -132,19 +138,19 @@ g_maze.fixMaze = function () {
     g_maze.tiles[-1]=[];
     g_maze.tiles[-2]=[];
     g_maze.tiles[-1][16]=1;
-    g_maze.tiles[-1][17]=0;
+    g_maze.tiles[-1][17]=9;
     g_maze.tiles[-1][18]=1;
     g_maze.tiles[-2][16]=1;
-    g_maze.tiles[-2][17]=0;
+    g_maze.tiles[-2][17]=9;
     g_maze.tiles[-2][18]=1;
     g_maze.tiles[28]=[];
     g_maze.tiles[29]=[];
     g_maze.tiles[28][16]=1;
-    g_maze.tiles[28][17]=0;
+    g_maze.tiles[28][17]=9;
     g_maze.tiles[28][18]=1;
-    g_maze.tiles[29][16]=0;
-    g_maze.tiles[29][17]=0;
-    g_maze.tiles[29][18]=0;
+    g_maze.tiles[29][16]=9;
+    g_maze.tiles[29][17]=9;
+    g_maze.tiles[29][18]=9;
 };
 
 g_maze.stopBeingScared = function() {

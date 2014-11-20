@@ -6,8 +6,6 @@ var g_ghostSpeed = 0.75;
 var g_pacSpeed = 0.8;
 var g_scaredGhostSpeed = 0.50;
 var g_scaredPacSpeed = 0.9;
-var g_inkyOut = 4;
-var g_clydeOut = 8;
 var g_ghostFrightTime = 6;
 var g_currentLevel = 1;
 var g_dotCounter = 0;
@@ -134,8 +132,6 @@ function newLevel (level) {
 		g_pacSpeed = 0.8;
 		g_scaredGhostSpeed = 0.50;
 		g_scaredPacSpeed = 0.9;
-		g_inkyOut = 4;
-		g_clydeOut = 8;
 		g_ghostFrigthTime = 6;
 		g_maze.chaseScatter = [7,20,7,20,5,20,5,false];
 		return; 
@@ -145,8 +141,6 @@ function newLevel (level) {
 		g_pacSpeed = 0.9;
 		g_scaredGhostSpeed = 0.55;
 		g_scaredPacSpeed = 0.95;
-		g_inkyOut = 4;
-		g_clydeOut = 8;
 		g_ghostFrigthTime = 4;
 		g_maze.chaseScatter = [7,20,7,20,5,1033,1/60,false];
 		return;
@@ -156,8 +150,6 @@ function newLevel (level) {
 		g_pacSpeed = 1;
 		g_scaredGhostSpeed = 0.6;
 		g_scaredPacSpeed = 1;
-		g_inkyOut = 4;
-		g_clydeOut = 8;
 		g_ghostFrigthTime = 2;
 		g_maze.chaseScatter = [5,20,5,20,5,1037,1/60,false];
 		return;
@@ -166,8 +158,6 @@ function newLevel (level) {
 	g_pacSpeed = 0.9;
 	g_scaredGhostSpeed = 0.55;
 	g_scaredPacSpeed = 0.95;
-	g_inkyOut = 4;
-	g_clydeOut = 8;
 	g_ghostFrigthTime = 0;
 	g_maze.chaseScatter = [5,20,5,20,5,1037,1/60,false];
 };

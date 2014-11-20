@@ -170,6 +170,7 @@ PacMan.prototype.eatDot = function(){
                 fruitEntity.splice(i,1);
                 g_dotCounter++;
                 g_BigPoints();
+                g_maze.cageLogic();
                 this.makeGhostsScared();
         }
     }   
