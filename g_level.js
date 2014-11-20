@@ -24,7 +24,7 @@ g_newGame = function() {
 function Level() {
     this.cx = 0;
     this.cy = 0;
-    this.levelsprite = this.levelsprite || g_levelimg[0];
+    this.levelsprite_blue = this.levelsprite || g_levelimg[0];
     this.levelsprite_white = this.levelsprite_white || g_levelimg[1];
 }
 
@@ -33,20 +33,29 @@ Level.prototype.standardsize = 16;
 Level.prototype.smallersize = 14;
 Level.prototype.delay = 2*SECS_TO_NOMINALS;
 Level.prototype.flicker = false;
-//Level.prototype.flickercounter = 0.2*SECS
+Level.prototype.flickercounter = 0.1*SECS_TO_NOMINALS;
 
 
-Level.prototype.update = function() {
+Level.prototype.update = function(du) {
 	if(g_score>highscore) highscore = g_score;
 	//console.log(g_lives);
 	//console.log("Array" + array_cx.length+ "entity"+entityManager._fruits.length);
-	//if (array_cx.length === 0 && entityManager._fruits.length === 0) {
-	if(array_cx.length === 230) {
+	if (array_cx.length === 0 && entityManager._fruits.length === 0) {
 
 		g_levelchange = true;
 
 		nextLevel();
 	}
+
+	if(g_levelchange) {
+		if(this.flickercounter > 0) this.flickercounter -= du;
+		else {
+			console.log("bacon");
+			this.flicker = !this.flicker;
+			this.flickercounter = 0.1*SECS_TO_NOMINALS;
+		}
+	}
+	
 };
 
 g_point = function(num) {
@@ -96,15 +105,13 @@ Level.prototype.render = function(ctx) {
 	// Draw wall image
 	if(g_levelchange) {
 		if(this.flicker) {
-			this.levelsprite.drawAt(ctx, this.cx, this.cy);
-			this.flicker = false;
+			this.levelsprite_blue.drawAt(ctx, this.cx, this.cy);
 		}
 		else {
 			this.levelsprite_white.drawAt(ctx, this.cx, this.cy);
-			this.flicker = true;
 		}
 	}
-	else this.levelsprite.drawAt(ctx, this.cx, this.cy);
+	else this.levelsprite_blue.drawAt(ctx, this.cx, this.cy);
 
 
 	// Render current level
