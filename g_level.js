@@ -29,13 +29,6 @@ Level.prototype.update = function(du) {
 
 		nextLevel();
 	}
-	if(g_lives === 0){
-		g_LostGame();
-		g_score = 0;
-		g_lives = 3;
-		g_currentLevel = 0;
-		nextLevel();
-	}
 };
 
 g_point = function(num) {
@@ -70,14 +63,21 @@ g_lossOfLife = function () {
 	g_lives--;
 }
 
-g_LostGame = function() {
+g_LostGame = function(du) {
 	if(g_lives === 0 && g_score > highscore){
 		(localStorage.setItem("highscore", g_score));
 	} 
+	g_score = 0;
+	g_lives = 3;
+	g_currentLevel = 0;
+	nextLevel();
 }
 
 Level.prototype.render = function(ctx) {
-
+	//render current level
+	util.drawPixelText(ctx, g_canvas.width-70, 20, "LEVEL", 16, "#DEDEDE");
+	if(g_currentLevel<10) util.drawPixelText(ctx, g_canvas.width-70, 40, "0"+g_currentLevel, 16, "#DEDEDE");
+	else util.drawPixelText(ctx, g_canvas.width-70, 40, g_currentLevel, 16, "#DEDEDE");
 	//Render points
 	this.levelsprite.drawAt(ctx, this.cx, this.cy);
 
@@ -94,10 +94,10 @@ Level.prototype.render = function(ctx) {
 	else util.drawPixelText(ctx, g_canvas.width/2, 40, highscore, 16, "#DEDEDE");
 
 	// Render ready text above pacman before he starts
-	if(!g_maze.theManMoving) util.drawPixelText(ctx, g_canvas.width/2, 336, "READY!", 14, "#FFFF00");
+	if(!g_maze.theManMoving && !entityManager._pacMan[0].isDead) util.drawPixelText(ctx, g_canvas.width/2, 336, "READY!", 14, "#FFFF00");
 
 	// THIS NEEDS TO BE FIXED?
-	if(g_lives === 0) util.drawPixelText(ctx, g_canvas.width/2, 336, "GAME   OVER", 14, "FE0000");
+	if(g_lives === 0) util.drawPixelText(ctx, g_canvas.width/2, 336, "GAME   OVER", 14, "#FE0000");
 
 	//Render Lives
 	var width = 90;
@@ -113,6 +113,7 @@ Level.prototype.render = function(ctx) {
 	//ctx.drawImage("images/levelwalls.png", this.cx, this.cy);
 };
 
+// starting next level
 function nextLevel () {
 	g_currentLevel++;
 	newLevel(g_currentLevel);
@@ -126,6 +127,8 @@ function nextLevel () {
 	makeDots();
 };
 
+
+// setting thing up for next level
 function newLevel (level) {
 	if (level===1) {
 		g_ghostSpeed = 0.75;

@@ -20,6 +20,7 @@ var g_blinky = new Ghost({
     turns : 'left'
 });
 
+// where is the current target
 g_blinky.findTargetTile = function() {
 	if (!g_scatterToggle) {
 		return this.PacTile;
@@ -45,6 +46,7 @@ var g_pinky = new Ghost({
     turns : 'up'
 });
 
+// where is the current target
 g_pinky.findTargetTile = function() {
 	if (!g_scatterToggle) {
 		switch (this.PacTurns) {
@@ -82,6 +84,7 @@ var g_inky = new Ghost({
     turns : 'up'
 });
 
+// where is the current target
 g_inky.findTargetTile = function() {
 	if (!g_scatterToggle) {
 		var tile = [0,0];
@@ -129,6 +132,7 @@ var g_clyde = new Ghost({
     turns : 'up'
 });
 
+// where is the current target
 g_clyde.findTargetTile = function() {
 	if(!g_scatterToggle) {
 		var dist = util.square(this.currentTile[0]-g_blinky.PacTile[0])+ 

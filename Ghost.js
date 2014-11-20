@@ -45,6 +45,7 @@ Ghost.prototype.rememberResets = function () {
     this.reset_turns = this.turns;
 };
 
+// Ghost put to begining position
 Ghost.prototype.resetGhost = function () {
     this.setPos(this.reset_cx, this.reset_cy);
     this.velX = this.reset_velX;
@@ -59,7 +60,7 @@ Ghost.prototype.resetGhost = function () {
 
 Ghost.prototype.move = function (target, myTile) {
     var go;
-    // shouldTurn around
+    // turn around if the ghost has become frightened 
     if (this.shouldTurn) {
         this.velY *=-1;
         this.velX *=-1;
@@ -72,7 +73,7 @@ Ghost.prototype.move = function (target, myTile) {
     if (this.scared && !this.isDeadNow) go = this.panicDecision();
     else go = this.shortWay(target, myTile);
 
-    // if is dead and is over ghostcage shouldTurn down
+    // if is dead and is over ghostcage should turn down
     if (this.isDeadNow && g_maze.tiles[myTile[0]][myTile[1]]===13) {
             this.velX = 0;
             this.velY = this.speed;
@@ -215,6 +216,7 @@ Ghost.prototype.makingDecisions = function(theTile, myTile) {
     }
 };
 
+// BOOOO! and then the ghost jumps in the air
 Ghost.prototype.fright = function() {
     this.scared = true;
     if(!this.isDeadNow) this.shouldTurn = true;
@@ -244,22 +246,22 @@ Ghost.prototype.update = function (du) {
 };
 
 Ghost.prototype.takeStep = function(du) {
-    var endTile = this.endOfTile(this.currentTile);
-    var theTile = g_maze.tiles[this.currentTile[0]][this.currentTile[1]];
+    var endTile = this.endOfTile(this.currentTile); // is the ghost in the later half of a tile
+    var theTile = g_maze.tiles[this.currentTile[0]][this.currentTile[1]]; //what type of tile is the ghost on
 
     if(theTile===10 && !this.inCage) {
         if(this.isDeadNow) this.scared = false;
-        if(this===g_inky && this.isDeadNow) {
+        if(this===g_inky && this.isDeadNow) { //inky stays in cage if he is killed
             this.resetGhost();
             g_maze.dotCounter = 0;
             this.inCage = true; 
         }
-        if(this===g_clyde && this.isDeadNow) {
+        if(this===g_clyde && this.isDeadNow) { //clyde stays in cage if he is killed
             this.resetGhost();
             g_maze.dotCounter = 0;
             this.inCage = true;
         }
-        this.isDeadNow = false;
+        this.isDeadNow = false; 
         this.centerx(this.currentTile);
         this.velX = 0;
         this.velY = -this.speed;
@@ -277,7 +279,7 @@ Ghost.prototype.takeStep = function(du) {
     this.wrapPosition();
     this.cx += this.velX*du;
     this.cy += this.velY*du;
-    this.setEyes();
+    this.setEyes(); // be sure to be looking in the right direction
     this.currentTile = this.tilePos();
 };
 
@@ -307,8 +309,8 @@ Ghost.prototype.drawGhosts = function(ctx){
 
 };
 
+// draw the ghost blue
 Ghost.prototype.drawScaredGhosts = function(ctx){
-
     if(this.counter === 0) this.i = 1;
     if(this.counter === 5) this.i = 0;
     if(g_maze.scaredTimer<=g_ghostFrightTime-2){
@@ -319,6 +321,8 @@ Ghost.prototype.drawScaredGhosts = function(ctx){
         g_scaredEndSprite[this.i].drawWrappedCentredAt(ctx, this.cx, this.cy, 0);
     }
 };
+
+// draw eyes with them looking in the same direction the ghost is going
 Ghost.prototype.drawEyes = function(ctx){
    var oldstyle = ctx.fillStyle;
     ctx.fillStyle = 'white';
@@ -326,7 +330,7 @@ Ghost.prototype.drawEyes = function(ctx){
     util.fillCircle(ctx, this.cx+5, this.cy-3, 4);
     ctx.fillStyle = 'black';
     var x = 0, y = 0;
-    switch (this.turns) {
+    switch (this.turns) { // in what direction is the ghost going
         case 'up':
             y = -2;
             break;
