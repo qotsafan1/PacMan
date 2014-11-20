@@ -64,10 +64,12 @@ g_maze.returnTilePos = function (cx, cy) {
     return [xTile,yTile];
 };
 
+// is this tile a wall
 g_maze.isThereWall = function (tx, ty) {
     return this.tiles[tx][ty];
 };
 
+// can the ghost take a decicion on this tile
 g_maze.isGhostDecTile = function (num, e) {
     return (num===2 || num===3 || num===4 || num===5 || (e.isDeadNow && num===13));
 };
@@ -100,6 +102,7 @@ g_maze.update = function(du) {
                 this.dotCounter===17)) {
             g_inky.goOut();
             this.dotCounter = 0;
+            this.nextOut = 0;
         }
         else if (g_clyde.inCage && g_clyde.endOfTile(g_clyde.currentTile) && (this.nextOut>4 || 
                 this.dotCounter===32)) {
@@ -153,6 +156,7 @@ g_maze.fixMaze = function () {
     g_maze.tiles[29][18]=9;
 };
 
+// hey, ghost stop being such chickens
 g_maze.stopBeingScared = function() {
     g_blinky.scared = false;
     g_pinky.scared = false;

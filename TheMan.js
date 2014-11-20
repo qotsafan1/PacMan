@@ -46,7 +46,6 @@ PacMan.prototype.KEY_UP = 'W'.charCodeAt(0);
 PacMan.prototype.KEY_DOWN  = 'S'.charCodeAt(0);
 PacMan.prototype.KEY_LEFT   = 'A'.charCodeAt(0);
 PacMan.prototype.KEY_RIGHT  = 'D'.charCodeAt(0);
-PacMan.prototype.KEY_KILL = 'I'.charCodeAt(0);
 
 // Initial, inheritable, default values
 PacMan.prototype.rotation = 0;
@@ -60,9 +59,6 @@ PacMan.prototype.directionY = 1;
 PacMan.prototype.isDead = false;
 
 PacMan.prototype.move = function(du, tileP) {
-    if(keys[this.KEY_KILL]){
-        this.die();
-    }
 
     var rotation;
     if(keys[this.KEY_UP] && this.canGoUp(tileP) && !this.isDead) {
@@ -138,11 +134,13 @@ PacMan.prototype.resetPacman = function(){
     this.animationOn = false;
     //initialize the sprite
     this.sprite = g_animateSprites[this.i];
+    //reset ghost
     g_blinky.resetGhost();
     g_pinky.resetGhost();
     g_inky.resetGhost();
     g_clyde.resetGhost();
     g_maze.nextOut = 0;
+    //but ghost back in cage
     g_inky.inCage = true;
     g_clyde.inCage = true;
 };
@@ -208,7 +206,7 @@ PacMan.prototype.update = function (du) {
     if (g_maze.ghostScared) this.speed = g_scaredPacSpeed*g_speed;
     else g_pacSpeed*g_speed;
 
-    while (du > 2) {
+    while (du > 2) { // take smaller steps if du is too large
         this.takeStep(2);
         du -= 2;
     }
@@ -225,6 +223,8 @@ PacMan.prototype.takeStep = function (du) {
     this.eatDot();
 
     this.move(du, tileP);
+
+    // stop if you are hitting a wall
     if(this.isNextTileWall(tileP) && this.endOfTile(tileP))
     {
         this.velX=0;
@@ -236,12 +236,14 @@ PacMan.prototype.takeStep = function (du) {
         var thing = this.isColliding();
         if (thing.scared && !thing.isDeadNow) {
             if(g_audioOn) g_eatGhostsAudio.play();
-            thing.isDeadNow = true;
-            this.ghostKilled *=2;
+            thing.isDeadNow = true; // ghost is killed if you eat him
+            this.ghostKilled *=2; 
             g_point(this.ghostKilled);
         }
         else {
-             if(!thing.isDeadNow) this.die();
+             if(!thing.isDeadNow) this.die(); 
+             // you cannot eat ghost when they are alive
+             // there is something wrong with the former sentence, what I am not sure
         }
     }
 };
@@ -255,6 +257,7 @@ PacMan.prototype.halt = function () {
     this.velY = 0;
 };
 
+// R.I.P.
 PacMan.prototype.die = function() {
     this.rotation = 0;  
     this.isDead = true;

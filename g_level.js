@@ -90,7 +90,7 @@ Level.prototype.render = function(ctx) {
 
 	// Render the highest score
 	util.drawPixelText(ctx, 150, 20, "HIGH SCORE", 16, "#DEDEDE");
-	if(highscore != null) util.drawPixelText(ctx, 250, 40, "00", 16, "#DEDEDE");
+	if(highscore === null) util.drawPixelText(ctx, 250, 40, "00", 16, "#DEDEDE");
 	else util.drawPixelText(ctx, 250, 40, highscore, 16, "#DEDEDE");
 
 	// Render ready text above pacman before he starts
@@ -113,6 +113,7 @@ Level.prototype.render = function(ctx) {
 	//ctx.drawImage("images/levelwalls.png", this.cx, this.cy);
 };
 
+// starting next level
 function nextLevel () {
 	g_currentLevel++;
 	newLevel(g_currentLevel);
@@ -126,6 +127,8 @@ function nextLevel () {
 	makeDots();
 };
 
+
+// setting thing up for next level
 function newLevel (level) {
 	if (level===1) {
 		g_ghostSpeed = 0.75;

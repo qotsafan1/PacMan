@@ -100,38 +100,22 @@ var g_chompAudio = new Audio('sounds/pacman_chomp.wav'),
 
 // GAME-SPECIFIC DIAGNOSTICS
 
-var g_useAveVel = true;
 var g_renderSpatialDebug = false;
 var g_useUglyRedWall = false;
 var g_scatterToggle = true;
-var g_takingTime = false;
 
-var KEY_AVE_VEL = keyCode('V');
 var KEY_SPATIAL = keyCode('X');
 var KEY_REDWALL = keyCode('M');
-var KEY_SCATTER = keyCode('N');
-var KEY_TAKETIME = keyCode('L');
 
 var KEY_HALT  = keyCode('H');
 var KEY_RESET = keyCode('R');
 
-var KEY_0 = keyCode('0');
-
-var KEY_1 = keyCode('1');
-var KEY_2 = keyCode('2');
-
 var KEY_K = keyCode('K');
 
 function processDiagnostics() {
-    //if (eatKey(KEY_SCATTER)) g_scatterToggle = !g_scatterToggle;
-
-    if (eatKey(KEY_AVE_VEL)) g_useAveVel = !g_useAveVel;
-
     if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
 
     if (eatKey(KEY_REDWALL)) g_useUglyRedWall = !g_useUglyRedWall;   
-
-    if (eatKey(KEY_TAKETIME)) g_takingTime = !g_takingTime;  
 
     if(eatKey(KEY_AUDIO)) g_audioOn = !g_audioOn; 
 }
