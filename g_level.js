@@ -74,8 +74,10 @@ g_LostGame = function(du) {
 }
 
 Level.prototype.render = function(ctx) {
+	//render current level
 	util.drawPixelText(ctx, g_canvas.width-70, 20, "LEVEL", 16, "#DEDEDE");
-	util.drawPixelText(ctx, g_canvas.width-70, 40, g_currentLevel, 16, "#DEDEDE");
+	if(g_currentLevel<10) util.drawPixelText(ctx, g_canvas.width-70, 40, "0"+g_currentLevel, 16, "#DEDEDE");
+	else util.drawPixelText(ctx, g_canvas.width-70, 40, g_currentLevel, 16, "#DEDEDE");
 	//Render points
 	this.levelsprite.drawAt(ctx, this.cx, this.cy);
 
