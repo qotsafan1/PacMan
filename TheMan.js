@@ -153,6 +153,7 @@ PacMan.prototype.animateDeath = function(){
         this.counter++;
 
         if(this.i === g_deathSprites.length){
+            if(g_lives === 0) return  g_LostGame()
             this.resetPacman();
         }
     }
